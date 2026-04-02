@@ -2,151 +2,194 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0">
 <title>א.ד. אינסטלציה | מחשבונים הנדסיים</title>
-<meta name="description" content="כלי חישוב הנדסי לאינסטלטורים - שיפועים, אוורור, לחצים, קטרים לפי ת״י 1205 והל״ת">
+<meta name="description" content="כלי חישוב הנדסי לאינסטלטורים לפי ת״י 1205 והל״ת">
 <meta name="theme-color" content="#0a0f1a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0a0f1a;--card:rgba(255,255,255,0.04);--card2:rgba(255,255,255,0.06);--bdr:rgba(255,255,255,0.08);--focus:rgba(56,189,248,0.45);--sky:#38bdf8;--sky2:#0ea5e9;--skyG:rgba(56,189,248,0.2);--grn:#34d399;--red:#f87171;--amb:#fbbf24;--ora:#fb923c;--wa:#25D366;--t1:#f1f5f9;--t2:#cbd5e1;--t3:#94a3b8;--t4:#64748b;--t5:#475569;--r:14px;--rs:10px;}
+:root{
+  --bg:#0a0f1a;--card:rgba(255,255,255,0.045);--card2:rgba(255,255,255,0.07);
+  --bdr:rgba(255,255,255,0.09);--focus:rgba(56,189,248,0.5);
+  --sky:#38bdf8;--sky2:#0ea5e9;--skyG:rgba(56,189,248,0.22);
+  --grn:#34d399;--red:#f87171;--amb:#fbbf24;--ora:#fb923c;--wa:#25D366;
+  --t1:#f8fafc;--t2:#e2e8f0;--t3:#b0bec5;--t4:#78909c;--t5:#546e7a;
+  --r:14px;--rs:10px;
+}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html{scroll-behavior:smooth;-webkit-user-select:none;-moz-user-select:none;user-select:none;}
-body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--t2);min-height:100dvh;overflow-x:hidden;-webkit-font-smoothing:antialiased;padding-bottom:72px;}
+body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--t2);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;padding-bottom:76px;}
 input,textarea{-webkit-user-select:text;user-select:text;}
-::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:3px;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:4px;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
 @keyframes pulse{0%,100%{opacity:.4;}50%{opacity:1;}}
+@keyframes glow{0%,100%{box-shadow:0 0 8px var(--skyG);}50%{box-shadow:0 0 20px rgba(56,189,248,0.4);}}
 
-/* ── HEADER (logo only) ── */
-.hdr{position:sticky;top:0;z-index:100;background:rgba(10,15,26,0.88);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--bdr);padding:10px 16px;}
-.hdr-top{display:flex;align-items:center;justify-content:space-between;}
+/* ── HEADER ── */
+.hdr{position:sticky;top:0;z-index:100;background:rgba(10,15,26,0.92);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--bdr);padding:10px 16px;}
+.hdr-top{display:flex;align-items:center;justify-content:space-between;max-width:800px;margin:0 auto;}
 .logo{display:flex;align-items:center;gap:10px;}
-.logo-ico{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--sky),var(--sky2));display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 4px 16px var(--skyG);flex-shrink:0;}
-.logo h1{font-size:14px;font-weight:800;color:var(--t1);letter-spacing:-.3px;}
-.logo p{font-size:9px;color:var(--t5);font-weight:500;margin-top:1px;}
-.ver{font-size:9px;font-weight:700;color:var(--sky);background:rgba(56,189,248,0.1);border:1px solid rgba(56,189,248,0.2);padding:3px 10px;border-radius:20px;}
+.logo-ico{width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,var(--sky),var(--sky2));display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 18px var(--skyG);flex-shrink:0;}
+.logo h1{font-size:16px;font-weight:800;color:var(--t1);letter-spacing:-.3px;}
+.logo p{font-size:10px;color:var(--t4);font-weight:500;margin-top:2px;}
+.ver{font-size:10px;font-weight:700;color:var(--sky);background:rgba(56,189,248,0.1);border:1px solid rgba(56,189,248,0.2);padding:4px 12px;border-radius:20px;}
 
-/* ── BOTTOM NAV (fixed) ── */
-.bnav{position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(10,15,26,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--bdr);display:flex;justify-content:space-around;padding:6px 4px;padding-bottom:max(6px,env(safe-area-inset-bottom));}
-.bn{display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 2px;border:none;background:none;cursor:pointer;font-family:inherit;font-size:9px;font-weight:500;color:var(--t5);transition:all .2s;min-width:0;flex:1;}
+/* ── BOTTOM NAV ── */
+.bnav{position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(10,15,26,0.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--bdr);display:flex;justify-content:center;padding:5px 2px;padding-bottom:max(5px,env(safe-area-inset-bottom));}
+.bnav-inner{display:flex;justify-content:space-around;width:100%;max-width:800px;}
+.bn{display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 2px;border:none;background:none;cursor:pointer;font-family:inherit;font-size:10px;font-weight:600;color:var(--t5);transition:all .2s;min-width:0;flex:1;}
 .bn.on{color:var(--sky);}
 .bn.on .bn-i{background:rgba(56,189,248,0.15);box-shadow:0 2px 10px var(--skyG);}
-.bn-i{font-size:18px;width:34px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:8px;transition:all .2s;}
-.bn:active{transform:scale(.92);}
-.bn-l{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:54px;}
+.bn-i{font-size:18px;width:36px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:8px;transition:all .2s;}
+.bn:active{transform:scale(.9);}
+.bn-l{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:60px;}
 
 /* ── MAIN ── */
-.mn{max-width:640px;margin:0 auto;padding:16px 14px 20px;}
+.mn{max-width:800px;margin:0 auto;padding:18px 16px 24px;}
 .sec{display:none;}.sec.on{display:block;animation:fadeUp .25s ease-out;}
-.stit{font-size:15px;font-weight:700;color:var(--t1);margin-bottom:3px;}
-.sdsc{font-size:11px;color:var(--t5);margin-bottom:16px;}
+.stit{font-size:17px;font-weight:800;color:var(--t1);margin-bottom:4px;}
+.sdsc{font-size:13px;color:var(--t4);margin-bottom:18px;line-height:1.5;}
 
 /* ── FIELDS ── */
-.fld{margin-bottom:12px;}
-.flbl{display:block;font-size:11px;color:var(--t3);font-weight:500;margin-bottom:5px;}
+.fld{margin-bottom:14px;}
+.flbl{display:block;font-size:13px;color:var(--t3);font-weight:600;margin-bottom:6px;}
 .iw{display:flex;align-items:center;background:var(--card);border:1px solid var(--bdr);border-radius:var(--rs);overflow:hidden;transition:border-color .2s;}
 .iw:focus-within{border-color:var(--focus);}
-.iw input{flex:1;background:none;border:none;outline:none;padding:11px 13px;color:var(--t1);font-family:inherit;font-size:16px;font-weight:600;text-align:right;direction:ltr;}
-.iw input::placeholder{color:var(--t5);font-weight:400;font-size:13px;}
-.iu{padding:0 11px;font-size:11px;color:var(--t5);border-right:1px solid var(--bdr);font-weight:500;white-space:nowrap;}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.iw input{flex:1;background:none;border:none;outline:none;padding:13px 14px;color:var(--t1);font-family:inherit;font-size:18px;font-weight:600;text-align:right;direction:ltr;}
+.iw input::placeholder{color:var(--t5);font-weight:400;font-size:14px;}
+.iu{padding:0 12px;font-size:13px;color:var(--t4);border-right:1px solid var(--bdr);font-weight:600;white-space:nowrap;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:400px){.row2{grid-template-columns:1fr;}}
 
 /* ── GRIDS ── */
-.bg{display:grid;gap:7px;}.bg4{grid-template-columns:repeat(4,1fr);}.bg2{grid-template-columns:repeat(2,1fr);}
-.gb{padding:10px 5px;border-radius:var(--rs);border:1px solid var(--bdr);background:var(--card);color:var(--t4);font-family:inherit;font-size:11px;font-weight:700;cursor:pointer;transition:all .2s;text-align:center;line-height:1.3;}
-.gb.on{background:var(--sky);color:#fff;border-color:transparent;box-shadow:0 3px 12px var(--skyG);}
+.bg{display:grid;gap:8px;}.bg4{grid-template-columns:repeat(4,1fr);}.bg2{grid-template-columns:repeat(2,1fr);}
+.gb{padding:12px 6px;border-radius:var(--rs);border:1px solid var(--bdr);background:var(--card);color:var(--t3);font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;text-align:center;line-height:1.3;}
+.gb.on{background:var(--sky);color:#fff;border-color:transparent;box-shadow:0 3px 14px var(--skyG);}
 .gb:not(.on):active{background:var(--card2);transform:scale(.97);}
-.gb small{display:block;font-size:9px;font-weight:400;opacity:.55;margin-top:2px;}
+.gb small{display:block;font-size:10px;font-weight:400;opacity:.6;margin-top:3px;}
+@media(max-width:400px){.bg4{grid-template-columns:repeat(2,1fr);}}
 
 /* ── RESULTS ── */
-.rc{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);padding:14px;margin-top:12px;animation:fadeUp .3s ease-out;}
-.rh{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:5px;}
-.sb{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;}
-.sb-ok{background:rgba(52,211,153,.14);color:var(--grn);border:1px solid rgba(52,211,153,.22);}
-.sb-er{background:rgba(248,113,113,.14);color:var(--red);border:1px solid rgba(248,113,113,.22);}
-.sb-wn{background:rgba(251,191,36,.14);color:var(--amb);border:1px solid rgba(251,191,36,.22);}
-.rref{font-size:9px;color:var(--t5);}
+.rc{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);padding:16px;margin-top:14px;animation:fadeUp .3s ease-out;}
+.rh{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:6px;}
+.sb{display:inline-flex;align-items:center;gap:4px;padding:5px 12px;border-radius:20px;font-size:13px;font-weight:700;}
+.sb-ok{background:rgba(52,211,153,.15);color:var(--grn);border:1px solid rgba(52,211,153,.25);}
+.sb-er{background:rgba(248,113,113,.15);color:var(--red);border:1px solid rgba(248,113,113,.25);}
+.sb-wn{background:rgba(251,191,36,.15);color:var(--amb);border:1px solid rgba(251,191,36,.25);}
+.rref{font-size:11px;color:var(--t5);}
 
-.mets{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px;}
-.met{background:rgba(255,255,255,.03);border-radius:var(--rs);padding:10px 5px;text-align:center;}
-.mv{font-size:19px;font-weight:900;line-height:1.1;}
-.ml{font-size:9px;color:var(--t5);margin-top:3px;}
-.cw{color:#fff;}.cs{color:var(--sky);}.cg{color:var(--grn);}.cr{color:var(--red);}.ca{color:var(--amb);}.co{color:var(--ora);}
+.mets{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}
+.met{background:rgba(255,255,255,.035);border-radius:var(--rs);padding:12px 6px;text-align:center;}
+.mv{font-size:22px;font-weight:900;line-height:1.1;}
+.ml{font-size:11px;color:var(--t4);margin-top:4px;font-weight:500;}
+.cw{color:var(--t1);}.cs{color:var(--sky);}.cg{color:var(--grn);}.cr{color:var(--red);}.ca{color:var(--amb);}.co{color:var(--ora);}
 
-.fb{background:rgba(255,255,255,.02);border-radius:var(--rs);padding:9px 11px;font-size:10px;color:var(--t4);line-height:1.7;}
-.fb strong{color:var(--t3);}.fb .hl{color:var(--sky);font-weight:700;}
+.fb{background:rgba(255,255,255,.025);border-radius:var(--rs);padding:11px 13px;font-size:12px;color:var(--t3);line-height:1.8;}
+.fb strong{color:var(--t2);}.fb .hl{color:var(--sky);font-weight:700;}
 
-.sol{padding:11px 13px;border-radius:var(--rs);font-size:12px;line-height:1.6;margin-top:8px;}
-.sol-er{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.13);color:#fca5a5;}
-.sol-wn{background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.13);color:#fde68a;}
+.sol{padding:13px 15px;border-radius:var(--rs);font-size:13px;line-height:1.6;margin-top:10px;font-weight:500;}
+.sol-er{background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.15);color:#fca5a5;}
+.sol-wn{background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.15);color:#fde68a;}
 
-/* ── WHATSAPP SHARE ── */
-.wa-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:10px;padding:10px;border-radius:var(--rs);border:1px solid rgba(37,211,102,.25);background:rgba(37,211,102,.08);color:var(--wa);font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;}
+/* ── DEPTH HIGHLIGHT ── */
+.depth-box{background:rgba(56,189,248,.06);border:2px solid rgba(56,189,248,.25);border-radius:var(--r);padding:14px;margin:10px 0;text-align:center;animation:glow 2s ease-in-out infinite;}
+.depth-box .dv{font-size:28px;font-weight:900;color:var(--sky);}
+.depth-box .dl{font-size:13px;color:var(--sky);margin-top:4px;font-weight:600;}
+
+/* ── WHATSAPP ── */
+.wa-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:12px;padding:12px;border-radius:var(--rs);border:1px solid rgba(37,211,102,.3);background:rgba(37,211,102,.08);color:var(--wa);font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;}
 .wa-btn:active{transform:scale(.97);background:rgba(37,211,102,.15);}
-.wa-btn svg{width:18px;height:18px;fill:var(--wa);}
+.wa-btn svg{width:20px;height:20px;fill:var(--wa);}
 
 /* ── CARDS ── */
-.cd{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);padding:16px;margin-bottom:10px;}
-.cd-t{font-size:12px;font-weight:700;color:var(--sky);margin-bottom:10px;}
+.cd{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);padding:18px;margin-bottom:12px;}
+.cd-t{font-size:14px;font-weight:700;color:var(--sky);margin-bottom:12px;}
 
-/* ── REF TABLE ── */
-.rt{width:100%;border-collapse:collapse;font-size:12px;}
-.rt th{text-align:right;padding:8px 6px;color:var(--t5);font-weight:500;font-size:10px;border-bottom:1px solid var(--bdr);}
-.rt td{padding:8px 6px;border-bottom:1px solid rgba(255,255,255,.03);color:var(--t3);}
+/* ── TABLES ── */
+.rt{width:100%;border-collapse:collapse;font-size:13px;}
+.rt th{text-align:right;padding:10px 8px;color:var(--t4);font-weight:600;font-size:12px;border-bottom:1px solid var(--bdr);}
+.rt td{padding:10px 8px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--t2);}
 .rt td:first-child{font-weight:700;color:var(--t1);}
 .rt .c{text-align:center;}
 
-.rg{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
-.ri{background:rgba(255,255,255,.03);border-radius:var(--rs);padding:12px;text-align:center;}
-.ri .v{font-size:20px;font-weight:900;color:#fff;}
-.ri .l{font-size:9px;color:var(--t5);margin-top:3px;}
-.ri.rig{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.12);}
-.ri.rir{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.12);}
+.rg{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.ri{background:rgba(255,255,255,.035);border-radius:var(--rs);padding:14px;text-align:center;}
+.ri .v{font-size:22px;font-weight:900;color:var(--t1);}
+.ri .l{font-size:11px;color:var(--t4);margin-top:4px;font-weight:500;}
+.ri.rig{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.15);}
+.ri.rir{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.15);}
 .ri .vg{color:var(--grn);}.ri .vr{color:var(--red);}
-.disc{text-align:center;font-size:9px;color:var(--t5);padding:10px;margin-top:8px;}
+.disc{text-align:center;font-size:11px;color:var(--t5);padding:12px;margin-top:10px;}
 
 /* ── ACCORDION ── */
 .acc{border:1px solid var(--bdr);border-radius:var(--rs);margin-bottom:8px;overflow:hidden;}
-.acc-h{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:var(--card);cursor:pointer;font-size:13px;font-weight:600;color:var(--t2);transition:background .2s;}
+.acc-h{display:flex;align-items:center;justify-content:space-between;padding:13px 15px;background:var(--card);cursor:pointer;font-size:14px;font-weight:600;color:var(--t1);transition:background .2s;}
 .acc-h:active{background:var(--card2);}
-.acc-arr{transition:transform .2s;font-size:12px;color:var(--t4);}
+.acc-arr{transition:transform .2s;font-size:13px;color:var(--t4);}
 .acc.open .acc-arr{transform:rotate(180deg);}
 .acc-b{max-height:0;overflow:hidden;transition:max-height .3s ease;}
 .acc.open .acc-b{max-height:2000px;}
-.acc-inner{padding:12px 14px;font-size:12px;color:var(--t3);line-height:1.8;border-top:1px solid var(--bdr);}
-.acc-inner strong{color:var(--t2);font-weight:600;}
-.tag{display:inline-block;padding:2px 8px;border-radius:6px;font-size:10px;font-weight:600;margin-right:4px;}
+.acc-inner{padding:13px 15px;font-size:13px;color:var(--t2);line-height:1.9;border-top:1px solid var(--bdr);}
+.acc-inner strong{color:var(--t1);font-weight:700;}
+.tag{display:inline-block;padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;margin-right:4px;}
 .tag-er{background:rgba(248,113,113,.12);color:var(--red);}
 .tag-wn{background:rgba(251,191,36,.12);color:var(--amb);}
 
+/* ── QUICK TOOLS ── */
+.tool-card{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);padding:18px;margin-bottom:14px;}
+.tool-title{font-size:14px;font-weight:700;color:var(--t1);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.flash-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:16px;border-radius:var(--r);border:2px solid var(--bdr);background:var(--card);color:var(--t1);font-family:inherit;font-size:16px;font-weight:700;cursor:pointer;transition:all .2s;}
+.flash-btn.active{background:rgba(251,191,36,.15);border-color:var(--amb);color:var(--amb);box-shadow:0 0 30px rgba(251,191,36,.2);}
+.flash-btn:active{transform:scale(.97);}
+.timer-display{font-size:48px;font-weight:900;color:var(--t1);text-align:center;font-variant-numeric:tabular-nums;letter-spacing:2px;}
+.timer-label{text-align:center;font-size:13px;color:var(--t4);margin-top:6px;font-weight:500;}
+.timer-btns{display:flex;gap:8px;margin-top:14px;}
+.timer-btn{flex:1;padding:12px;border-radius:var(--rs);border:1px solid var(--bdr);background:var(--card);color:var(--t2);font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;text-align:center;}
+.timer-btn.primary{background:var(--sky);color:#fff;border-color:transparent;}
+.timer-btn.danger{background:rgba(248,113,113,.1);color:var(--red);border-color:rgba(248,113,113,.2);}
+.timer-btn:active{transform:scale(.96);}
+.timer-done{color:var(--grn);font-size:16px;font-weight:700;text-align:center;margin-top:10px;animation:pulse 1s infinite;}
+
 /* ── CHAT ── */
-.chtc{display:flex;flex-direction:column;height:calc(100dvh - 200px);min-height:350px;}
+.chtc{display:flex;flex-direction:column;height:calc(100vh - 200px);min-height:380px;max-height:600px;}
 .chts{flex:1;overflow-y:auto;padding:4px;}
 .chtm{display:flex;margin-bottom:8px;}
 .chtm.u{justify-content:flex-start;}.chtm.a{justify-content:flex-end;}
-.chtb{max-width:85%;padding:10px 13px;border-radius:var(--r);font-size:12px;line-height:1.7;white-space:pre-wrap;word-wrap:break-word;}
-.chtm.u .chtb{background:rgba(56,189,248,.1);color:#bae6fd;border:1px solid rgba(56,189,248,.12);border-top-right-radius:4px;}
-.chtm.a .chtb{background:var(--card);color:var(--t2);border:1px solid var(--bdr);border-top-left-radius:4px;}
-.chtm.a .chtb.ch-err{border-color:rgba(248,113,113,.2);background:rgba(248,113,113,.06);color:#fca5a5;}
-.chtia{display:flex;gap:7px;margin-top:8px;}
-.chti{flex:1;background:var(--card);border:1px solid var(--bdr);border-radius:var(--rs);padding:11px 13px;color:var(--t1);font-family:inherit;font-size:12px;outline:none;}
+.chtb{max-width:85%;padding:12px 15px;border-radius:var(--r);font-size:14px;line-height:1.7;white-space:pre-wrap;word-wrap:break-word;color:var(--t1);}
+.chtm.u .chtb{background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.15);border-top-right-radius:4px;}
+.chtm.a .chtb{background:var(--card);border:1px solid var(--bdr);border-top-left-radius:4px;}
+.chtm.a .chtb.ch-err{border-color:rgba(248,113,113,.25);background:rgba(248,113,113,.07);color:#fca5a5;}
+.chtia{display:flex;gap:8px;margin-top:10px;}
+.chti{flex:1;background:var(--card);border:1px solid var(--bdr);border-radius:var(--rs);padding:12px 14px;color:var(--t1);font-family:inherit;font-size:14px;outline:none;}
 .chti:focus{border-color:var(--focus);}
 .chti::placeholder{color:var(--t5);}
-.chtsn{background:var(--sky);color:#fff;border:none;border-radius:var(--rs);padding:11px 16px;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.chtsn{background:var(--sky);color:#fff;border:none;border-radius:var(--rs);padding:12px 18px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;}
 .chtsn:disabled{opacity:.3;cursor:default;}
 .chtsn:not(:disabled):active{transform:scale(.95);}
-.typ{color:var(--t5);font-size:11px;animation:pulse 1.5s infinite;}
-.qa{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;}
-.qab{padding:5px 10px;border-radius:20px;border:1px solid var(--bdr);background:var(--card);color:var(--t3);font-family:inherit;font-size:10px;font-weight:500;cursor:pointer;transition:all .2s;}
+.typ{color:var(--t4);font-size:13px;animation:pulse 1.5s infinite;}
+.qa{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;}
+.qab{padding:7px 14px;border-radius:20px;border:1px solid var(--bdr);background:var(--card);color:var(--t2);font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;}
 .qab:active{background:var(--card2);transform:scale(.96);}
+
+/* ── DESKTOP ── */
+@media(min-width:768px){
+  .mn{padding:24px 32px 30px;}
+  .bnav{justify-content:center;}
+  .bn{font-size:11px;padding:6px 4px;}
+  .bn-i{font-size:20px;width:40px;height:32px;}
+  .mets{gap:10px;}
+  .met{padding:14px 10px;}
+  .mv{font-size:24px;}
+  .chtc{max-height:700px;}
+  .row2{gap:14px;}
+}
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header class="hdr">
   <div class="hdr-top">
     <div class="logo">
@@ -157,13 +200,12 @@ input,textarea{-webkit-user-select:text;user-select:text;}
   </div>
 </header>
 
-<!-- MAIN -->
 <main class="mn">
 
-<!-- SLOPE -->
+<!-- ══════ SLOPE ══════ -->
 <div class="sec on" id="s-slope">
   <div class="stit">מחשבון שיפועים</div>
-  <div class="sdsc">חישוב הפרש גובה נדרש לפי קוטר ואורך · H = L × S</div>
+  <div class="sdsc">חישוב הפרש גובה ועומק חפירה נדרש · H = L × S</div>
   <div class="fld"><span class="flbl">קוטר צנרת</span>
     <div class="bg bg4" id="sl-dia">
       <button class="gb" data-v="50">50 מ"מ<small>2 צול</small></button>
@@ -176,7 +218,7 @@ input,textarea{-webkit-user-select:text;user-select:text;}
     <div class="iw"><input type="number" id="sl-len" placeholder="הזן אורך" step="0.1" inputmode="decimal"><span class="iu">מטר</span></div>
   </div>
   <div class="row2">
-    <div class="fld"><span class="flbl">עומק התחלה (אופציונלי)</span>
+    <div class="fld"><span class="flbl">עומק תחילת קו (ס"מ)</span>
       <div class="iw"><input type="number" id="sl-depth" placeholder="עומק חפירה" step="0.5" inputmode="decimal"><span class="iu">ס"מ</span></div>
     </div>
     <div class="fld"><span class="flbl">שיפוע ידני (אופציונלי)</span>
@@ -186,7 +228,7 @@ input,textarea{-webkit-user-select:text;user-select:text;}
   <div id="sl-res"></div>
 </div>
 
-<!-- VENT -->
+<!-- ══════ VENT ══════ -->
 <div class="sec" id="s-vent">
   <div class="stit">בדיקת מרחק אוורור</div>
   <div class="sdsc">מרחק מקסימלי מנקודת אוורור / נשם לפי הל"ת</div>
@@ -204,57 +246,126 @@ input,textarea{-webkit-user-select:text;user-select:text;}
   <div id="vn-res"></div>
 </div>
 
-<!-- PRESSURE -->
+<!-- ══════ PRESSURE ══════ -->
 <div class="sec" id="s-press">
   <div class="stit">מחשבון לחצים</div>
   <div class="sdsc">איבוד לחץ סטטי לפי גובה · כל 10 מ' = 1 בר</div>
   <div class="fld"><span class="flbl">לחץ מים בכניסה לבניין</span>
     <div class="iw"><input type="number" id="pr-sup" placeholder="לחץ מהרשת" step="0.1" inputmode="decimal"><span class="iu">בר</span></div>
   </div>
-  <div class="fld"><span class="flbl">גובה הנקודה הרחוקה (מעל מד המים)</span>
-    <div class="iw"><input type="number" id="pr-hgt" placeholder="הפרש גובה" step="0.5" inputmode="decimal"><span class="iu">מטר</span></div>
-  </div>
-  <div class="fld"><span class="flbl">אורך צנרת כולל (אופציונלי)</span>
-    <div class="iw"><input type="number" id="pr-pipe" placeholder="להערכת חיכוך" step="1" inputmode="decimal"><span class="iu">מטר</span></div>
+  <div class="row2">
+    <div class="fld"><span class="flbl">גובה הנקודה הרחוקה</span>
+      <div class="iw"><input type="number" id="pr-hgt" placeholder="מעל מד המים" step="0.5" inputmode="decimal"><span class="iu">מטר</span></div>
+    </div>
+    <div class="fld"><span class="flbl">אורך צנרת (אופציונלי)</span>
+      <div class="iw"><input type="number" id="pr-pipe" placeholder="להערכת חיכוך" step="1" inputmode="decimal"><span class="iu">מטר</span></div>
+    </div>
   </div>
   <div id="pr-res"></div>
 </div>
 
-<!-- PIPE SIZING -->
+<!-- ══════ PIPE SIZING ══════ -->
 <div class="sec" id="s-pipe">
   <div class="stit">מחשבון קטרים (FU)</div>
   <div class="sdsc">סה"כ יחידות עומס → המלצת קוטר צנרת</div>
-  <div class="fld"><span class="flbl">🚽 אסלות (FU=4)</span>
-    <div class="iw"><input type="number" id="fu-toilet" placeholder="0" min="0" step="1" inputmode="numeric" value="0"><span class="iu">יח'</span></div>
+  <div class="row2">
+    <div class="fld"><span class="flbl">🚽 אסלות (FU=4)</span>
+      <div class="iw"><input type="number" id="fu-toilet" min="0" step="1" inputmode="numeric" value="0"><span class="iu">יח'</span></div>
+    </div>
+    <div class="fld"><span class="flbl">🛁 מקלחות (FU=2)</span>
+      <div class="iw"><input type="number" id="fu-shower" min="0" step="1" inputmode="numeric" value="0"><span class="iu">יח'</span></div>
+    </div>
   </div>
-  <div class="fld"><span class="flbl">🛁 מקלחות (FU=2)</span>
-    <div class="iw"><input type="number" id="fu-shower" placeholder="0" min="0" step="1" inputmode="numeric" value="0"><span class="iu">יח'</span></div>
-  </div>
-  <div class="fld"><span class="flbl">🚿 כיורי רחצה (FU=1)</span>
-    <div class="iw"><input type="number" id="fu-sink" placeholder="0" min="0" step="1" inputmode="numeric" value="0"><span class="iu">יח'</span></div>
-  </div>
-  <div class="fld"><span class="flbl">🍽️ כיורי מטבח (FU=2)</span>
-    <div class="iw"><input type="number" id="fu-kitchen" placeholder="0" min="0" step="1" inputmode="numeric" value="0"><span class="iu">יח'</span></div>
+  <div class="row2">
+    <div class="fld"><span class="flbl">🚿 כיורי רחצה (FU=1)</span>
+      <div class="iw"><input type="number" id="fu-sink" min="0" step="1" inputmode="numeric" value="0"><span class="iu">יח'</span></div>
+    </div>
+    <div class="fld"><span class="flbl">🍽️ כיורי מטבח (FU=2)</span>
+      <div class="iw"><input type="number" id="fu-kitchen" min="0" step="1" inputmode="numeric" value="0"><span class="iu">יח'</span></div>
+    </div>
   </div>
   <div class="fld"><span class="flbl">🧺 מכונת כביסה (FU=3)</span>
-    <div class="iw"><input type="number" id="fu-washing" placeholder="0" min="0" step="1" inputmode="numeric" value="0"><span class="iu">יח'</span></div>
+    <div class="iw"><input type="number" id="fu-washing" min="0" step="1" inputmode="numeric" value="0"><span class="iu">יח'</span></div>
   </div>
   <div id="fu-res"></div>
 </div>
 
-<!-- FAULTS -->
-<div class="sec" id="s-faults">
-  <div class="stit">מדריך תקלות נפוצות</div>
-  <div class="sdsc">אבחון מהיר ופתרונות לבעיות שכיחות בשטח</div>
-  <div class="acc" onclick="this.classList.toggle('open')"><div class="acc-h">🔊 רעשי גרגור בצנרת ניקוז<span class="acc-arr">▼</span></div><div class="acc-b"><div class="acc-inner"><strong>סימפטום:</strong> רעש גרגור / בועות בעת הזרמה<br><strong>סיבות:</strong><br>• חוסר אוורור <span class="tag tag-er">נפוץ</span><br>• שיפוע חד מדי – שאיבת מחסום מים<br>• חסימה חלקית<br><strong>פתרון:</strong><br>• בדוק מרחק אוורור<br>• התקן נשם (AAV)<br>• ודא שיפוע 1.5%-2% ל-110 מ"מ</div></div></div>
-  <div class="acc" onclick="this.classList.toggle('open')"><div class="acc-h">💧 דליפה בחיבורי צנרת<span class="acc-arr">▼</span></div><div class="acc-b"><div class="acc-inner"><strong>סימפטום:</strong> רטיבות, טפטוף, כתמי מים<br><strong>סיבות:</strong><br>• חיבור לא תקין <span class="tag tag-er">נפוץ</span><br>• לחץ מעל 5 בר<br>• חומרי איטום לא מתאימים<br>• סדק מקפאון<br><strong>פתרון:</strong><br>• בדוק לחץ כניסה<br>• התקן PRV אם מעל 5 בר<br>• PPR – הלחמה ב-260°C</div></div></div>
-  <div class="acc" onclick="this.classList.toggle('open')"><div class="acc-h">🚽 שטיפה חלשה<span class="acc-arr">▼</span></div><div class="acc-b"><div class="acc-inner"><strong>סימפטום:</strong> מים זורמים לאט<br><strong>סיבות:</strong><br>• לחץ נמוך מ-1.0 בר <span class="tag tag-wn">בדוק</span><br>• מנגנון שטיפה פגום<br>• חסימה חלקית<br>• שיפוע לא מספיק<br><strong>פתרון:</strong><br>• בדוק לחץ בנקודה<br>• בדוק/החלף מנגנון שטיפה<br>• שטוף עם כבל ספירלי</div></div></div>
-  <div class="acc" onclick="this.classList.toggle('open')"><div class="acc-h">🔨 פטיש מים (Water Hammer)<span class="acc-arr">▼</span></div><div class="acc-b"><div class="acc-inner"><strong>סימפטום:</strong> חבטות בסגירת ברז<br><strong>סיבות:</strong><br>• לחץ גבוה מדי <span class="tag tag-er">נפוץ</span><br>• מהירות זרימה גבוהה<br>• צנרת לא מעוגנת<br><strong>פתרון:</strong><br>• התקן Arrestor<br>• PRV – מקסימום 5 בר<br>• עגן כל 1.5 מ' אופקי</div></div></div>
-  <div class="acc" onclick="this.classList.toggle('open')"><div class="acc-h">🌡️ מים חמים לא מגיעים<span class="acc-arr">▼</span></div><div class="acc-b"><div class="acc-inner"><strong>סימפטום:</strong> המתנה ארוכה, מים פושרים<br><strong>סיבות:</strong><br>• צנרת לא מבודדת <span class="tag tag-wn">בדוק</span><br>• תרמוסטט פגום<br>• חיבור הפוך חם/קר<br><strong>פתרון:</strong><br>• בדד צנרת (חובה ת"י 1205)<br>• טמפ' דוד 60°C<br>• חם=שמאל, קר=ימין</div></div></div>
-  <div class="acc" onclick="this.classList.toggle('open')"><div class="acc-h">🦠 ריח ביוב מהניקוז<span class="acc-arr">▼</span></div><div class="acc-b"><div class="acc-inner"><strong>סימפטום:</strong> ריח ביוב בחדרי רחצה/מטבח<br><strong>סיבות:</strong><br>• סיפון יבש <span class="tag tag-er">נפוץ</span><br>• שאיבת סיפון – חוסר אוורור<br>• סיפון סדוק/חסר<br><strong>פתרון:</strong><br>• שפוך כוס מים בסיפון<br>• התקן נשם<br>• מחסום מים מינימום 50 מ"מ</div></div></div>
+<!-- ══════ QUICK TOOLS ══════ -->
+<div class="sec" id="s-tools">
+  <div class="stit">עזרים מהירים</div>
+  <div class="sdsc">כלים שימושיים לעבודה בשטח</div>
+
+  <!-- Flashlight -->
+  <div class="tool-card">
+    <div class="tool-title">🔦 פנס</div>
+    <button class="flash-btn" id="flash-btn" onclick="toggleFlash()">
+      <span id="flash-icon">🔦</span>
+      <span id="flash-text">הפעל פנס</span>
+    </button>
+  </div>
+
+  <!-- Timer -->
+  <div class="tool-card">
+    <div class="tool-title">⏱️ טיימר בדיקת אטימות / הצפה (ת"י 1205)</div>
+    <div class="timer-display" id="timer-display">15:00</div>
+    <div class="timer-label" id="timer-label">15 דקות – בדיקת אטימות סטנדרטית</div>
+    <div class="timer-btns">
+      <button class="timer-btn primary" id="timer-start" onclick="startTimer()">▶ התחל</button>
+      <button class="timer-btn" id="timer-pause" onclick="pauseTimer()" style="display:none">⏸ השהה</button>
+      <button class="timer-btn danger" id="timer-reset" onclick="resetTimer()">↺ אפס</button>
+    </div>
+    <div id="timer-done" style="display:none" class="timer-done">✅ בדיקת אטימות הושלמה!</div>
+  </div>
+
+  <!-- Installation Heights -->
+  <div class="tool-card">
+    <div class="tool-title">📏 גבהי התקנה סטנדרטיים</div>
+    <table class="rt">
+      <thead><tr><th>מוצר</th><th class="c">גובה (ס"מ)</th><th class="c">הערה</th></tr></thead>
+      <tbody>
+        <tr><td>ניאגרה סמויה</td><td class="c cs" style="font-weight:800">100</td><td class="c" style="font-size:11px">מרכז לחצן</td></tr>
+        <tr><td>יציאת ביוב אסלה</td><td class="c cs" style="font-weight:800">18</td><td class="c" style="font-size:11px">מרכז צנרת מרצפה</td></tr>
+        <tr><td>אינטרפוץ מקלחת</td><td class="c cs" style="font-weight:800">110-120</td><td class="c" style="font-size:11px">מרצפה גמורה</td></tr>
+        <tr><td>ברז כיור רחצה</td><td class="c cs" style="font-weight:800">105</td><td class="c" style="font-size:11px">מרצפה גמורה</td></tr>
+        <tr><td>ברז מטבח</td><td class="c cs" style="font-weight:800">105</td><td class="c" style="font-size:11px">מעל השיש</td></tr>
+        <tr><td>יציאת מים למכונת כביסה</td><td class="c cs" style="font-weight:800">75</td><td class="c" style="font-size:11px">מרצפה גמורה</td></tr>
+        <tr><td>סיפון רצפה (מקלחת)</td><td class="c cs" style="font-weight:800">0</td><td class="c" style="font-size:11px">שיפוע 1-2% לסיפון</td></tr>
+        <tr><td>גובה כיור רחצה</td><td class="c cs" style="font-weight:800">80-85</td><td class="c" style="font-size:11px">חלק עליון</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pipe Volume Calculator -->
+  <div class="tool-card">
+    <div class="tool-title">🧮 מחשבון נפח מים בצנרת</div>
+    <div class="fld"><span class="flbl">קוטר צנרת</span>
+      <div class="bg bg4" id="vol-dia">
+        <button class="gb on" data-v="0.5">½"<small>15 מ"מ</small></button>
+        <button class="gb" data-v="0.75">¾"<small>20 מ"מ</small></button>
+        <button class="gb" data-v="1">1"<small>25 מ"מ</small></button>
+        <button class="gb" data-v="1.25">1¼"<small>32 מ"מ</small></button>
+      </div>
+    </div>
+    <div class="fld"><span class="flbl">אורך צנרת</span>
+      <div class="iw"><input type="number" id="vol-len" placeholder="אורך" step="0.5" inputmode="decimal"><span class="iu">מטר</span></div>
+    </div>
+    <div id="vol-res"></div>
+  </div>
 </div>
 
-<!-- REFERENCE -->
+<!-- ══════ FAULTS ══════ -->
+<div class="sec" id="s-faults">
+  <div class="stit">מדריך תקלות נפוצות</div>
+  <div class="sdsc">אבחון מהיר ופתרונות שכיחים</div>
+  <div class="acc" onclick="this.classList.toggle('open')"><div class="acc-h">🔊 רעשי גרגור בניקוז<span class="acc-arr">▼</span></div><div class="acc-b"><div class="acc-inner"><strong>סימפטום:</strong> רעש בועות בהזרמה<br><strong>סיבות:</strong><br>• חוסר אוורור <span class="tag tag-er">נפוץ</span><br>• שיפוע חד מדי<br>• חסימה חלקית<br><strong>פתרון:</strong> התקן נשם AAV · ודא שיפוע 1.5%-2% ל-110 מ"מ</div></div></div>
+  <div class="acc" onclick="this.classList.toggle('open')"><div class="acc-h">💧 דליפה בחיבורים<span class="acc-arr">▼</span></div><div class="acc-b"><div class="acc-inner"><strong>סיבות:</strong><br>• חיבור לקוי <span class="tag tag-er">נפוץ</span><br>• לחץ מעל 5 בר<br>• סדק מקפאון<br><strong>פתרון:</strong> PRV אם מעל 5 בר · PPR הלחמה 260°C</div></div></div>
+  <div class="acc" onclick="this.classList.toggle('open')"><div class="acc-h">🚽 שטיפה חלשה<span class="acc-arr">▼</span></div><div class="acc-b"><div class="acc-inner"><strong>סיבות:</strong><br>• לחץ נמוך מ-1 בר <span class="tag tag-wn">בדוק</span><br>• מנגנון פגום<br>• שיפוע לא מספיק<br><strong>פתרון:</strong> בדוק לחץ · החלף מנגנון · כבל ספירלי</div></div></div>
+  <div class="acc" onclick="this.classList.toggle('open')"><div class="acc-h">🔨 פטיש מים<span class="acc-arr">▼</span></div><div class="acc-b"><div class="acc-inner"><strong>סיבות:</strong><br>• לחץ גבוה <span class="tag tag-er">נפוץ</span><br>• צנרת לא מעוגנת<br><strong>פתרון:</strong> Arrestor · PRV מקס' 5 בר · עיגון כל 1.5 מ'</div></div></div>
+  <div class="acc" onclick="this.classList.toggle('open')"><div class="acc-h">🌡️ מים חמים לא מגיעים<span class="acc-arr">▼</span></div><div class="acc-b"><div class="acc-inner"><strong>סיבות:</strong><br>• צנרת לא מבודדת <span class="tag tag-wn">בדוק</span><br>• תרמוסטט פגום<br><strong>פתרון:</strong> בדד צנרת (חובה) · דוד 60°C · חם=שמאל</div></div></div>
+  <div class="acc" onclick="this.classList.toggle('open')"><div class="acc-h">🦠 ריח ביוב<span class="acc-arr">▼</span></div><div class="acc-b"><div class="acc-inner"><strong>סיבות:</strong><br>• סיפון יבש <span class="tag tag-er">נפוץ</span><br>• חוסר אוורור<br><strong>פתרון:</strong> שפוך מים בסיפון · התקן נשם · מחסום 50 מ"מ</div></div></div>
+</div>
+
+<!-- ══════ REFERENCE ══════ -->
 <div class="sec" id="s-ref">
   <div class="stit">תקנים וטבלאות עזר</div>
   <div class="sdsc">ת"י 1205 · הל"ת · נתונים מהירים</div>
@@ -267,277 +378,141 @@ input,textarea{-webkit-user-select:text;user-select:text;}
       <tr><td>6" (160 מ"מ)</td><td class="c">1.0%</td><td class="c">1.5%</td><td class="c cs">1-1.5</td></tr>
     </tbody></table>
   </div>
-  <div class="cd"><div class="cd-t">🔧 מרחקי אוורור מקסימליים</div>
+  <div class="cd"><div class="cd-t">🔧 מרחקי אוורור</div>
     <div class="rg">
       <div class="ri"><div class="v">3.0 מ'</div><div class="l">🚽 אסלה (FU=4)</div></div>
-      <div class="ri"><div class="v">1.5 מ'</div><div class="l">🚿 כיור רחצה (FU=1)</div></div>
+      <div class="ri"><div class="v">1.5 מ'</div><div class="l">🚿 כיור (FU=1)</div></div>
       <div class="ri"><div class="v">2.5 מ'</div><div class="l">🛁 מקלחת (FU=2)</div></div>
-      <div class="ri"><div class="v">2.5 מ'</div><div class="l">🍽️ כיור מטבח (FU=2)</div></div>
+      <div class="ri"><div class="v">2.5 מ'</div><div class="l">🍽️ מטבח (FU=2)</div></div>
     </div>
   </div>
-  <div class="cd"><div class="cd-t">💧 לחצי מים</div>
+  <div class="cd"><div class="cd-t">💧 לחצים</div>
     <div class="rg">
       <div class="ri rig"><div class="v vg">≥ 1.0 בר</div><div class="l">מינימום בנקודה רחוקה</div></div>
       <div class="ri rir"><div class="v vr">≤ 5.0 בר</div><div class="l">מקסימום בכניסה</div></div>
     </div>
   </div>
   <div class="cd"><div class="cd-t">🔩 קטרים לפי FU</div>
-    <table class="rt"><thead><tr><th>FU</th><th class="c">ניקוז</th><th class="c">אספקה</th><th class="c">הערה</th></tr></thead>
+    <table class="rt"><thead><tr><th>FU</th><th class="c">ניקוז</th><th class="c">אספקה</th><th class="c">סיווג</th></tr></thead>
     <tbody>
-      <tr><td>עד 6</td><td class="c">75 מ"מ</td><td class="c">20 מ"מ</td><td class="c" style="font-size:10px">דירה קטנה</td></tr>
-      <tr><td>7-15</td><td class="c">110 מ"מ</td><td class="c">25 מ"מ</td><td class="c" style="font-size:10px">דירה רגילה</td></tr>
-      <tr><td>16-30</td><td class="c">110 מ"מ</td><td class="c">32 מ"מ</td><td class="c" style="font-size:10px">דירה גדולה</td></tr>
-      <tr><td>31-60</td><td class="c">160 מ"מ</td><td class="c">40 מ"מ</td><td class="c" style="font-size:10px">קולקטור</td></tr>
-      <tr><td>60+</td><td class="c">160+ מ"מ</td><td class="c">50 מ"מ</td><td class="c" style="font-size:10px">מתכנן נדרש</td></tr>
-    </tbody></table>
-  </div>
-  <div class="cd"><div class="cd-t">🌡️ טמפרטורות</div>
-    <div class="rg">
-      <div class="ri"><div class="v" style="font-size:16px">60°C</div><div class="l">דוד מומלץ</div></div>
-      <div class="ri"><div class="v" style="font-size:16px">50°C</div><div class="l">מקסימום מוצא</div></div>
-      <div class="ri"><div class="v" style="font-size:16px">38°C</div><div class="l">רחצה נוחה</div></div>
-      <div class="ri"><div class="v" style="font-size:16px">260°C</div><div class="l">הלחמת PPR</div></div>
-    </div>
-  </div>
-  <div class="cd"><div class="cd-t">📏 מרחקי עיגון</div>
-    <table class="rt"><thead><tr><th>סוג</th><th class="c">אופקי</th><th class="c">אנכי</th></tr></thead>
-    <tbody>
-      <tr><td>PPR 20-25</td><td class="c">0.6-0.8 מ'</td><td class="c">1.0-1.2 מ'</td></tr>
-      <tr><td>PPR 32-40</td><td class="c">0.8-1.0 מ'</td><td class="c">1.2-1.5 מ'</td></tr>
-      <tr><td>PVC 50</td><td class="c">0.8 מ'</td><td class="c">1.2 מ'</td></tr>
-      <tr><td>PVC 110</td><td class="c">1.0-1.2 מ'</td><td class="c">1.5-1.8 מ'</td></tr>
+      <tr><td>עד 6</td><td class="c">75 מ"מ</td><td class="c">20 מ"מ</td><td class="c" style="font-size:11px">דירה קטנה</td></tr>
+      <tr><td>7-15</td><td class="c">110 מ"מ</td><td class="c">25 מ"מ</td><td class="c" style="font-size:11px">דירה רגילה</td></tr>
+      <tr><td>16-30</td><td class="c">110 מ"מ</td><td class="c">32 מ"מ</td><td class="c" style="font-size:11px">דירה גדולה</td></tr>
+      <tr><td>31-60</td><td class="c">160 מ"מ</td><td class="c">40 מ"מ</td><td class="c" style="font-size:11px">קולקטור</td></tr>
     </tbody></table>
   </div>
   <div class="cd"><div class="cd-t">⚡ חוקי אצבע</div>
-    <div style="font-size:12px;color:var(--t3);line-height:2;">
+    <div style="font-size:14px;color:var(--t2);line-height:2.2;">
       • <strong class="cs">10 מ' = 1 בר</strong> איבוד סטטי<br>
       • <strong class="cs">1.5-2 ס"מ/מ'</strong> שיפוע 110 מ"מ<br>
-      • <strong class="cs">מקס' 2 מ/ש</strong> מהירות באספקה<br>
-      • <strong class="cs">¾" = ~20 ל'/דק'</strong> ספיקה<br>
-      • <strong class="cs">סיפון 50 מ"מ</strong> מחסום מים<br>
+      • <strong class="cs">מקס' 2 מ/ש</strong> מהירות אספקה<br>
+      • <strong class="cs">סיפון ≥ 50 מ"מ</strong> מחסום מים<br>
+      • <strong class="cs">PPR 260°C</strong> הלחמה<br>
       • <strong class="cs">חם=שמאל קר=ימין</strong>
     </div>
   </div>
   <div class="disc">ת"י 1205 · הל"ת · לשימוש כעזר · התייעצו עם מתכנן מוסמך</div>
 </div>
 
-<!-- CHAT -->
+<!-- ══════ CHAT ══════ -->
 <div class="sec" id="s-chat">
   <div class="stit">התייעץ עם המהנדס</div>
-  <div class="sdsc">צ'אט AI · ת"י 1205 · הל"ת</div>
+  <div class="sdsc">צ'אט AI מבוסס ידע הנדסי</div>
   <div class="qa" id="qa">
     <button class="qab" data-q="מה השיפוע הנכון ל-4 צול?">📐 שיפוע 4"</button>
-    <button class="qab" data-q="מה מרחק אוורור מקסימלי לאסלה?">📏 אוורור אסלה</button>
+    <button class="qab" data-q="מה מרחק אוורור מקסימלי לאסלה?">📏 אוורור</button>
     <button class="qab" data-q="איך מחשבים לחץ מים לקומה 5?">💧 לחץ קומה 5</button>
-    <button class="qab" data-q="מה קוטר צנרת ל-3 חדרי אמבטיה?">🔩 קוטר לדירה</button>
+    <button class="qab" data-q="מה קוטר צנרת ל-3 חדרי אמבטיה?">🔩 קוטר דירה</button>
     <button class="qab" data-q="ריח ביוב עולה מהמקלחת, מה עושים?">🦠 ריח ביוב</button>
   </div>
   <div class="chtc">
     <div class="chts" id="ch-msgs">
       <div class="chtm a"><div class="chtb">שלום! אני העוזר ההנדסי של א.ד. אינסטלציה 🔧
 
-שאל אותי כל שאלה על שיפועים, קטרים, לחצים, אוורור או תקנים.
-
+שאל אותי כל שאלה לפי ת"י 1205 והל"ת.
 לחץ על כפתור למעלה לשאלה מהירה.</div></div>
     </div>
     <div class="chtia">
       <button class="chtsn" id="ch-send" disabled>שלח</button>
-      <input type="text" class="chti" id="ch-in" placeholder='למשל: "שיפוע 4 צול באורך 8 מטר?"' dir="rtl">
+      <input type="text" class="chti" id="ch-in" placeholder='שאלה...' dir="rtl">
     </div>
   </div>
 </div>
 
 </main>
 
-<!-- BOTTOM NAVIGATION -->
-<nav class="bnav" id="bnav">
+<nav class="bnav"><div class="bnav-inner" id="bnav">
   <button class="bn on" data-t="slope"><div class="bn-i">📐</div><div class="bn-l">שיפועים</div></button>
   <button class="bn" data-t="vent"><div class="bn-i">📏</div><div class="bn-l">אוורור</div></button>
   <button class="bn" data-t="press"><div class="bn-i">💧</div><div class="bn-l">לחצים</div></button>
   <button class="bn" data-t="pipe"><div class="bn-i">🔩</div><div class="bn-l">קטרים</div></button>
+  <button class="bn" data-t="tools"><div class="bn-i">🛠️</div><div class="bn-l">עזרים</div></button>
   <button class="bn" data-t="faults"><div class="bn-i">⚠️</div><div class="bn-l">תקלות</div></button>
   <button class="bn" data-t="ref"><div class="bn-i">📋</div><div class="bn-l">תקנים</div></button>
-  <button class="bn" data-t="chat"><div class="bn-i">💬</div><div class="bn-l">המהנדס</div></button>
-</nav>
+  <button class="bn" data-t="chat"><div class="bn-i">💬</div><div class="bn-l">מהנדס</div></button>
+</div></nav>
 
 <script>
-// ── PROTECTION + DEBUGGER TRAP ──
-(function(){
-  document.addEventListener('contextmenu',function(e){e.preventDefault();},false);
-  document.addEventListener('keydown',function(e){
-    if(e.key==='F12'){e.preventDefault();e.stopPropagation();return false;}
-    if(e.ctrlKey&&e.shiftKey&&['I','J','C','K'].indexOf(e.key.toUpperCase())!==-1){e.preventDefault();return false;}
-    if(e.ctrlKey&&['u','U','s','S','p','P'].indexOf(e.key)!==-1){e.preventDefault();return false;}
-  },true);
-  document.addEventListener('dragstart',function(e){e.preventDefault();},false);
-  document.addEventListener('selectstart',function(e){var t=e.target.tagName;if(t!=='INPUT'&&t!=='TEXTAREA')e.preventDefault();});
-  document.addEventListener('copy',function(e){var t=document.activeElement.tagName;if(t!=='INPUT'&&t!=='TEXTAREA')e.preventDefault();});
-  // Debugger trap - freezes DevTools when open
-  (function trap(){try{(function(){return false;}).constructor('debugger')();}catch(e){}setTimeout(trap,100);})();
-})();
+(function(){document.addEventListener('contextmenu',function(e){e.preventDefault();},!1);document.addEventListener('keydown',function(e){if(e.key==='F12'){e.preventDefault();e.stopPropagation();return!1}if(e.ctrlKey&&e.shiftKey&&'IJCK'.indexOf(e.key.toUpperCase())>-1){e.preventDefault();return!1}if(e.ctrlKey&&'uUsSpP'.indexOf(e.key)>-1){e.preventDefault();return!1}},!0);document.addEventListener('dragstart',function(e){e.preventDefault();},!1);document.addEventListener('selectstart',function(e){var t=e.target.tagName;if(t!=='INPUT'&&t!=='TEXTAREA')e.preventDefault();});document.addEventListener('copy',function(e){var t=document.activeElement.tagName;if(t!=='INPUT'&&t!=='TEXTAREA')e.preventDefault();});(function _t(){try{(function(){return!1}).constructor('debugger')();}catch(e){}setTimeout(_t,80);})();})();
 
-// ── DATA ──
-var STD={
-  slopes:{'50':{min:2,max:5,l:'2 צול (50 מ"מ)'},'75':{min:1.5,max:3,l:'3 צול (75 מ"מ)'},'110':{min:1.5,max:2,l:'4 צול (110 מ"מ)'},'160':{min:1,max:1.5,l:'6 צול (160 מ"מ)'}},
-  vents:{toilet:{max:3,l:'אסלה',fu:4},sink:{max:1.5,l:'כיור רחצה',fu:1},shower:{max:2.5,l:'מקלחת',fu:2},kitchen:{max:2.5,l:'כיור מטבח',fu:2}},
-  pressure:{min:1,max:5},
-  pipeSize:[{maxFU:6,drain:'75 מ"מ (3")',supply:'20 מ"מ (¾")',note:'דירה קטנה'},{maxFU:15,drain:'110 מ"מ (4")',supply:'25 מ"מ (1")',note:'דירה רגילה'},{maxFU:30,drain:'110 מ"מ (4")',supply:'32 מ"מ (1¼")',note:'דירה גדולה'},{maxFU:60,drain:'160 מ"מ (6")',supply:'40 מ"מ (1½")',note:'קולקטור'},{maxFU:Infinity,drain:'160+ מ"מ',supply:'50 מ"מ (2")',note:'מתכנן נדרש'}]
-};
+var S={slopes:{'50':{n:2,x:5,l:'2\u05E6\u05D5\u05DC (50)'},'75':{n:1.5,x:3,l:'3\u05E6\u05D5\u05DC (75)'},'110':{n:1.5,x:2,l:'4\u05E6\u05D5\u05DC (110)'},'160':{n:1,x:1.5,l:'6\u05E6\u05D5\u05DC (160)'}},vents:{toilet:{m:3,l:'\u05D0\u05E1\u05DC\u05D4',f:4},sink:{m:1.5,l:'\u05DB\u05D9\u05D5\u05E8 \u05E8\u05D7\u05E6\u05D4',f:1},shower:{m:2.5,l:'\u05DE\u05E7\u05DC\u05D7\u05EA',f:2},kitchen:{m:2.5,l:'\u05DB\u05D9\u05D5\u05E8 \u05DE\u05D8\u05D1\u05D7',f:2}},pr:{n:1,x:5},ps:[{m:6,d:'75 \u05DE"\u05DE (3")',s:'20 \u05DE"\u05DE (\u00BE")',t:'\u05D3\u05D9\u05E8\u05D4 \u05E7\u05D8\u05E0\u05D4'},{m:15,d:'110 \u05DE"\u05DE (4")',s:'25 \u05DE"\u05DE (1")',t:'\u05D3\u05D9\u05E8\u05D4 \u05E8\u05D2\u05D9\u05DC\u05D4'},{m:30,d:'110 \u05DE"\u05DE (4")',s:'32 \u05DE"\u05DE (1\u00BC")',t:'\u05D3\u05D9\u05E8\u05D4 \u05D2\u05D3\u05D5\u05DC\u05D4'},{m:60,d:'160 \u05DE"\u05DE (6")',s:'40 \u05DE"\u05DE (1\u00BD")',t:'\u05E7\u05D5\u05DC\u05E7\u05D8\u05D5\u05E8'},{m:1/0,d:'160+ \u05DE"\u05DE',s:'50 \u05DE"\u05DE (2")',t:'\u05DE\u05EA\u05DB\u05E0\u05DF \u05E0\u05D3\u05E8\u05E9'}],vol:{'0.5':{d:15,l:'\u00BD" (15)'},'0.75':{d:20,l:'\u00BE" (20)'},'1':{d:25,l:'1" (25)'},'1.25':{d:32,l:'1\u00BC" (32)'}}};
 
-// ── WHATSAPP SVG ──
-var WA_SVG='<svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>';
+var WA='<svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>';
+function wab(t){return '<button class="wa-btn" onclick="sWA(this)" data-text="'+t.replace(/"/g,'&quot;')+'">'+WA+' \u05E9\u05EA\u05E3 \u05D1\u05D5\u05D5\u05D0\u05D8\u05E1\u05D0\u05E4</button>';}
+function sWA(b){window.open('https://wa.me/?text='+encodeURIComponent('\u05D0.\u05D3. \u05D0\u05D9\u05E0\u05E1\u05D8\u05DC\u05E6\u05D9\u05D4 - \u05E1\u05D9\u05DB\u05D5\u05DD \u05D1\u05D3\u05D9\u05E7\u05D4 \u05D4\u05E0\u05D3\u05E1\u05D9\u05EA:\n\n'+b.getAttribute('data-text')+'\n\n\uD83D\uDD27 \u05DE\u05D7\u05D5\u05E9\u05D1 \u05D1\u05D0\u05E4\u05DC\u05D9\u05E7\u05E6\u05D9\u05D9\u05EA \u05D4\u05DE\u05D5\u05DE\u05D7\u05D4 \u05DC\u05D0\u05D9\u05E0\u05E1\u05D8\u05DC\u05E6\u05D9\u05D4'),'_blank');}
 
-function waBtn(text){
-  return '<button class="wa-btn" onclick="shareWA(this)" data-text="'+text.replace(/"/g,'&quot;')+'">'+WA_SVG+' שתף בוואטסאפ</button>';
-}
-function shareWA(btn){
-  var t=btn.getAttribute('data-text');
-  var msg=encodeURIComponent('א.ד. אינסטלציה - סיכום בדיקה הנדסית:\n\n'+t+'\n\n🔧 מחושב באפליקציית המומחה לאינסטלציה');
-  window.open('https://wa.me/?text='+msg,'_blank');
-}
-
-// ── TAB NAVIGATION (bottom nav) ──
 var bns=document.querySelectorAll('.bn');
-bns.forEach(function(b){
-  b.addEventListener('click',function(){
-    bns.forEach(function(x){x.classList.remove('on');});
-    b.classList.add('on');
-    document.querySelectorAll('.sec').forEach(function(s){s.classList.remove('on');});
-    document.getElementById('s-'+b.dataset.t).classList.add('on');
-    window.scrollTo({top:0,behavior:'smooth'});
-  });
-});
+bns.forEach(function(b){b.addEventListener('click',function(){bns.forEach(function(x){x.classList.remove('on');});b.classList.add('on');document.querySelectorAll('.sec').forEach(function(s){s.classList.remove('on');});document.getElementById('s-'+b.dataset.t).classList.add('on');window.scrollTo({top:0,behavior:'smooth'});});});
 
-// ── GRID SELECT ──
-function grid(id,cb){var c=document.getElementById(id);if(!c)return;c.addEventListener('click',function(e){var b=e.target.closest('.gb');if(!b)return;c.querySelectorAll('.gb').forEach(function(x){x.classList.remove('on');});b.classList.add('on');if(cb)cb(b.dataset.v);});}
+function grd(id,cb){var c=document.getElementById(id);if(!c)return;c.addEventListener('click',function(e){var b=e.target.closest('.gb');if(!b)return;c.querySelectorAll('.gb').forEach(function(x){x.classList.remove('on');});b.classList.add('on');if(cb)cb(b.dataset.v);});}
 
-// ── SLOPE CALC ──
-var slDia='110';
-grid('sl-dia',function(v){slDia=v;calcSl();});
-['sl-len','sl-custom','sl-depth'].forEach(function(id){document.getElementById(id).addEventListener('input',calcSl);});
+// SLOPE
+var sD='110';grd('sl-dia',function(v){sD=v;cSl();});
+['sl-len','sl-custom','sl-depth'].forEach(function(i){document.getElementById(i).addEventListener('input',cSl);});
 
-function calcSl(){
-  var el=document.getElementById('sl-res'),L=parseFloat(document.getElementById('sl-len').value),custom=parseFloat(document.getElementById('sl-custom').value),startDepth=parseFloat(document.getElementById('sl-depth').value);
-  if(!L||L<=0){el.innerHTML='';return;}var s=STD.slopes[slDia];if(!s){el.innerHTML='';return;}
-  var rec=(s.min+s.max)/2,useSlope=(!isNaN(custom)&&custom>0)?custom:rec,H=(L*useSlope/100),minH=(L*s.min/100),maxH=(L*s.max/100),isC=!isNaN(custom)&&custom>0;
-  var hasDepth=!isNaN(startDepth)&&startDepth>0;
-  var endDepth=hasDepth?(startDepth+H):0;
-  var st='ok',stC='sb-ok',stT='✓ תקין';
-  if(isC){if(custom<s.min){st='err';stC='sb-er';stT='✗ שיפוע נמוך מדי';}else if(custom>s.max){st='warn';stC='sb-wn';stT='⚠ שיפוע גבוה מדי';}}
-  var sol='';
-  if(st==='err')sol='<div class="sol sol-er"><strong>🔧 פתרון:</strong> שיפוע '+custom+'% נמוך מהמינימום ('+s.min+'%). הגדל שיפוע ל-'+s.min+'% לפחות.</div>';
-  if(st==='warn')sol='<div class="sol sol-wn"><strong>⚠ אזהרה:</strong> שיפוע '+custom+'% גבוה מהמקסימום ('+s.max+'%). עלול לגרום לשאיבת מחסום מים.</div>';
+function cSl(){var e=document.getElementById('sl-res'),L=parseFloat(document.getElementById('sl-len').value),cu=parseFloat(document.getElementById('sl-custom').value),dp=parseFloat(document.getElementById('sl-depth').value);if(!L||L<=0){e.innerHTML='';return;}var s=S.slopes[sD];if(!s){e.innerHTML='';return;}var rc=(s.n+s.x)/2,us=(!isNaN(cu)&&cu>0)?cu:rc,H=L*us/100,mnH=L*s.n/100,mxH=L*s.x/100,iC=!isNaN(cu)&&cu>0,hD=!isNaN(dp)&&dp>0,eD=hD?dp+H:0;var st='ok',sC='sb-ok',sT='\u2713 \u05EA\u05E7\u05D9\u05DF';if(iC){if(cu<s.n){st='err';sC='sb-er';sT='\u2717 \u05E9\u05D9\u05E4\u05D5\u05E2 \u05E0\u05DE\u05D5\u05DA';}else if(cu>s.x){st='warn';sC='sb-wn';sT='\u26A0 \u05E9\u05D9\u05E4\u05D5\u05E2 \u05D2\u05D1\u05D5\u05D4';}}var sl='';if(st==='err')sl='<div class="sol sol-er"><strong>\uD83D\uDD27 \u05E4\u05EA\u05E8\u05D5\u05DF:</strong> \u05E9\u05D9\u05E4\u05D5\u05E2 '+cu+'% \u05E0\u05DE\u05D5\u05DA \u05DE\u05D4\u05DE\u05D9\u05E0\u05D9\u05DE\u05D5\u05DD ('+s.n+'%). \u05D4\u05D2\u05D3\u05DC \u05DC-'+s.n+'% \u05DC\u05E4\u05D7\u05D5\u05EA.</div>';if(st==='warn')sl='<div class="sol sol-wn"><strong>\u26A0</strong> \u05E9\u05D9\u05E4\u05D5\u05E2 '+cu+'% \u05D2\u05D1\u05D5\u05D4 \u05DE\u05D4\u05DE\u05E7\u05E1\u05D9\u05DE\u05D5\u05DD ('+s.x+'%). \u05E2\u05DC\u05D5\u05DC \u05DC\u05D2\u05E8\u05D5\u05DD \u05DC\u05E9\u05D0\u05D9\u05D1\u05EA \u05DE\u05D7\u05E1\u05D5\u05DD \u05DE\u05D9\u05DD.</div>';
+var dH='';if(hD){dH='<div class="depth-box"><div class="dv">\u2B07 '+eD.toFixed(1)+' \u05E1"\u05DE</div><div class="dl">\u05E2\u05D5\u05DE\u05E7 \u05E1\u05D9\u05D5\u05DD \u05E0\u05D3\u05E8\u05E9 (\u05EA\u05D7\u05D9\u05DC\u05D4 '+dp.toFixed(1)+' + \u05D4\u05E4\u05E8\u05E9 '+H.toFixed(2)+')</div></div>';}
+var wt='\u05D1\u05D3\u05D9\u05E7\u05EA \u05E9\u05D9\u05E4\u05D5\u05E2: '+s.l+'\n\u05D0\u05D5\u05E8\u05DA: '+L.toFixed(1)+' \u05DE\'\n\u05E9\u05D9\u05E4\u05D5\u05E2: '+us.toFixed(1)+'%\n\u05D4\u05E4\u05E8\u05E9 \u05D2\u05D5\u05D1\u05D4: '+H.toFixed(2)+' \u05E1"\u05DE'+(hD?'\n\u05E2\u05D5\u05DE\u05E7 \u05EA\u05D7\u05D9\u05DC\u05D4: '+dp.toFixed(1)+' \u05E1"\u05DE\n\u05E2\u05D5\u05DE\u05E7 \u05E1\u05D9\u05D5\u05DD: '+eD.toFixed(1)+' \u05E1"\u05DE':'')+'\n\u05E1\u05D8\u05D8\u05D5\u05E1: '+(st==='ok'?'\u05EA\u05E7\u05D9\u05DF':'\u05DC\u05D0 \u05EA\u05E7\u05D9\u05DF');
+e.innerHTML='<div class="rc"><div class="rh"><span class="sb '+sC+'">'+sT+'</span><span class="rref">'+s.l+' \u00B7 \u05EA"\u05D9 1205</span></div><div class="mets"><div class="met"><div class="mv cw">'+us.toFixed(1)+'%</div><div class="ml">'+(iC?'\u05E9\u05D9\u05E4\u05D5\u05E2 \u05E9\u05D4\u05D5\u05D6\u05DF':'\u05E9\u05D9\u05E4\u05D5\u05E2 \u05DE\u05D5\u05DE\u05DC\u05E5')+'</div></div><div class="met"><div class="mv cs">'+H.toFixed(2)+'</div><div class="ml">\u05D4\u05E4\u05E8\u05E9 \u05D2\u05D5\u05D1\u05D4 (\u05E1"\u05DE)</div></div><div class="met"><div class="mv cw" style="font-size:15px">'+s.n+'%-'+s.x+'%</div><div class="ml">\u05D8\u05D5\u05D5\u05D7 \u05EA\u05E7\u05E0\u05D9</div></div></div>'+dH+'<div class="fb"><strong>\u05E0\u05D5\u05E1\u05D7\u05D4:</strong> H = '+L.toFixed(1)+' \u00D7 '+us.toFixed(1)+'% = <span class="hl">'+H.toFixed(2)+' \u05E1"\u05DE</span><br><strong>\u05D8\u05D5\u05D5\u05D7:</strong> '+mnH.toFixed(2)+' \u2013 '+mxH.toFixed(2)+' \u05E1"\u05DE</div>'+sl+wab(wt)+'</div>';}
 
-  // Depth row
-  var depthHTML='';
-  if(hasDepth){
-    depthHTML='<div class="mets" style="grid-template-columns:repeat(3,1fr);margin-bottom:10px">'
-      +'<div class="met"><div class="mv co" style="font-size:16px">'+startDepth.toFixed(1)+' ס"מ</div><div class="ml">עומק התחלה</div></div>'
-      +'<div class="met"><div class="mv cs" style="font-size:16px">+'+H.toFixed(2)+' ס"מ</div><div class="ml">הפרש גובה</div></div>'
-      +'<div class="met" style="background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.15);border-radius:var(--rs)"><div class="mv" style="font-size:18px;color:var(--sky)">'+endDepth.toFixed(1)+' ס"מ</div><div class="ml" style="color:var(--sky)">⬇ עומק סיום</div></div>'
-      +'</div>';
-  }
+// VENT
+var vF='toilet';grd('vn-fix',function(v){vF=v;cVn();});document.getElementById('vn-dist').addEventListener('input',cVn);
+function cVn(){var e=document.getElementById('vn-res'),D=parseFloat(document.getElementById('vn-dist').value);if(!D||D<=0){e.innerHTML='';return;}var v=S.vents[vF];if(!v){e.innerHTML='';return;}var ok=D<=v.m,mg=Math.abs(v.m-D).toFixed(2),sC=ok?'sb-ok':'sb-er',sT=ok?'\u2713 \u05EA\u05E7\u05D9\u05DF':'\u2717 \u05DC\u05D0 \u05EA\u05E7\u05D9\u05DF',mC=ok?'cg':'cr',mS=ok?'+':'-',mL=ok?'\u05DE\u05E8\u05D5\u05D5\u05D7':'\u05D7\u05E8\u05D9\u05D2\u05D4';var sl='';if(!ok)sl='<div class="sol sol-er"><strong>\uD83D\uDD27</strong> \u05DE\u05E8\u05D7\u05E7 '+D+' \u05DE\' \u05D7\u05D5\u05E8\u05D2 (\u05DE\u05D5\u05EA\u05E8 '+v.m+' \u05DE\'). \u05D4\u05D5\u05E1\u05E3 \u05E0\u05E9\u05DD AAV \u05D0\u05D5 \u05E7\u05E8\u05D1 \u05D0\u05D5\u05D5\u05E8\u05D5\u05E8.</div>';else if(parseFloat(mg)<0.5)sl='<div class="sol sol-wn"><strong>\u26A0</strong> \u05DE\u05E8\u05D5\u05D5\u05D7 \u05E7\u05D8\u05DF ('+mg+' \u05DE\'). \u05E9\u05E7\u05D5\u05DC \u05E0\u05E9\u05DD.</div>';e.innerHTML='<div class="rc"><div class="rh"><span class="sb '+sC+'">'+sT+'</span><span class="rref">'+v.l+' (FU='+v.f+') \u00B7 \u05D4\u05DC"\u05EA</span></div><div class="mets"><div class="met"><div class="mv cw">'+D+' \u05DE\'</div><div class="ml">\u05DE\u05E8\u05D7\u05E7 \u05D1\u05E4\u05D5\u05E2\u05DC</div></div><div class="met"><div class="mv cs">'+v.m+' \u05DE\'</div><div class="ml">\u05DE\u05E7\u05E1\u05D9\u05DE\u05D5\u05DD</div></div><div class="met"><div class="mv '+mC+'">'+mS+mg+' \u05DE\'</div><div class="ml">'+mL+'</div></div></div>'+sl+'</div>';}
 
-  var waText='בדיקת שיפוע: '+s.l+'\nאורך: '+L.toFixed(1)+' מ\'\nשיפוע: '+useSlope.toFixed(1)+'%\nהפרש גובה: '+H.toFixed(2)+' ס"מ\nטווח תקני: '+s.min+'%-'+s.max+'%'+(hasDepth?'\nעומק התחלה: '+startDepth.toFixed(1)+' ס"מ\nעומק סיום: '+endDepth.toFixed(1)+' ס"מ':'')+'\nסטטוס: '+(st==='ok'?'תקין':'לא תקין');
+// PRESSURE
+['pr-sup','pr-hgt','pr-pipe'].forEach(function(i){document.getElementById(i).addEventListener('input',cPr);});
+function cPr(){var e=document.getElementById('pr-res'),P=parseFloat(document.getElementById('pr-sup').value),H=parseFloat(document.getElementById('pr-hgt').value),pL=parseFloat(document.getElementById('pr-pipe').value);if(!P||!H){e.innerHTML='';return;}var sL=H/10,fL=0,hF=!isNaN(pL)&&pL>0;if(hF)fL=pL*.003;var tL=sL+fL,rm=P-tL,st='ok',sC='sb-ok',sT='\u2713 \u05EA\u05E7\u05D9\u05DF',sl='';if(rm<S.pr.n){st='err';sC='sb-er';sT='\u2717 \u05DC\u05D0 \u05EA\u05E7\u05D9\u05DF';sl='<div class="sol sol-er"><strong>\uD83D\uDD27</strong> \u05DC\u05D7\u05E5 '+rm.toFixed(1)+' \u05D1\u05E8 < '+S.pr.n+' \u05D1\u05E8. \u05D4\u05EA\u05E7\u05DF \u05D1\u05D5\u05E1\u05D8\u05E8 \u05D0\u05D5 \u05D4\u05D2\u05D3\u05DC \u05E7\u05D5\u05D8\u05E8.</div>';}else if(P>S.pr.x){st='warn';sC='sb-wn';sT='\u26A0 \u05DC\u05D7\u05E5 \u05D2\u05D1\u05D5\u05D4';sl='<div class="sol sol-wn"><strong>\u26A0</strong> '+P+' \u05D1\u05E8 > '+S.pr.x+' \u05D1\u05E8. \u05D7\u05D5\u05D1\u05D4 PRV \u05DC-3-4 \u05D1\u05E8.</div>';}else if(rm<1.5){sl='<div class="sol sol-wn"><strong>\u26A0</strong> '+rm.toFixed(1)+' \u05D1\u05E8 \u05E7\u05E8\u05D5\u05D1 \u05DC\u05DE\u05D9\u05E0\u05D9\u05DE\u05D5\u05DD. \u05E9\u05E7\u05D5\u05DC \u05D1\u05D5\u05E1\u05D8\u05E8.</div>';}var fH='';if(hF)fH='<div class="met"><div class="mv co">-'+fL.toFixed(2)+'</div><div class="ml">\u05D7\u05D9\u05DB\u05D5\u05DA (\u05D1\u05E8)</div></div>';var wt='\u05D1\u05D3\u05D9\u05E7\u05EA \u05DC\u05D7\u05E5:\n\u05DB\u05E0\u05D9\u05E1\u05D4: '+P+' \u05D1\u05E8\n\u05D2\u05D5\u05D1\u05D4: '+H+' \u05DE\'\n\u05D0\u05D9\u05D1\u05D5\u05D3 \u05E1\u05D8\u05D8\u05D9: '+sL.toFixed(2)+' \u05D1\u05E8\n\u05DC\u05D7\u05E5 \u05D1\u05E0\u05E7\u05D5\u05D3\u05D4: '+rm.toFixed(1)+' \u05D1\u05E8\n\u05E1\u05D8\u05D8\u05D5\u05E1: '+(st==='ok'?'\u05EA\u05E7\u05D9\u05DF':'\u05DC\u05D0 \u05EA\u05E7\u05D9\u05DF');e.innerHTML='<div class="rc"><div class="rh"><span class="sb '+sC+'">'+sT+'</span><span class="rref">\u05EA"\u05D9 1205</span></div><div class="mets" style="grid-template-columns:repeat('+(hF?4:3)+',1fr)"><div class="met"><div class="mv cw">'+P+'</div><div class="ml">\u05DB\u05E0\u05D9\u05E1\u05D4 (\u05D1\u05E8)</div></div><div class="met"><div class="mv ca">-'+sL.toFixed(2)+'</div><div class="ml">\u05E1\u05D8\u05D8\u05D9 (\u05D1\u05E8)</div></div>'+fH+'<div class="met"><div class="mv '+(st==='ok'?'cg':'cr')+'">'+rm.toFixed(1)+'</div><div class="ml">\u05D1\u05E0\u05E7\u05D5\u05D3\u05D4 (\u05D1\u05E8)</div></div></div><div class="fb"><strong>\u05E1\u05D8\u05D8\u05D9:</strong> '+H+'\u05DE \u00F7 10 = '+sL.toFixed(2)+(hF?' \u00B7 <strong>\u05D7\u05D9\u05DB\u05D5\u05DA:</strong> ~'+fL.toFixed(2):'')+' \u00B7 <strong>\u05E1\u05D4"\u05DB:</strong> <span class="hl">'+tL.toFixed(2)+' \u05D1\u05E8</span></div>'+sl+wab(wt)+'</div>';}
 
-  el.innerHTML='<div class="rc"><div class="rh"><span class="sb '+stC+'">'+stT+'</span><span class="rref">'+s.l+' · ת"י 1205</span></div>'
-    +'<div class="mets"><div class="met"><div class="mv cw">'+useSlope.toFixed(1)+'%</div><div class="ml">'+(isC?'שיפוע שהוזן':'שיפוע מומלץ')+'</div></div><div class="met"><div class="mv cs">'+H.toFixed(2)+'</div><div class="ml">הפרש גובה (ס"מ)</div></div><div class="met"><div class="mv cw" style="font-size:14px">'+s.min+'%-'+s.max+'%</div><div class="ml">טווח תקני</div></div></div>'
-    +depthHTML
-    +'<div class="fb"><strong>נוסחה:</strong> H = '+L.toFixed(1)+' × '+useSlope.toFixed(1)+'% = <span class="hl">'+H.toFixed(2)+' ס"מ</span><br><strong>טווח:</strong> '+minH.toFixed(2)+' – '+maxH.toFixed(2)+' ס"מ</div>'
-    +sol+waBtn(waText)+'</div>';
-}
+// PIPE SIZING
+var fI=['fu-toilet','fu-shower','fu-sink','fu-kitchen','fu-washing'],fW=[4,2,1,2,3],fN=['\u05D0\u05E1\u05DC\u05D5\u05EA','\u05DE\u05E7\u05DC\u05D7\u05D5\u05EA','\u05DB\u05D9\u05D5\u05E8\u05D9 \u05E8\u05D7\u05E6\u05D4','\u05DB\u05D9\u05D5\u05E8\u05D9 \u05DE\u05D8\u05D1\u05D7','\u05DE\u05DB\u05D5\u05E0\u05D5\u05EA \u05DB\u05D1\u05D9\u05E1\u05D4'];
+fI.forEach(function(i){document.getElementById(i).addEventListener('input',cFU);});
+function cFU(){var t=0,bd=[];fI.forEach(function(i,j){var q=parseInt(document.getElementById(i).value)||0;if(q>0){var s=q*fW[j];t+=s;bd.push(fN[j]+': '+q+'\u00D7'+fW[j]+'='+s);}});var e=document.getElementById('fu-res');if(t===0){e.innerHTML='';return;}var p=null;for(var i=0;i<S.ps.length;i++){if(t<=S.ps[i].m){p=S.ps[i];break;}}if(!p)p=S.ps[S.ps.length-1];var ne=t>60,sl='';if(ne)sl='<div class="sol sol-wn"><strong>\u26A0</strong> '+t+' FU \u2013 \u05DE\u05D5\u05DE\u05DC\u05E5 \u05DC\u05D4\u05EA\u05D9\u05D9\u05E2\u05E5 \u05E2\u05DD \u05DE\u05EA\u05DB\u05E0\u05DF \u05DE\u05D5\u05E1\u05DE\u05DA.</div>';var wt='\u05D7\u05D9\u05E9\u05D5\u05D1 \u05E7\u05D8\u05E8\u05D9\u05DD:\n'+bd.join('\n')+'\n\u05E1\u05D4"\u05DB: '+t+' FU\n\u05E0\u05D9\u05E7\u05D5\u05D6: '+p.d+'\n\u05D0\u05E1\u05E4\u05E7\u05D4: '+p.s+'\n\u05E1\u05D9\u05D5\u05D5\u05D2: '+p.t;e.innerHTML='<div class="rc"><div class="rh"><span class="sb '+(ne?'sb-wn':'sb-ok')+'">'+(ne?'\u26A0 \u05E0\u05D3\u05E8\u05E9 \u05DE\u05EA\u05DB\u05E0\u05DF':'\u2713 \u05EA\u05E7\u05D9\u05DF')+'</span><span class="rref">\u05D4\u05DE\u05DC\u05E6\u05EA \u05E7\u05D8\u05E8\u05D9\u05DD</span></div><div class="mets" style="grid-template-columns:repeat(4,1fr)"><div class="met"><div class="mv cs">'+t+'</div><div class="ml">\u05E1\u05D4"\u05DB FU</div></div><div class="met"><div class="mv cw" style="font-size:13px">'+p.d+'</div><div class="ml">\u05E0\u05D9\u05E7\u05D5\u05D6</div></div><div class="met"><div class="mv cw" style="font-size:13px">'+p.s+'</div><div class="ml">\u05D0\u05E1\u05E4\u05E7\u05D4</div></div><div class="met"><div class="mv ca" style="font-size:13px">'+p.t+'</div><div class="ml">\u05E1\u05D9\u05D5\u05D5\u05D2</div></div></div><div class="fb"><strong>\u05E4\u05D9\u05E8\u05D5\u05D8:</strong> '+bd.join(' \u00B7 ')+' = <span class="hl">'+t+' FU</span></div>'+sl+wab(wt)+'</div>';}
 
-// ── VENT CALC ──
-var vnFix='toilet';
-grid('vn-fix',function(v){vnFix=v;calcVn();});
-document.getElementById('vn-dist').addEventListener('input',calcVn);
+// FLASHLIGHT
+var flashOn=false,flashStream=null;
+async function toggleFlash(){var btn=document.getElementById('flash-btn'),txt=document.getElementById('flash-text'),ico=document.getElementById('flash-icon');if(flashOn){if(flashStream){flashStream.getTracks().forEach(function(t){t.stop();});flashStream=null;}flashOn=false;btn.classList.remove('active');txt.textContent='\u05D4\u05E4\u05E2\u05DC \u05E4\u05E0\u05E1';ico.textContent='\uD83D\uDD26';return;}try{flashStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});var track=flashStream.getVideoTracks()[0];await track.applyConstraints({advanced:[{torch:true}]});flashOn=true;btn.classList.add('active');txt.textContent='\u05DB\u05D1\u05D4 \u05E4\u05E0\u05E1';ico.textContent='\uD83D\uDCA1';}catch(err){txt.textContent='\u05DC\u05D0 \u05E0\u05EA\u05DE\u05DA \u2013 \u05D4\u05E4\u05E2\u05DC \u05DE\u05D4\u05D4\u05D2\u05D3\u05E8\u05D5\u05EA';}}
 
-function calcVn(){
-  var el=document.getElementById('vn-res'),D=parseFloat(document.getElementById('vn-dist').value);
-  if(!D||D<=0){el.innerHTML='';return;}var v=STD.vents[vnFix];if(!v){el.innerHTML='';return;}
-  var ok=D<=v.max,margin=Math.abs(v.max-D).toFixed(2),stC=ok?'sb-ok':'sb-er',stT=ok?'✓ תקין':'✗ לא תקין',mC=ok?'cg':'cr',mS=ok?'+':'-',mL=ok?'מרווח':'חריגה';
-  var sol='';
-  if(!ok)sol='<div class="sol sol-er"><strong>🔧 פתרון:</strong> מרחק '+D+' מ\' חורג (מותר '+v.max+' מ\'). יש להוסיף נשם (AAV) או להקרב אוורור.<br>גובה נשם מינימום 150 מ"מ מעל ציר הצנרת.</div>';
-  else if(parseFloat(margin)<0.5)sol='<div class="sol sol-wn"><strong>⚠ שים לב:</strong> מרווח קטן ('+margin+' מ\' בלבד). שקול נשם לביטחון.</div>';
-  el.innerHTML='<div class="rc"><div class="rh"><span class="sb '+stC+'">'+stT+'</span><span class="rref">'+v.l+' (FU='+v.fu+') · הל"ת</span></div><div class="mets"><div class="met"><div class="mv cw">'+D+' מ\'</div><div class="ml">מרחק בפועל</div></div><div class="met"><div class="mv cs">'+v.max+' מ\'</div><div class="ml">מקסימום מותר</div></div><div class="met"><div class="mv '+mC+'">'+mS+margin+' מ\'</div><div class="ml">'+mL+'</div></div></div>'+sol+'</div>';
-}
+// TIMER
+var tmr=null,tmrSec=900,tmrRunning=false;
+function fmtT(s){var m=Math.floor(s/60),sc=s%60;return String(m).padStart(2,'0')+':'+String(sc).padStart(2,'0');}
+function startTimer(){if(tmrRunning)return;tmrRunning=true;document.getElementById('timer-start').style.display='none';document.getElementById('timer-pause').style.display='';document.getElementById('timer-done').style.display='none';tmr=setInterval(function(){tmrSec--;document.getElementById('timer-display').textContent=fmtT(tmrSec);if(tmrSec<=0){clearInterval(tmr);tmrRunning=false;document.getElementById('timer-display').textContent='00:00';document.getElementById('timer-done').style.display='';document.getElementById('timer-pause').style.display='none';document.getElementById('timer-start').style.display='';try{if('vibrate' in navigator)navigator.vibrate([500,200,500,200,500]);var a=new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1jZ2xvb3V5fYGDhIaHiIiIh4eFg4B9enZybmpmYl5bWFVST01LSUZFQ0JBQEBBQkRGSEtOUVVZXWFlamxxdn2Ch4uPk5aZm52en5+fnp2bmJWRjYmFgHx3cm1oY19bV1NQTEpIRkVEQ0NDQ0RFR0lMT1NYXGFmbHJ4foSJjpKXm56ho6WmpqaloqCdmZWRjIeAfHZxbGdjX1tXU1BNS0lHRkVFRURFRkdJTE9TWF1iZ21zeoGHjJGWm5+ipaeop6empKGempiUkIuGgXx3cWxnY19bV1NQTUtJR0ZFRUVFRkdIS01RVVpfZGpwd36EiY6TmJ2hpKanqKempKKfnJiUkIuGgXx3cWxnY19bV1NQTU0=');a.play();}catch(e){}}},1e3);}
+function pauseTimer(){if(!tmrRunning)return;clearInterval(tmr);tmrRunning=false;document.getElementById('timer-pause').style.display='none';document.getElementById('timer-start').style.display='';document.getElementById('timer-start').textContent='\u25B6 \u05D4\u05DE\u05E9\u05DA';}
+function resetTimer(){clearInterval(tmr);tmrRunning=false;tmrSec=900;document.getElementById('timer-display').textContent='15:00';document.getElementById('timer-label').textContent='15 \u05D3\u05E7\u05D5\u05EA \u2013 \u05D1\u05D3\u05D9\u05E7\u05EA \u05D0\u05D8\u05D9\u05DE\u05D5\u05EA';document.getElementById('timer-start').style.display='';document.getElementById('timer-start').textContent='\u25B6 \u05D4\u05EA\u05D7\u05DC';document.getElementById('timer-pause').style.display='none';document.getElementById('timer-done').style.display='none';}
 
-// ── PRESSURE CALC ──
-['pr-sup','pr-hgt','pr-pipe'].forEach(function(id){document.getElementById(id).addEventListener('input',calcPr);});
+// VOLUME
+var vD='0.5';grd('vol-dia',function(v){vD=v;cVol();});document.getElementById('vol-len').addEventListener('input',cVol);
+function cVol(){var e=document.getElementById('vol-res'),L=parseFloat(document.getElementById('vol-len').value);if(!L||L<=0){e.innerHTML='';return;}var v=S.vol[vD];if(!v){e.innerHTML='';return;}var r=v.d/2/1000,vol=Math.PI*r*r*L*1000;e.innerHTML='<div class="rc"><div class="rh"><span class="sb sb-ok">\u2713 \u05EA\u05D5\u05E6\u05D0\u05D4</span><span class="rref">'+v.l+' \u05DE"\u05DE</span></div><div class="mets"><div class="met"><div class="mv cs">'+vol.toFixed(2)+'</div><div class="ml">\u05DC\u05D9\u05D8\u05E8\u05D9\u05DD</div></div><div class="met"><div class="mv cw">'+v.d+' \u05DE"\u05DE</div><div class="ml">\u05E7\u05D5\u05D8\u05E8 \u05E4\u05E0\u05D9\u05DE\u05D9</div></div><div class="met"><div class="mv cw">'+L+' \u05DE\'</div><div class="ml">\u05D0\u05D5\u05E8\u05DA</div></div></div><div class="fb"><strong>\u05E0\u05D5\u05E1\u05D7\u05D4:</strong> \u03C0 \u00D7 r\u00B2 \u00D7 L = \u03C0 \u00D7 '+(r*1000).toFixed(1)+'\u05DE"\u05DE\u00B2 \u00D7 '+L+'\u05DE = <span class="hl">'+vol.toFixed(2)+' \u05DC\u05D9\u05D8\u05E8</span></div></div>';}
 
-function calcPr(){
-  var el=document.getElementById('pr-res'),P=parseFloat(document.getElementById('pr-sup').value),H=parseFloat(document.getElementById('pr-hgt').value),pL=parseFloat(document.getElementById('pr-pipe').value);
-  if(!P||!H){el.innerHTML='';return;}
-  var sL=H/10,fL=0,hF=!isNaN(pL)&&pL>0;if(hF)fL=pL*0.003;
-  var tL=sL+fL,rem=P-tL,st='ok',stC='sb-ok',stT='✓ תקין',sol='';
-  if(rem<STD.pressure.min){st='err';stC='sb-er';stT='✗ לא תקין';sol='<div class="sol sol-er"><strong>🔧 פתרון:</strong> לחץ בנקודה '+rem.toFixed(1)+' בר < '+STD.pressure.min+' בר.<br>• התקן משאבת בוסטר<br>• או הגדל קוטר</div>';}
-  else if(P>STD.pressure.max){st='warn';stC='sb-wn';stT='⚠ לחץ גבוה';sol='<div class="sol sol-wn"><strong>⚠</strong> לחץ כניסה '+P+' בר > '+STD.pressure.max+' בר.<br>• חובה PRV<br>• כוונן ל-3-4 בר</div>';}
-  else if(rem<1.5){sol='<div class="sol sol-wn"><strong>⚠</strong> לחץ '+rem.toFixed(1)+' בר קרוב למינימום. שקול בוסטר.</div>';}
-  var fH='';if(hF)fH='<div class="met"><div class="mv co">-'+fL.toFixed(2)+'</div><div class="ml">חיכוך (בר)</div></div>';
-
-  var waText='בדיקת לחץ:\nלחץ כניסה: '+P+' בר\nגובה: '+H+' מ\'\nאיבוד סטטי: '+sL.toFixed(2)+' בר'+(hF?'\nאיבוד חיכוך: '+fL.toFixed(2)+' בר':'')+'\nלחץ בנקודה: '+rem.toFixed(1)+' בר\nסטטוס: '+(st==='ok'?'תקין':'לא תקין');
-
-  el.innerHTML='<div class="rc"><div class="rh"><span class="sb '+stC+'">'+stT+'</span><span class="rref">ת"י 1205</span></div><div class="mets" style="grid-template-columns:repeat('+(hF?4:3)+',1fr)"><div class="met"><div class="mv cw">'+P+'</div><div class="ml">כניסה (בר)</div></div><div class="met"><div class="mv ca">-'+sL.toFixed(2)+'</div><div class="ml">סטטי (בר)</div></div>'+fH+'<div class="met"><div class="mv '+(st==='ok'?'cg':'cr')+'">'+rem.toFixed(1)+'</div><div class="ml">בנקודה (בר)</div></div></div><div class="fb"><strong>סטטי:</strong> '+H+'מ ÷ 10 = '+sL.toFixed(2)+(hF?' · <strong>חיכוך:</strong> ~'+fL.toFixed(2):'')+' · <strong>סה"כ:</strong> <span class="hl">'+tL.toFixed(2)+' בר</span></div>'+sol+waBtn(waText)+'</div>';
-}
-
-// ── PIPE SIZING ──
-var fuIds=['fu-toilet','fu-shower','fu-sink','fu-kitchen','fu-washing'],fuW=[4,2,1,2,3],fuL=['אסלות','מקלחות','כיורי רחצה','כיורי מטבח','מכ\' כביסה'];
-fuIds.forEach(function(id){document.getElementById(id).addEventListener('input',calcFU);});
-
-function calcFU(){
-  var total=0,bd=[];
-  fuIds.forEach(function(id,i){var q=parseInt(document.getElementById(id).value)||0;if(q>0){var s=q*fuW[i];total+=s;bd.push(fuL[i]+': '+q+'×'+fuW[i]+'='+s);}});
-  var el=document.getElementById('fu-res');if(total===0){el.innerHTML='';return;}
-  var pipe=null;for(var i=0;i<STD.pipeSize.length;i++){if(total<=STD.pipeSize[i].maxFU){pipe=STD.pipeSize[i];break;}}
-  if(!pipe)pipe=STD.pipeSize[STD.pipeSize.length-1];
-  var ne=total>60,sol='';if(ne)sol='<div class="sol sol-wn"><strong>⚠</strong> '+total+' FU – מומלץ להתייעץ עם מתכנן אינסטלציה מוסמך.</div>';
-
-  var waText='חישוב קטרים:\n'+bd.join('\n')+'\nסה"כ: '+total+' FU\nקוטר ניקוז: '+pipe.drain+'\nקוטר אספקה: '+pipe.supply+'\nסיווג: '+pipe.note;
-
-  el.innerHTML='<div class="rc"><div class="rh"><span class="sb '+(ne?'sb-wn':'sb-ok')+'">'+(ne?'⚠ נדרש מתכנן':'✓ תקין')+'</span><span class="rref">המלצת קטרים</span></div><div class="mets" style="grid-template-columns:repeat(4,1fr)"><div class="met"><div class="mv cs">'+total+'</div><div class="ml">סה"כ FU</div></div><div class="met"><div class="mv cw" style="font-size:12px">'+pipe.drain+'</div><div class="ml">ניקוז</div></div><div class="met"><div class="mv cw" style="font-size:12px">'+pipe.supply+'</div><div class="ml">אספקה</div></div><div class="met"><div class="mv ca" style="font-size:12px">'+pipe.note+'</div><div class="ml">סיווג</div></div></div><div class="fb"><strong>פירוט:</strong> '+bd.join(' · ')+' = <span class="hl">'+total+' FU</span></div>'+sol+waBtn(waText)+'</div>';
-}
-
-// ── CHAT ──
-var SYS='אתה "עוזר אינסטלציה הנדסי מוסמך" של א.ד. אינסטלציה. תפקידך לספק תשובה מדויקת, מהירה ומבוססת תקן (הל"ת ות"י 1205) לאינסטלטורים בשטח.\nחוקי ברזל:\n- שיפועים: 4 צול (110 מ"מ) = 1.5%-2%. 2 צול (50 מ"מ) = 2%-5%. 3 צול (75 מ"מ) = 1.5%-3%. 6 צול (160 מ"מ) = 1%-1.5%.\n- מרחקי אוורור: אסלה עד 3 מטר, כיור עד 1.5 מטר, מקלחת/מטבח עד 2.5 מטר.\n- לחצים: מינימום 1.0 בר בנקודה רחוקה, מקסימום 5.0 בר בתוך הבית.\n- קטרים (FU): אסלה=4, מטבח=2, מקלחת=2, כיור רחצה=1, מכ\' כביסה=3.\n- טמפרטורות: דוד 60°C, מוצא מקסימום 50°C, רחצה 38°C.\n- H = L × S. 10מ גובה = 1 בר.\n- מהירות מקס\' 2 מ/ש באספקה. סיפון מינ\' 50 מ"מ.\n- PPR הלחמה 260°C, עמידות 95°C.\n- עיגון PPR אופקי כל 60-80 ס"מ.\nמבנה: סטטוס, פירוט, פתרון.\nחריגה = "מומלץ להתייעץ עם מתכנן מוסמך".\nעברית בלבד. קצר וממוקד.';
-
+// CHAT
+var SYS='\u05D0\u05EA\u05D4 "\u05E2\u05D5\u05D6\u05E8 \u05D0\u05D9\u05E0\u05E1\u05D8\u05DC\u05E6\u05D9\u05D4 \u05D4\u05E0\u05D3\u05E1\u05D9 \u05DE\u05D5\u05E1\u05DE\u05DA" \u05E9\u05DC \u05D0.\u05D3. \u05D0\u05D9\u05E0\u05E1\u05D8\u05DC\u05E6\u05D9\u05D4. \u05E1\u05E4\u05E7 \u05EA\u05E9\u05D5\u05D1\u05D5\u05EA \u05DE\u05D3\u05D5\u05D9\u05E7\u05D5\u05EA \u05DC\u05E4\u05D9 \u05EA"\u05D9 1205 \u05D5\u05D4\u05DC"\u05EA.\n\u05E9\u05D9\u05E4\u05D5\u05E2\u05D9\u05DD: 4\u05E6\u05D5\u05DC(110)=1.5%-2%. 2\u05E6\u05D5\u05DC(50)=2%-5%. 3\u05E6\u05D5\u05DC(75)=1.5%-3%. 6\u05E6\u05D5\u05DC(160)=1%-1.5%.\n\u05D0\u05D5\u05D5\u05E8\u05D5\u05E8: \u05D0\u05E1\u05DC\u05D4 3\u05DE, \u05DB\u05D9\u05D5\u05E8 1.5\u05DE, \u05DE\u05E7\u05DC\u05D7\u05EA/\u05DE\u05D8\u05D1\u05D7 2.5\u05DE.\n\u05DC\u05D7\u05E6\u05D9\u05DD: \u05DE\u05D9\u05DF 1.0 \u05D1\u05E8, \u05DE\u05E7\u05E1 5.0 \u05D1\u05E8.\nFU: \u05D0\u05E1\u05DC\u05D4=4, \u05DE\u05D8\u05D1\u05D7=2, \u05DE\u05E7\u05DC\u05D7\u05EA=2, \u05DB\u05D9\u05D5\u05E8=1, \u05DB\u05D1\u05D9\u05E1\u05D4=3.\nH=L\u00D7S. 10\u05DE=1\u05D1\u05E8. \u05E1\u05D9\u05E4\u05D5\u05DF 50\u05DE"\u05DE. PPR 260\u00B0C.\n\u05E2\u05E0\u05D4 \u05D1\u05E2\u05D1\u05E8\u05D9\u05EA. \u05E7\u05E6\u05E8 \u05D5\u05DE\u05DE\u05D5\u05E7\u05D3.';
 var hist=[],chIn=document.getElementById('ch-in'),chSn=document.getElementById('ch-send'),chMs=document.getElementById('ch-msgs'),chLd=false;
 chIn.addEventListener('input',function(){chSn.disabled=!chIn.value.trim()||chLd;});
-chIn.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendCh();}});
-chSn.addEventListener('click',sendCh);
-document.getElementById('qa').addEventListener('click',function(e){var b=e.target.closest('.qab');if(!b)return;chIn.value=b.dataset.q;chSn.disabled=false;sendCh();});
-
-function addMsg(r,t,isErr){var d=document.createElement('div');d.className='chtm '+(r==='user'?'u':'a');d.innerHTML='<div class="chtb'+(isErr?' ch-err':'')+'">'+esc(t)+'</div>';chMs.appendChild(d);chMs.scrollTop=chMs.scrollHeight;}
-function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');}
-
-async function sendCh(){
-  var msg=chIn.value.trim();if(!msg||chLd)return;chIn.value='';chSn.disabled=true;chLd=true;
-  addMsg('user',msg);hist.push({role:'user',content:msg});
-  var tp=document.createElement('div');tp.className='chtm a';tp.id='ch-tp';tp.innerHTML='<div class="chtb typ">מחשב תשובה...</div>';chMs.appendChild(tp);chMs.scrollTop=chMs.scrollHeight;
-  try{
-    var r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:SYS,messages:hist})});
-    var d=await r.json();
-    var ti=document.getElementById('ch-tp');if(ti)ti.remove();
-    // Handle API errors
-    if(d.error){
-      var errMsg='❌ שגיאת חיבור';
-      if(d.error.type==='authentication_error') errMsg='❌ שגיאת חיבור - בדוק את מפתח ה-API';
-      else if(d.error.type==='rate_limit_error') errMsg='⏳ יותר מדי בקשות - נסה שוב בעוד דקה';
-      else if(d.error.type==='overloaded_error') errMsg='⏳ השרת עמוס - נסה שוב בעוד רגע';
-      else errMsg='❌ שגיאה: '+(d.error.message||'בדוק את מפתח ה-API');
-      hist.pop(); // Remove failed user message from history
-      addMsg('assistant',errMsg,true);
-    } else {
-      var txt=(d.content||[]).map(function(c){return c.text||'';}).join('')||'מצטער, לא הצלחתי לעבד. נסה שוב.';
-      hist.push({role:'assistant',content:txt});
-      addMsg('assistant',txt);
-    }
-  }catch(err){
-    var ti=document.getElementById('ch-tp');if(ti)ti.remove();
-    hist.pop();
-    addMsg('assistant','❌ שגיאת חיבור - בדוק חיבור לאינטרנט או את מפתח ה-API ונסה שוב.',true);
-  }
-  chLd=false;chSn.disabled=!chIn.value.trim();
-}
+chIn.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sCh();}});
+chSn.addEventListener('click',sCh);
+document.getElementById('qa').addEventListener('click',function(e){var b=e.target.closest('.qab');if(!b)return;chIn.value=b.dataset.q;chSn.disabled=false;sCh();});
+function aM(r,t,er){var d=document.createElement('div');d.className='chtm '+(r==='user'?'u':'a');d.innerHTML='<div class="chtb'+(er?' ch-err':'')+'">'+eH(t)+'</div>';chMs.appendChild(d);chMs.scrollTop=chMs.scrollHeight;}
+function eH(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');}
+async function sCh(){var msg=chIn.value.trim();if(!msg||chLd)return;chIn.value='';chSn.disabled=true;chLd=true;aM('user',msg);hist.push({role:'user',content:msg});var tp=document.createElement('div');tp.className='chtm a';tp.id='ch-tp';tp.innerHTML='<div class="chtb typ">\u05DE\u05D7\u05E9\u05D1 \u05EA\u05E9\u05D5\u05D1\u05D4...</div>';chMs.appendChild(tp);chMs.scrollTop=chMs.scrollHeight;try{var r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:SYS,messages:hist})});var d=await r.json();var ti=document.getElementById('ch-tp');if(ti)ti.remove();if(d.error){var em='\u274C \u05E9\u05D2\u05D9\u05D0\u05EA \u05D7\u05D9\u05D1\u05D5\u05E8';if(d.error.type==='authentication_error')em='\u274C \u05E9\u05D2\u05D9\u05D0\u05EA \u05D7\u05D9\u05D1\u05D5\u05E8 \u2013 \u05D1\u05D3\u05D5\u05E7 \u05D0\u05EA \u05DE\u05E4\u05EA\u05D7 \u05D4-API';else if(d.error.type==='rate_limit_error')em='\u23F3 \u05D9\u05D5\u05EA\u05E8 \u05DE\u05D3\u05D9 \u05D1\u05E7\u05E9\u05D5\u05EA \u2013 \u05E0\u05E1\u05D4 \u05D1\u05E2\u05D5\u05D3 \u05D3\u05E7\u05D4';else if(d.error.type==='overloaded_error')em='\u23F3 \u05D4\u05E9\u05E8\u05EA \u05E2\u05DE\u05D5\u05E1 \u2013 \u05E0\u05E1\u05D4 \u05E9\u05D5\u05D1';else em='\u274C \u05E9\u05D2\u05D9\u05D0\u05D4: '+(d.error.message||'\u05D1\u05D3\u05D5\u05E7 \u05DE\u05E4\u05EA\u05D7 API');hist.pop();aM('assistant',em,true);}else{var txt=(d.content||[]).map(function(c){return c.text||'';}).join('')||'\u05DE\u05E6\u05D8\u05E2\u05E8, \u05E0\u05E1\u05D4 \u05E9\u05D5\u05D1.';hist.push({role:'assistant',content:txt});aM('assistant',txt);}}catch(err){var ti=document.getElementById('ch-tp');if(ti)ti.remove();hist.pop();aM('assistant','\u274C \u05E9\u05D2\u05D9\u05D0\u05EA \u05D7\u05D9\u05D1\u05D5\u05E8 \u2013 \u05D1\u05D3\u05D5\u05E7 \u05D7\u05D9\u05D1\u05D5\u05E8 \u05DC\u05D0\u05D9\u05E0\u05D8\u05E8\u05E0\u05D8 \u05D0\u05D5 \u05DE\u05E4\u05EA\u05D7 API',true);}chLd=false;chSn.disabled=!chIn.value.trim();}
 </script>
 </body>
 </html>
