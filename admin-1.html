@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>א.ד. אינסטלציה | לוח ניהול</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f8f9fb;--card:#fff;--bdr:#e2e8f0;--sky:#0ea5e9;--skyL:#e0f2fe;--grn:#10b981;--red:#ef4444;--amb:#f59e0b;--t1:#0f172a;--t2:#334155;--t3:#64748b;--t4:#94a3b8;--r:12px;--rs:8px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--t2);min-height:100vh;}
+
+/* ── LOGIN SCREEN ── */
+.login-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;}
+.login-overlay.hidden{display:none;}
+.login-box{background:#fff;border-radius:16px;padding:36px 32px;width:100%;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,.3);}
+.login-logo{text-align:center;margin-bottom:24px;}
+.login-logo .ico{width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,#38bdf8,#0ea5e9);display:inline-flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 6px 20px rgba(56,189,248,.3);margin-bottom:12px;}
+.login-logo h2{font-size:20px;font-weight:800;color:var(--t1);}
+.login-logo p{font-size:12px;color:var(--t4);margin-top:4px;}
+.login-field{margin-bottom:14px;}
+.login-field label{display:block;font-size:12px;font-weight:600;color:var(--t3);margin-bottom:5px;}
+.login-field input{width:100%;padding:12px 14px;border:1px solid var(--bdr);border-radius:var(--rs);font-family:inherit;font-size:15px;color:var(--t1);outline:none;transition:border-color .2s;}
+.login-field input:focus{border-color:var(--sky);}
+.login-btn{width:100%;padding:13px;border-radius:var(--rs);border:none;background:var(--sky);color:#fff;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;transition:all .15s;margin-top:6px;}
+.login-btn:hover{background:#0284c7;}.login-btn:active{transform:scale(.98);}
+.login-btn:disabled{opacity:.5;cursor:default;}
+.login-error{margin-top:10px;padding:10px;border-radius:var(--rs);background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.15);color:var(--red);font-size:12px;font-weight:600;display:none;text-align:center;}
+.login-lockout{color:var(--amb);background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.15);}
+
+/* ── TOP BAR ── */
+.top-bar{background:#fff;border-bottom:1px solid var(--bdr);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 1px 3px rgba(0,0,0,.05);}
+.top-bar h1{font-size:18px;font-weight:800;color:var(--t1);display:flex;align-items:center;gap:8px;}
+.top-bar h1 span{font-size:22px;}
+.top-actions{display:flex;align-items:center;gap:8px;}
+.save-btn{padding:10px 24px;border-radius:var(--rs);border:none;background:var(--sky);color:#fff;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:6px;}
+.save-btn:hover{background:#0284c7;}.save-btn:active{transform:scale(.97);}
+.save-ok{background:var(--grn)!important;}
+.logout-btn{padding:10px 16px;border-radius:var(--rs);border:1px solid var(--bdr);background:#fff;color:var(--red);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:5px;}
+.logout-btn:hover{background:rgba(239,68,68,.05);}
+
+/* ── LAYOUT ── */
+.layout{display:flex;min-height:calc(100vh - 57px);}
+.sidebar{width:220px;background:#fff;border-left:1px solid var(--bdr);padding:16px 0;flex-shrink:0;position:sticky;top:57px;height:calc(100vh - 57px);overflow-y:auto;}
+.sb-item{display:flex;align-items:center;gap:10px;padding:11px 20px;cursor:pointer;font-size:13px;font-weight:600;color:var(--t3);transition:all .15s;border-right:3px solid transparent;}
+.sb-item:hover{background:var(--skyL);color:var(--sky);}
+.sb-item.on{background:var(--skyL);color:var(--sky);border-right-color:var(--sky);font-weight:700;}
+.sb-item .sb-ico{font-size:17px;width:24px;text-align:center;}
+.content{flex:1;padding:24px 28px;max-width:900px;}
+.page{display:none;}.page.on{display:block;animation:fadeIn .2s ease-out;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.page-title{font-size:20px;font-weight:800;color:var(--t1);margin-bottom:6px;}
+.page-desc{font-size:13px;color:var(--t4);margin-bottom:20px;}
+.section-card{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);padding:20px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.sc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.sc-title{font-size:15px;font-weight:700;color:var(--t1);}
+.form-row{display:flex;gap:10px;align-items:flex-end;margin-bottom:10px;flex-wrap:wrap;}
+.form-group{display:flex;flex-direction:column;gap:4px;flex:1;min-width:120px;}
+.form-group label{font-size:11px;font-weight:600;color:var(--t3);}
+.form-group input,.form-group select,.form-group textarea{padding:9px 12px;border:1px solid var(--bdr);border-radius:var(--rs);font-family:inherit;font-size:14px;color:var(--t1);outline:none;transition:border-color .15s;background:#fff;}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--sky);}
+.form-group textarea{resize:vertical;min-height:60px;}
+.item-list{border:1px solid var(--bdr);border-radius:var(--rs);overflow:hidden;}
+.item-row{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--bdr);transition:background .1s;}
+.item-row:last-child{border-bottom:none;}
+.item-row:hover{background:#f8fafc;}
+.item-row .ir-name{flex:1;font-size:13px;font-weight:600;color:var(--t1);}
+.item-row .ir-meta{font-size:12px;color:var(--t4);display:flex;align-items:center;gap:6px;}
+.item-row .ir-price{font-size:14px;font-weight:800;color:var(--sky);}
+.btn{padding:8px 16px;border-radius:var(--rs);border:1px solid var(--bdr);background:#fff;color:var(--t2);font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:5px;}
+.btn:hover{background:#f1f5f9;}.btn:active{transform:scale(.97);}
+.btn-sky{background:var(--skyL);color:var(--sky);border-color:rgba(14,165,233,.2);}
+.btn-red{color:var(--red);border-color:rgba(239,68,68,.2);}
+.btn-red:hover{background:rgba(239,68,68,.05);}
+.btn-grn{background:rgba(16,185,129,.08);color:var(--grn);border-color:rgba(16,185,129,.2);}
+.btn-sm{padding:5px 10px;font-size:11px;}
+.add-btn{display:flex;align-items:center;gap:6px;padding:10px 18px;border-radius:var(--rs);border:2px dashed var(--bdr);background:none;color:var(--t4);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;width:100%;justify-content:center;margin-top:10px;}
+.add-btn:hover{border-color:var(--sky);color:var(--sky);background:var(--skyL);}
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.4);z-index:500;display:flex;align-items:center;justify-content:center;display:none;}
+.modal-overlay.on{display:flex;}
+.modal{background:#fff;border-radius:var(--r);padding:24px;width:90%;max-width:500px;max-height:80vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.15);}
+.modal-title{font-size:17px;font-weight:800;color:var(--t1);margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;}
+.modal-close{width:32px;height:32px;border-radius:8px;border:none;background:var(--bg);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--t3);}
+.modal-close:hover{background:var(--bdr);}
+.modal-actions{display:flex;gap:8px;margin-top:18px;justify-content:flex-end;}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:20px;}
+.stat{background:#fff;border:1px solid var(--bdr);border-radius:var(--rs);padding:16px;text-align:center;}
+.stat .sv{font-size:28px;font-weight:900;color:var(--sky);}
+.stat .sl{font-size:11px;color:var(--t4);margin-top:4px;}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:#0f172a;color:#fff;padding:12px 24px;border-radius:var(--rs);font-size:13px;font-weight:600;z-index:600;transition:transform .3s ease;display:flex;align-items:center;gap:8px;box-shadow:0 10px 30px rgba(0,0,0,.2);}
+.toast.show{transform:translateX(-50%) translateY(0);}
+.user-badge{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:20px;background:var(--skyL);color:var(--sky);font-size:11px;font-weight:600;}
+@media(max-width:768px){
+  .sidebar{display:none;}
+  .layout{flex-direction:column;}
+  .content{padding:16px;}
+  .mob-nav{display:flex;overflow-x:auto;gap:4px;padding:8px 12px;background:#fff;border-bottom:1px solid var(--bdr);scrollbar-width:none;}
+  .mob-nav::-webkit-scrollbar{display:none;}
+  .mob-nav .mn-btn{padding:8px 14px;border-radius:20px;border:1px solid var(--bdr);background:#fff;color:var(--t3);font-family:inherit;font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap;}
+  .mob-nav .mn-btn.on{background:var(--sky);color:#fff;border-color:var(--sky);}
+  .top-actions{gap:4px;}
+  .save-btn{padding:8px 14px;font-size:12px;}
+  .logout-btn{padding:8px 10px;font-size:11px;}
+}
+@media(min-width:769px){.mob-nav{display:none;}}
+</style>
+</head>
+<body>
+
+<!-- ═══════ LOGIN SCREEN ═══════ -->
+<div class="login-overlay" id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="ico">🔧</div>
+      <h2>לוח ניהול</h2>
+      <p>א.ד. אינסטלציה · גישה מורשית בלבד</p>
+    </div>
+    <div class="login-field">
+      <label>שם משתמש</label>
+      <input type="text" id="loginUser" placeholder="הזן שם משתמש" autocomplete="username">
+    </div>
+    <div class="login-field">
+      <label>סיסמה</label>
+      <input type="password" id="loginPass" placeholder="הזן סיסמה" autocomplete="current-password">
+    </div>
+    <button class="login-btn" id="loginBtn" onclick="doLogin()">🔐 כניסה</button>
+    <div class="login-error" id="loginError"></div>
+  </div>
+</div>
+
+<!-- ═══════ ADMIN PANEL ═══════ -->
+<div id="adminPanel" style="display:none">
+
+<div class="top-bar">
+  <h1><span>🔧</span> לוח ניהול</h1>
+  <div class="top-actions">
+    <div class="user-badge" id="userBadge">👤 מנהל</div>
+    <button class="save-btn" id="saveBtn" onclick="saveAll()">💾 שמור</button>
+    <button class="logout-btn" onclick="doLogout()">🚪 יציאה</button>
+  </div>
+</div>
+
+<div class="mob-nav" id="mobNav"></div>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="content" id="content"></div>
+</div>
+
+</div>
+
+<div class="modal-overlay" id="modal">
+  <div class="modal" id="modalContent"></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════
+//  AUTHENTICATION SYSTEM
+// ═══════════════════════════════════
+var AUTH_KEY='ad_plumbing_auth';
+var SESSION_KEY='ad_plumbing_session';
+var LOCKOUT_KEY='ad_plumbing_lockout';
+var MAX_ATTEMPTS=5;
+var LOCKOUT_MINUTES=15;
+var SESSION_HOURS=24;
+
+// Default credentials (first time setup)
+var DEFAULT_USER='admin';
+var DEFAULT_PASS='ad2024';
+
+function getAuth(){
+  try{var a=localStorage.getItem(AUTH_KEY);if(a)return JSON.parse(a);}catch(e){}
+  // First time: set default credentials
+  var def={user:DEFAULT_USER,pass:hashPass(DEFAULT_PASS)};
+  localStorage.setItem(AUTH_KEY,JSON.stringify(def));
+  return def;
+}
+
+function hashPass(p){
+  // Simple hash - NOT cryptographic but sufficient for client-side
+  var h=0;for(var i=0;i<p.length;i++){h=((h<<5)-h)+p.charCodeAt(i);h|=0;}
+  return 'h_'+Math.abs(h).toString(36)+'_'+p.length;
+}
+
+function checkLockout(){
+  try{
+    var lo=localStorage.getItem(LOCKOUT_KEY);
+    if(!lo)return false;
+    var d=JSON.parse(lo);
+    if(d.until>Date.now()){return d;}
+    localStorage.removeItem(LOCKOUT_KEY);
+  }catch(e){}
+  return false;
+}
+
+function addFailedAttempt(){
+  try{
+    var key='ad_plumbing_attempts';
+    var a=JSON.parse(localStorage.getItem(key)||'{"count":0,"first":0}');
+    if(Date.now()-a.first>LOCKOUT_MINUTES*60*1000){a={count:0,first:Date.now()};}
+    a.count++;
+    if(a.count===1)a.first=Date.now();
+    localStorage.setItem(key,JSON.stringify(a));
+    if(a.count>=MAX_ATTEMPTS){
+      var until=Date.now()+LOCKOUT_MINUTES*60*1000;
+      localStorage.setItem(LOCKOUT_KEY,JSON.stringify({until:until}));
+      localStorage.removeItem(key);
+      return true; // locked out
+    }
+    return false;
+  }catch(e){return false;}
+}
+
+function getFailedCount(){
+  try{var a=JSON.parse(localStorage.getItem('ad_plumbing_attempts')||'{"count":0}');return a.count;}catch(e){return 0;}
+}
+
+function createSession(){
+  var s={token:'s_'+Math.random().toString(36).substr(2)+'_'+Date.now(),expires:Date.now()+SESSION_HOURS*3600*1000};
+  localStorage.setItem(SESSION_KEY,JSON.stringify(s));
+  return s;
+}
+
+function checkSession(){
+  try{
+    var s=localStorage.getItem(SESSION_KEY);
+    if(!s)return false;
+    var d=JSON.parse(s);
+    if(d.expires>Date.now())return true;
+    localStorage.removeItem(SESSION_KEY);
+  }catch(e){}
+  return false;
+}
+
+function doLogin(){
+  var errEl=document.getElementById('loginError');
+  var lockout=checkLockout();
+  if(lockout){
+    var mins=Math.ceil((lockout.until-Date.now())/60000);
+    errEl.textContent='⏳ החשבון נעול. נסה שוב בעוד '+mins+' דקות.';
+    errEl.className='login-error login-lockout';
+    errEl.style.display='block';
+    return;
+  }
+  var user=document.getElementById('loginUser').value.trim();
+  var pass=document.getElementById('loginPass').value;
+  if(!user||!pass){errEl.textContent='⚠️ הזן שם משתמש וסיסמה';errEl.style.display='block';return;}
+  var auth=getAuth();
+  if(user===auth.user&&hashPass(pass)===auth.pass){
+    // Success
+    localStorage.removeItem('ad_plumbing_attempts');
+    createSession();
+    showAdmin(user);
+  }else{
+    var locked=addFailedAttempt();
+    if(locked){
+      errEl.textContent='🔒 '+MAX_ATTEMPTS+' ניסיונות כושלים. החשבון ננעל ל-'+LOCKOUT_MINUTES+' דקות.';
+      errEl.className='login-error login-lockout';
+    }else{
+      var remaining=MAX_ATTEMPTS-getFailedCount();
+      errEl.textContent='❌ שם משתמש או סיסמה שגויים ('+remaining+' ניסיונות נותרו)';
+      errEl.className='login-error';
+    }
+    errEl.style.display='block';
+    document.getElementById('loginPass').value='';
+  }
+}
+
+function doLogout(){
+  localStorage.removeItem(SESSION_KEY);
+  document.getElementById('adminPanel').style.display='none';
+  document.getElementById('loginScreen').classList.remove('hidden');
+  document.getElementById('loginUser').value='';
+  document.getElementById('loginPass').value='';
+  document.getElementById('loginError').style.display='none';
+}
+
+function showAdmin(user){
+  document.getElementById('loginScreen').classList.add('hidden');
+  document.getElementById('adminPanel').style.display='';
+  document.getElementById('userBadge').textContent='👤 '+user;
+}
+
+// Enter key on login
+document.getElementById('loginPass').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin();});
+document.getElementById('loginUser').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('loginPass').focus();});
+
+// Check session on load
+if(checkSession()){
+  var auth=getAuth();
+  showAdmin(auth.user);
+}
+
+// ═══════════════════════════════════
+//  PAGES CONFIG
+// ═══════════════════════════════════
+var PAGES=[
+  {id:'dashboard',ico:'📊',name:'דשבורד'},
+  {id:'prices',ico:'💰',name:'מחירון'},
+  {id:'faults',ico:'⚠️',name:'תקלות'},
+  {id:'client',ico:'👤',name:'הסברי לקוח'},
+  {id:'heights',ico:'📏',name:'גבהי התקנה'},
+  {id:'drying',ico:'⏳',name:'זמני ייבוש'},
+  {id:'standards',ico:'📐',name:'תקנים'},
+  {id:'security',ico:'🔐',name:'אבטחה'},
+  {id:'settings',ico:'⚙️',name:'הגדרות'}
+];
+
+// ── DEFAULT DATA ──
+var DEFAULTS={prices:[{cat:'fix',name:'תיקון נזילה קטנה (גלוי)',price:250},{cat:'fix',name:'תיקון נזילה בקיר (עם פתיחה)',price:550},{cat:'fix',name:'תיקון שטף אסלה',price:200},{cat:'fix',name:'תיקון ברז מטפטף',price:180},{cat:'fix',name:'תיקון דליפה מדוד שמש',price:400},{cat:'fix',name:'תיקון צנרת תת-רצפתית',price:800},{cat:'fix',name:'תיקון מנגנון ניאגרה',price:280},{cat:'fix',name:'תיקון אינטרפוץ',price:350},{cat:'install',name:'התקנת אסלה חדשה',price:450},{cat:'install',name:'התקנת כיור רחצה',price:350},{cat:'install',name:'התקנת כיור מטבח',price:400},{cat:'install',name:'התקנת מקלחון',price:500},{cat:'install',name:'התקנת ברז מטבח',price:250},{cat:'install',name:'התקנת דוד חשמלי',price:600},{cat:'install',name:'התקנת מכונת כביסה/כלים',price:250},{cat:'install',name:'התקנת נשם (AAV)',price:200},{cat:'install',name:'התקנת ממעט לחץ (PRV)',price:350},{cat:'install',name:'התקנת ניאגרה סמויה',price:800},{cat:'install',name:'התקנת אינטרפוץ',price:500},{cat:'install',name:'התקנת משאבת לחץ',price:1200},{cat:'replace',name:'החלפת אסלה (כולל פירוק)',price:650},{cat:'replace',name:'החלפת ברז מטבח',price:350},{cat:'replace',name:'החלפת מנגנון שטיפה',price:300},{cat:'replace',name:'החלפת סיפון',price:180},{cat:'replace',name:'החלפת גמיש',price:150},{cat:'replace',name:'החלפת צנרת PPR (מטר)',price:200},{cat:'replace',name:'החלפת אינטרפוץ',price:600},{cat:'block',name:'פתיחת סתימה בכיור',price:250},{cat:'block',name:'פתיחת סתימה באסלה',price:300},{cat:'block',name:'פתיחת סתימה ראשית',price:500},{cat:'block',name:'פתיחת סתימה במכונה חשמלית',price:600},{cat:'block',name:'שטיפת קו בלחץ',price:700},{cat:'block',name:'צילום קו במצלמה',price:500},{cat:'other',name:'ביקור + אבחון',price:200},{cat:'other',name:'בדיקת לחץ מים',price:150},{cat:'other',name:'איתור נזילה עם ציוד',price:500},{cat:'other',name:'קריאת חירום (שבת/חג)',price:500},{cat:'other',name:'קריאת חירום (לילה)',price:450}],
+faults:[{icon:'🔊',title:'רעשי גרגור בצנרת',symptoms:'רעש בועות בהזרמה',causes:'חוסר אוורור|שיפוע חד מדי|חסימה חלקית',solution:'התקן נשם AAV · ודא שיפוע 1.5%-2% ל-110מ"מ'},{icon:'💧',title:'דליפה בחיבורים',symptoms:'רטיבות, טפטוף',causes:'חיבור לקוי|לחץ מעל 5 בר|סדק מקפאון',solution:'PRV אם מעל 5 בר · הלחמת PPR 260°C'},{icon:'🚽',title:'שטיפה חלשה',symptoms:'מים זורמים לאט',causes:'לחץ נמוך|מנגנון פגום|שיפוע לא מספיק',solution:'בדוק לחץ · החלף מנגנון · כבל ספירלי'},{icon:'🔨',title:'פטיש מים',symptoms:'חבטות בסגירת ברז',causes:'לחץ גבוה|צנרת לא מעוגנת',solution:'Arrestor · PRV · עיגון כל 1.5מ\''},{icon:'🦠',title:'ריח ביוב',symptoms:'ריח ביוב מהניקוז',causes:'סיפון יבש|חוסר אוורור|סיפון סדוק',solution:'שפוך מים · נשם · מחסום 50מ"מ'}],
+clientTexts:[{title:'🔊 רעשי גרגור',text:'הרעש נגרם כי אין מספיק אוויר בצנרת הניקוז. זה כמו בקבוק הפוך – בלי אוויר, המים לא זורמים חלק. הפתרון הוא להתקין שסתום אוויר (נשם).'},{title:'💧 דליפה',text:'הדליפה יכולה להיגרם מלחץ מים גבוה מדי או מחיבור ישן שנשחק. מומלץ להתקין וסת לחץ ולהחליף את החיבור הפגום.'},{title:'🦠 ריח ביוב',text:'הריח עולה כי מחסום המים בסיפון התייבש. שפכו כוס מים ובדקו שהסיפון תקין.'},{title:'🔨 רעש חבטות',text:'הרעש קורה כשסוגרים ברז בחדות. הפתרון הוא להתקין בולם זעזועים ולבדוק שלחץ המים לא גבוה מדי.'},{title:'🚽 שטיפה חלשה',text:'שטיפה חלשה נגרמת מלחץ מים נמוך או ממנגנון שטיפה ישן. צריך לבדוק לחץ, מנגנון, וחסימות.'}],
+heights:[{name:'ניאגרה סמויה',height:'100',note:'מרכז לחצן'},{name:'יציאת ביוב אסלה',height:'18',note:'מרכז צנרת'},{name:'אינטרפוץ מקלחת',height:'110-120',note:'מרצפה גמורה'},{name:'ברז כיור רחצה',height:'105',note:'מרצפה גמורה'},{name:'ברז מטבח',height:'105',note:'מעל השיש'},{name:'יציאת מכ"כ',height:'75',note:'מרצפה גמורה'},{name:'גובה כיור',height:'80-85',note:'חלק עליון'}],
+drying:[{name:'דבק PVC',wait:'5 דק\'',full:'2 שעות'},{name:'דבק CPVC',wait:'10 דק\'',full:'4 שעות'},{name:'סיליקון',wait:'30 דק\'',full:'24 שעות'},{name:'טפלון חוט',wait:'מיידי',full:'מיידי'},{name:'אפוקסי',wait:'60 דק\'',full:'24 שעות'},{name:'PPR (הלחמה)',wait:'מיידי',full:'3 דק\' קירור'},{name:'מלט אינסטלציה',wait:'4 שעות',full:'24-48 שעות'},{name:'איטום ביטומני',wait:'2 שעות',full:'24 שעות'},{name:'פוליאוריתן',wait:'45 דק\'',full:'24 שעות'}],
+settings:{businessName:'א.ד. אינסטלציה',phone:'',whatsappPrefix:'א.ד. אינסטלציה'}};
+
+var CATS={fix:'תיקונים',install:'התקנות',replace:'החלפות',block:'סתימות',other:'שונות'};
+var data={};
+function loadData(){try{var s=localStorage.getItem('ad_plumbing_cms');if(s){data=JSON.parse(s);}else{data=JSON.parse(JSON.stringify(DEFAULTS));}}catch(e){data=JSON.parse(JSON.stringify(DEFAULTS));}}
+function saveAll(){try{localStorage.setItem('ad_plumbing_cms',JSON.stringify(data));var b=document.getElementById('saveBtn');b.classList.add('save-ok');b.innerHTML='✅ נשמר!';setTimeout(function(){b.classList.remove('save-ok');b.innerHTML='💾 שמור';},2000);showToast('✅ נשמר בהצלחה');}catch(e){showToast('❌ שגיאה');}}
+function showToast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},3000);}
+function resetToDefaults(){if(confirm('אפס הכל לברירת מחדל?')){data=JSON.parse(JSON.stringify(DEFAULTS));saveAll();renderPage(curPage);}}
+function esc(s){return s?String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'):'';}
+
+var curPage='dashboard';
+function initNav(){var sb=document.getElementById('sidebar'),mn=document.getElementById('mobNav');PAGES.forEach(function(p){var d=document.createElement('div');d.className='sb-item'+(p.id===curPage?' on':'');d.dataset.page=p.id;d.innerHTML='<span class="sb-ico">'+p.ico+'</span>'+p.name;d.addEventListener('click',function(){navTo(p.id);});sb.appendChild(d);var b=document.createElement('button');b.className='mn-btn'+(p.id===curPage?' on':'');b.dataset.page=p.id;b.textContent=p.ico+' '+p.name;b.addEventListener('click',function(){navTo(p.id);});mn.appendChild(b);});}
+function navTo(id){curPage=id;document.querySelectorAll('.sb-item,.mn-btn').forEach(function(el){el.classList.toggle('on',el.dataset.page===id);});renderPage(id);}
+function renderPage(id){var c=document.getElementById('content');var fn={dashboard:rDash,prices:rPrices,faults:rFaults,client:rClient,heights:rHeights,drying:rDrying,standards:rStandards,security:rSecurity,settings:rSettings};if(fn[id])fn[id](c);}
+function openModal(h){document.getElementById('modalContent').innerHTML=h;document.getElementById('modal').classList.add('on');}
+function closeModal(){document.getElementById('modal').classList.remove('on');}
+document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+
+// ── DASHBOARD ──
+function rDash(c){var np=(data.prices||[]).length,nf=(data.faults||[]).length,nc=(data.clientTexts||[]).length;c.innerHTML='<div class="page on"><div class="page-title">📊 דשבורד</div><div class="page-desc">סקירה כללית</div><div class="stats"><div class="stat"><div class="sv">'+np+'</div><div class="sl">עבודות</div></div><div class="stat"><div class="sv">'+nf+'</div><div class="sl">תקלות</div></div><div class="stat"><div class="sv">'+nc+'</div><div class="sl">הסברים</div></div></div><div class="section-card"><div class="sc-title">פעולות</div><div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button class="btn btn-sky" onclick="navTo(\'prices\')">💰 מחירון</button><button class="btn btn-sky" onclick="navTo(\'faults\')">⚠️ תקלות</button><button class="btn btn-sky" onclick="navTo(\'security\')">🔐 אבטחה</button><button class="btn btn-red" onclick="resetToDefaults()">↺ אפס</button></div></div></div>';}
+
+// ── PRICES ──
+function rPrices(c){var h='<div class="page on"><div class="page-title">💰 מחירון</div><div class="page-desc">ניהול עבודות ומחירים</div>';Object.keys(CATS).forEach(function(cat){var items=(data.prices||[]).filter(function(p){return p.cat===cat;});h+='<div class="section-card"><div class="sc-header"><div class="sc-title">'+CATS[cat]+' ('+items.length+')</div></div><div class="item-list">';items.forEach(function(item){var idx=data.prices.indexOf(item);h+='<div class="item-row"><div class="ir-name">'+esc(item.name)+'</div><div class="ir-price">₪'+item.price+'</div><button class="btn btn-sm btn-sky" onclick="editPrice('+idx+')">✏️</button><button class="btn btn-sm btn-red" onclick="delPrice('+idx+')">🗑️</button></div>';});h+='</div><button class="add-btn" onclick="addPrice(\''+cat+'\')">+ הוסף</button></div>';});h+='</div>';c.innerHTML=h;}
+function editPrice(i){var p=data.prices[i];openModal('<div class="modal-title"><span>✏️ עריכה</span><button class="modal-close" onclick="closeModal()">✕</button></div><div class="form-group"><label>שם</label><input id="ep-n" value="'+esc(p.name)+'"></div><div class="form-row"><div class="form-group"><label>מחיר ₪</label><input type="number" id="ep-p" value="'+p.price+'"></div><div class="form-group"><label>קטגוריה</label><select id="ep-c">'+Object.keys(CATS).map(function(k){return '<option value="'+k+'"'+(k===p.cat?' selected':'')+'>'+CATS[k]+'</option>';}).join('')+'</select></div></div><div class="modal-actions"><button class="btn" onclick="closeModal()">ביטול</button><button class="btn btn-sky" onclick="svPrice('+i+')">💾 שמור</button></div>');}
+function svPrice(i){data.prices[i].name=document.getElementById('ep-n').value;data.prices[i].price=parseInt(document.getElementById('ep-p').value)||0;data.prices[i].cat=document.getElementById('ep-c').value;closeModal();rPrices(document.getElementById('content'));showToast('✅');}
+function delPrice(i){if(confirm('למחוק?')){data.prices.splice(i,1);rPrices(document.getElementById('content'));showToast('🗑️');}}
+function addPrice(cat){openModal('<div class="modal-title"><span>+ חדש</span><button class="modal-close" onclick="closeModal()">✕</button></div><div class="form-group"><label>שם</label><input id="ep-n" placeholder="תיאור"></div><div class="form-row"><div class="form-group"><label>מחיר ₪</label><input type="number" id="ep-p" placeholder="0"></div><div class="form-group"><label>קטגוריה</label><select id="ep-c">'+Object.keys(CATS).map(function(k){return '<option value="'+k+'"'+(k===cat?' selected':'')+'>'+CATS[k]+'</option>';}).join('')+'</select></div></div><div class="modal-actions"><button class="btn" onclick="closeModal()">ביטול</button><button class="btn btn-grn" onclick="doAddPrice()">+ הוסף</button></div>');}
+function doAddPrice(){var n=document.getElementById('ep-n').value;if(!n){showToast('⚠️ הזן שם');return;}data.prices.push({cat:document.getElementById('ep-c').value,name:n,price:parseInt(document.getElementById('ep-p').value)||0});closeModal();rPrices(document.getElementById('content'));showToast('✅');}
+
+// ── FAULTS ──
+function rFaults(c){var h='<div class="page on"><div class="page-title">⚠️ תקלות</div><div class="page-desc">ניהול מדריך תקלות</div>';(data.faults||[]).forEach(function(f,i){h+='<div class="section-card"><div class="sc-header"><div class="sc-title">'+f.icon+' '+esc(f.title)+'</div><div style="display:flex;gap:6px"><button class="btn btn-sm btn-sky" onclick="editFault('+i+')">✏️</button><button class="btn btn-sm btn-red" onclick="delFault('+i+')">🗑️</button></div></div><div style="font-size:12px;color:#64748b;line-height:1.7"><strong>סימפטום:</strong> '+esc(f.symptoms)+'<br><strong>סיבות:</strong> '+esc(f.causes)+'<br><strong>פתרון:</strong> '+esc(f.solution)+'</div></div>';});h+='<button class="add-btn" onclick="addFault()">+ תקלה חדשה</button></div>';c.innerHTML=h;}
+function editFault(i){var f=data.faults[i];openModal('<div class="modal-title"><span>✏️</span><button class="modal-close" onclick="closeModal()">✕</button></div><div class="form-row"><div class="form-group" style="max-width:60px"><label>אייקון</label><input id="ef-i" value="'+f.icon+'" maxlength="2"></div><div class="form-group"><label>כותרת</label><input id="ef-t" value="'+esc(f.title)+'"></div></div><div class="form-group"><label>סימפטומים</label><input id="ef-s" value="'+esc(f.symptoms)+'"></div><div class="form-group"><label>סיבות (|)</label><input id="ef-c" value="'+esc(f.causes)+'"></div><div class="form-group"><label>פתרון</label><textarea id="ef-sl">'+esc(f.solution)+'</textarea></div><div class="modal-actions"><button class="btn" onclick="closeModal()">ביטול</button><button class="btn btn-sky" onclick="svFault('+i+')">💾</button></div>');}
+function svFault(i){data.faults[i]={icon:document.getElementById('ef-i').value,title:document.getElementById('ef-t').value,symptoms:document.getElementById('ef-s').value,causes:document.getElementById('ef-c').value,solution:document.getElementById('ef-sl').value};closeModal();rFaults(document.getElementById('content'));showToast('✅');}
+function delFault(i){if(confirm('למחוק?')){data.faults.splice(i,1);rFaults(document.getElementById('content'));showToast('🗑️');}}
+function addFault(){openModal('<div class="modal-title"><span>+</span><button class="modal-close" onclick="closeModal()">✕</button></div><div class="form-row"><div class="form-group" style="max-width:60px"><label>אייקון</label><input id="ef-i" value="🔧" maxlength="2"></div><div class="form-group"><label>כותרת</label><input id="ef-t" placeholder="שם"></div></div><div class="form-group"><label>סימפטומים</label><input id="ef-s"></div><div class="form-group"><label>סיבות (|)</label><input id="ef-c"></div><div class="form-group"><label>פתרון</label><textarea id="ef-sl"></textarea></div><div class="modal-actions"><button class="btn" onclick="closeModal()">ביטול</button><button class="btn btn-grn" onclick="doAddFault()">+</button></div>');}
+function doAddFault(){data.faults.push({icon:document.getElementById('ef-i').value,title:document.getElementById('ef-t').value,symptoms:document.getElementById('ef-s').value,causes:document.getElementById('ef-c').value,solution:document.getElementById('ef-sl').value});closeModal();rFaults(document.getElementById('content'));showToast('✅');}
+
+// ── CLIENT ──
+function rClient(c){var h='<div class="page on"><div class="page-title">👤 הסברי לקוח</div><div class="page-desc">טקסטים לשליחה ללקוח</div>';(data.clientTexts||[]).forEach(function(t,i){h+='<div class="section-card"><div class="sc-header"><div class="sc-title">'+esc(t.title)+'</div><div style="display:flex;gap:6px"><button class="btn btn-sm btn-sky" onclick="editCT('+i+')">✏️</button><button class="btn btn-sm btn-red" onclick="delCT('+i+')">🗑️</button></div></div><div style="font-size:13px;color:#475569;line-height:1.7">'+esc(t.text)+'</div></div>';});h+='<button class="add-btn" onclick="addCT()">+ הסבר חדש</button></div>';c.innerHTML=h;}
+function editCT(i){var t=data.clientTexts[i];openModal('<div class="modal-title"><span>✏️</span><button class="modal-close" onclick="closeModal()">✕</button></div><div class="form-group"><label>כותרת</label><input id="ct-t" value="'+esc(t.title)+'"></div><div class="form-group"><label>טקסט</label><textarea id="ct-x" rows="4">'+esc(t.text)+'</textarea></div><div class="modal-actions"><button class="btn" onclick="closeModal()">ביטול</button><button class="btn btn-sky" onclick="svCT('+i+')">💾</button></div>');}
+function svCT(i){data.clientTexts[i]={title:document.getElementById('ct-t').value,text:document.getElementById('ct-x').value};closeModal();rClient(document.getElementById('content'));showToast('✅');}
+function delCT(i){if(confirm('למחוק?')){data.clientTexts.splice(i,1);rClient(document.getElementById('content'));showToast('🗑️');}}
+function addCT(){openModal('<div class="modal-title"><span>+</span><button class="modal-close" onclick="closeModal()">✕</button></div><div class="form-group"><label>כותרת</label><input id="ct-t" placeholder="🔧 כותרת"></div><div class="form-group"><label>טקסט</label><textarea id="ct-x" rows="4" placeholder="הסבר..."></textarea></div><div class="modal-actions"><button class="btn" onclick="closeModal()">ביטול</button><button class="btn btn-grn" onclick="doAddCT()">+</button></div>');}
+function doAddCT(){data.clientTexts.push({title:document.getElementById('ct-t').value,text:document.getElementById('ct-x').value});closeModal();rClient(document.getElementById('content'));showToast('✅');}
+
+// ── HEIGHTS ──
+function rHeights(c){var h='<div class="page on"><div class="page-title">📏 גבהי התקנה</div><div class="page-desc">גבהים סטנדרטיים</div><div class="section-card"><div class="item-list">';(data.heights||[]).forEach(function(r,i){h+='<div class="item-row"><div class="ir-name">'+esc(r.name)+'</div><div class="ir-meta"><span class="ir-price">'+esc(r.height)+' ס"מ</span></div><button class="btn btn-sm btn-sky" onclick="editH('+i+')">✏️</button><button class="btn btn-sm btn-red" onclick="delH('+i+')">🗑️</button></div>';});h+='</div><button class="add-btn" onclick="addH()">+ מוצר</button></div></div>';c.innerHTML=h;}
+function editH(i){var h=data.heights[i];openModal('<div class="modal-title"><span>✏️</span><button class="modal-close" onclick="closeModal()">✕</button></div><div class="form-group"><label>מוצר</label><input id="h-n" value="'+esc(h.name)+'"></div><div class="form-row"><div class="form-group"><label>גובה</label><input id="h-h" value="'+esc(h.height)+'"></div><div class="form-group"><label>הערה</label><input id="h-o" value="'+esc(h.note)+'"></div></div><div class="modal-actions"><button class="btn" onclick="closeModal()">ביטול</button><button class="btn btn-sky" onclick="svH('+i+')">💾</button></div>');}
+function svH(i){data.heights[i]={name:document.getElementById('h-n').value,height:document.getElementById('h-h').value,note:document.getElementById('h-o').value};closeModal();rHeights(document.getElementById('content'));showToast('✅');}
+function delH(i){if(confirm('למחוק?')){data.heights.splice(i,1);rHeights(document.getElementById('content'));showToast('🗑️');}}
+function addH(){openModal('<div class="modal-title"><span>+</span><button class="modal-close" onclick="closeModal()">✕</button></div><div class="form-group"><label>מוצר</label><input id="h-n"></div><div class="form-row"><div class="form-group"><label>גובה</label><input id="h-h"></div><div class="form-group"><label>הערה</label><input id="h-o"></div></div><div class="modal-actions"><button class="btn" onclick="closeModal()">ביטול</button><button class="btn btn-grn" onclick="doAddH()">+</button></div>');}
+function doAddH(){data.heights.push({name:document.getElementById('h-n').value,height:document.getElementById('h-h').value,note:document.getElementById('h-o').value});closeModal();rHeights(document.getElementById('content'));showToast('✅');}
+
+// ── DRYING ──
+function rDrying(c){var h='<div class="page on"><div class="page-title">⏳ זמני ייבוש</div><div class="page-desc">זמני המתנה לחומרים</div><div class="section-card"><div class="item-list">';(data.drying||[]).forEach(function(d,i){h+='<div class="item-row"><div class="ir-name">'+esc(d.name)+'</div><div class="ir-meta"><span style="color:#0ea5e9;font-weight:700">'+esc(d.wait)+'</span><span style="color:#94a3b8">→ '+esc(d.full)+'</span></div><button class="btn btn-sm btn-sky" onclick="editD('+i+')">✏️</button><button class="btn btn-sm btn-red" onclick="delD('+i+')">🗑️</button></div>';});h+='</div><button class="add-btn" onclick="addD()">+ חומר</button></div></div>';c.innerHTML=h;}
+function editD(i){var d=data.drying[i];openModal('<div class="modal-title"><span>✏️</span><button class="modal-close" onclick="closeModal()">✕</button></div><div class="form-group"><label>חומר</label><input id="d-n" value="'+esc(d.name)+'"></div><div class="form-row"><div class="form-group"><label>המתנה</label><input id="d-w" value="'+esc(d.wait)+'"></div><div class="form-group"><label>ייבוש מלא</label><input id="d-f" value="'+esc(d.full)+'"></div></div><div class="modal-actions"><button class="btn" onclick="closeModal()">ביטול</button><button class="btn btn-sky" onclick="svD('+i+')">💾</button></div>');}
+function svD(i){data.drying[i]={name:document.getElementById('d-n').value,wait:document.getElementById('d-w').value,full:document.getElementById('d-f').value};closeModal();rDrying(document.getElementById('content'));showToast('✅');}
+function delD(i){if(confirm('למחוק?')){data.drying.splice(i,1);rDrying(document.getElementById('content'));showToast('🗑️');}}
+function addD(){openModal('<div class="modal-title"><span>+</span><button class="modal-close" onclick="closeModal()">✕</button></div><div class="form-group"><label>חומר</label><input id="d-n"></div><div class="form-row"><div class="form-group"><label>המתנה</label><input id="d-w"></div><div class="form-group"><label>ייבוש מלא</label><input id="d-f"></div></div><div class="modal-actions"><button class="btn" onclick="closeModal()">ביטול</button><button class="btn btn-grn" onclick="doAddD()">+</button></div>');}
+function doAddD(){data.drying.push({name:document.getElementById('d-n').value,wait:document.getElementById('d-w').value,full:document.getElementById('d-f').value});closeModal();rDrying(document.getElementById('content'));showToast('✅');}
+
+// ── STANDARDS ──
+function rStandards(c){c.innerHTML='<div class="page on"><div class="page-title">📐 תקנים</div><div class="page-desc">ערכים קבועים לפי ת"י 1205</div><div class="section-card"><div style="font-size:13px;color:#475569;line-height:2"><strong>שיפועים:</strong><br>• 2" (50מ"מ): 2.0%-5.0%<br>• 3" (75מ"מ): 1.5%-3.0%<br>• 4" (110מ"מ): 1.5%-2.0%<br>• 6" (160מ"מ): 1.0%-1.5%<br><br><strong>אוורור:</strong><br>• אסלה: 3.0מ\' (FU=4)<br>• כיור: 1.5מ\' (FU=1)<br>• מקלחת/מטבח: 2.5מ\' (FU=2)<br><br><strong>לחצים:</strong><br>• מינימום: 1.0 בר<br>• מקסימום: 5.0 בר<br>• 10מ\' = 1 בר</div></div><div style="padding:12px;font-size:11px;color:#94a3b8;text-align:center">ערכים קבועים — לא ניתנים לעריכה</div></div>';}
+
+// ═══════════════════════════════════
+//  SECURITY PAGE
+// ═══════════════════════════════════
+function rSecurity(c){
+  var auth=getAuth();
+  c.innerHTML='<div class="page on"><div class="page-title">🔐 אבטחה</div><div class="page-desc">ניהול שם משתמש, סיסמה והגדרות אבטחה</div>'
+    +'<div class="section-card"><div class="sc-title">👤 שינוי שם משתמש</div><div class="form-group" style="margin-top:12px"><label>שם משתמש נוכחי</label><input value="'+esc(auth.user)+'" disabled style="background:#f1f5f9;color:#94a3b8"></div><div class="form-group"><label>שם משתמש חדש</label><input id="sec-newuser" placeholder="הזן שם חדש"></div><div style="margin-top:12px"><button class="btn btn-sky" onclick="changeUser()">💾 עדכן שם משתמש</button></div></div>'
+    +'<div class="section-card"><div class="sc-title">🔑 שינוי סיסמה</div><div class="form-group" style="margin-top:12px"><label>סיסמה נוכחית</label><input type="password" id="sec-oldpass" placeholder="סיסמה נוכחית"></div><div class="form-group"><label>סיסמה חדשה</label><input type="password" id="sec-newpass" placeholder="סיסמה חדשה (לפחות 4 תווים)"></div><div class="form-group"><label>אימות סיסמה חדשה</label><input type="password" id="sec-newpass2" placeholder="הזן שוב"></div><div style="margin-top:12px"><button class="btn btn-sky" onclick="changePass()">🔑 עדכן סיסמה</button></div></div>'
+    +'<div class="section-card"><div class="sc-title">🛡️ מידע אבטחה</div><div style="font-size:13px;color:#475569;line-height:1.8;margin-top:8px">• <strong>נעילה אוטומטית:</strong> אחרי '+MAX_ATTEMPTS+' ניסיונות כושלים החשבון ננעל ל-'+LOCKOUT_MINUTES+' דקות<br>• <strong>תוקף הפעלה:</strong> '+SESSION_HOURS+' שעות — אחרי זה צריך להתחבר מחדש<br>• <strong>הסיסמה מוצפנת</strong> ב-localStorage ולא נשמרת בטקסט גלוי</div></div>'
+    +'</div>';
+}
+
+function changeUser(){
+  var newUser=document.getElementById('sec-newuser').value.trim();
+  if(!newUser||newUser.length<3){showToast('⚠️ שם משתמש חייב להכיל לפחות 3 תווים');return;}
+  var auth=getAuth();
+  auth.user=newUser;
+  localStorage.setItem(AUTH_KEY,JSON.stringify(auth));
+  document.getElementById('userBadge').textContent='👤 '+newUser;
+  showToast('✅ שם משתמש עודכן ל: '+newUser);
+  rSecurity(document.getElementById('content'));
+}
+
+function changePass(){
+  var oldP=document.getElementById('sec-oldpass').value;
+  var newP=document.getElementById('sec-newpass').value;
+  var newP2=document.getElementById('sec-newpass2').value;
+  var auth=getAuth();
+  if(hashPass(oldP)!==auth.pass){showToast('❌ סיסמה נוכחית שגויה');return;}
+  if(newP.length<4){showToast('⚠️ סיסמה חדשה חייבת להכיל לפחות 4 תווים');return;}
+  if(newP!==newP2){showToast('⚠️ הסיסמאות לא תואמות');return;}
+  auth.pass=hashPass(newP);
+  localStorage.setItem(AUTH_KEY,JSON.stringify(auth));
+  showToast('✅ סיסמה עודכנה בהצלחה');
+  rSecurity(document.getElementById('content'));
+}
+
+// ── SETTINGS ──
+function rSettings(c){var s=data.settings||DEFAULTS.settings;c.innerHTML='<div class="page on"><div class="page-title">⚙️ הגדרות</div><div class="page-desc">הגדרות כלליות</div><div class="section-card"><div class="sc-title">פרטי העסק</div><div class="form-group" style="margin-top:12px"><label>שם העסק</label><input id="st-n" value="'+esc(s.businessName)+'" onchange="data.settings.businessName=this.value"></div><div class="form-group"><label>טלפון</label><input id="st-p" value="'+esc(s.phone||'')+'" placeholder="050-0000000" onchange="data.settings.phone=this.value"></div><div class="form-group"><label>פתיח ווטסאפ</label><input id="st-w" value="'+esc(s.whatsappPrefix)+'" onchange="data.settings.whatsappPrefix=this.value"></div></div><div class="section-card"><div class="sc-title">נתונים</div><div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button class="btn btn-sky" onclick="exportData()">📤 ייצוא JSON</button><button class="btn" onclick="document.getElementById(\'impF\').click()">📥 ייבוא</button><input type="file" id="impF" accept=".json" style="display:none" onchange="importData(event)"><button class="btn btn-red" onclick="resetToDefaults()">↺ אפס</button></div></div></div>';}
+function exportData(){var b=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='ad-plumbing-data.json';a.click();showToast('📤 יוצא');}
+function importData(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(ev){try{data=JSON.parse(ev.target.result);saveAll();renderPage(curPage);showToast('📥 יובא');}catch(err){showToast('❌ קובץ לא תקין');}};r.readAsText(f);}
+
+// ── INIT ──
+loadData();initNav();renderPage('dashboard');
+</script>
+</body>
+</html>
