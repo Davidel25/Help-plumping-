@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>א.ד. אינסטלציה | לוח ניהול</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f8f9fb;--card:#fff;--bdr:#e2e8f0;--sky:#0ea5e9;--skyL:#e0f2fe;--grn:#10b981;--red:#ef4444;--amb:#f59e0b;--t1:#0f172a;--t2:#334155;--t3:#64748b;--t4:#94a3b8;--r:12px;--rs:8px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--t2);min-height:100vh;}
+.login-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:linear-gradient(135deg,#0f172a,#1e293b);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;}
+.login-overlay.hidden{display:none;}
+.login-box{background:#fff;border-radius:16px;padding:36px 32px;width:100%;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,.3);}
+.login-logo{text-align:center;margin-bottom:24px;}
+.login-logo .ico{width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,#38bdf8,#0ea5e9);display:inline-flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 6px 20px rgba(56,189,248,.3);margin-bottom:12px;}
+.login-logo h2{font-size:20px;font-weight:800;color:var(--t1);}
+.login-logo p{font-size:12px;color:var(--t4);margin-top:4px;}
+.login-field{margin-bottom:14px;}
+.login-field label{display:block;font-size:12px;font-weight:600;color:var(--t3);margin-bottom:5px;}
+.login-field input{width:100%;padding:12px 14px;border:1px solid var(--bdr);border-radius:var(--rs);font-family:inherit;font-size:15px;color:var(--t1);outline:none;transition:border-color .2s;}
+.login-field input:focus{border-color:var(--sky);}
+.login-btn{width:100%;padding:13px;border-radius:var(--rs);border:none;background:var(--sky);color:#fff;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;margin-top:6px;}
+.login-btn:active{transform:scale(.98);}
+.login-error{margin-top:10px;padding:10px;border-radius:var(--rs);background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.15);color:var(--red);font-size:12px;font-weight:600;display:none;text-align:center;}
+.login-lockout{color:var(--amb);background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.15);}
+.top-bar{background:#fff;border-bottom:1px solid var(--bdr);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 1px 3px rgba(0,0,0,.05);}
+.top-bar h1{font-size:18px;font-weight:800;color:var(--t1);display:flex;align-items:center;gap:8px;}
+.top-actions{display:flex;align-items:center;gap:8px;}
+.save-btn{padding:10px 20px;border-radius:var(--rs);border:none;background:var(--sky);color:#fff;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;}
+.save-btn:active{transform:scale(.97);}
+.logout-btn{padding:10px 14px;border-radius:var(--rs);border:1px solid var(--bdr);background:#fff;color:var(--red);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;}
+.layout{display:flex;min-height:calc(100vh - 57px);}
+.sidebar{width:220px;background:#fff;border-left:1px solid var(--bdr);padding:16px 0;flex-shrink:0;position:sticky;top:57px;height:calc(100vh - 57px);overflow-y:auto;}
+.sb-item{display:flex;align-items:center;gap:10px;padding:11px 20px;cursor:pointer;font-size:13px;font-weight:600;color:var(--t3);transition:all .15s;border-right:3px solid transparent;}
+.sb-item:hover{background:var(--skyL);color:var(--sky);}
+.sb-item.on{background:var(--skyL);color:var(--sky);border-right-color:var(--sky);font-weight:700;}
+.sb-item .sb-ico{font-size:17px;width:24px;text-align:center;}
+.content{flex:1;padding:24px 28px;max-width:900px;}
+.page{display:none;}.page.on{display:block;animation:fadeIn .2s ease-out;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.page-title{font-size:20px;font-weight:800;color:var(--t1);margin-bottom:6px;}
+.page-desc{font-size:13px;color:var(--t4);margin-bottom:20px;}
+.section-card{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);padding:20px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.sc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:6px;}
+.sc-title{font-size:15px;font-weight:700;color:var(--t1);}
+.form-row{display:flex;gap:10px;align-items:flex-end;margin-bottom:10px;flex-wrap:wrap;}
+.form-group{display:flex;flex-direction:column;gap:4px;flex:1;min-width:120px;}
+.form-group label{font-size:11px;font-weight:600;color:var(--t3);}
+.form-group input,.form-group select,.form-group textarea{padding:9px 12px;border:1px solid var(--bdr);border-radius:var(--rs);font-family:inherit;font-size:14px;color:var(--t1);outline:none;background:#fff;}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--sky);}
+.form-group textarea{resize:vertical;min-height:60px;}
+.item-list{border:1px solid var(--bdr);border-radius:var(--rs);overflow:hidden;}
+.item-row{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--bdr);}
+.item-row:last-child{border-bottom:none;}
+.item-row:hover{background:#f8fafc;}
+.item-row .ir-name{flex:1;font-size:13px;font-weight:600;color:var(--t1);}
+.item-row .ir-meta{font-size:12px;color:var(--t4);display:flex;align-items:center;gap:6px;}
+.item-row .ir-price{font-size:14px;font-weight:800;color:var(--sky);}
+.btn{padding:8px 16px;border-radius:var(--rs);border:1px solid var(--bdr);background:#fff;color:var(--t2);font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:5px;}
+.btn:hover{background:#f1f5f9;}.btn:active{transform:scale(.97);}
+.btn-sky{background:var(--skyL);color:var(--sky);border-color:rgba(14,165,233,.2);}
+.btn-red{color:var(--red);border-color:rgba(239,68,68,.2);}
+.btn-grn{background:rgba(16,185,129,.08);color:var(--grn);border-color:rgba(16,185,129,.2);}
+.btn-sm{padding:5px 10px;font-size:11px;}
+.add-btn{display:flex;align-items:center;gap:6px;padding:10px;border-radius:var(--rs);border:2px dashed var(--bdr);background:none;color:var(--t4);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;width:100%;justify-content:center;margin-top:10px;}
+.add-btn:hover{border-color:var(--sky);color:var(--sky);background:var(--skyL);}
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.4);z-index:500;display:none;align-items:center;justify-content:center;}
+.modal-overlay.on{display:flex;}
+.modal{background:#fff;border-radius:var(--r);padding:24px;width:90%;max-width:500px;max-height:80vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.15);}
+.modal-title{font-size:17px;font-weight:800;color:var(--t1);margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;}
+.modal-close{width:32px;height:32px;border-radius:8px;border:none;background:var(--bg);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--t3);}
+.modal-actions{display:flex;gap:8px;margin-top:18px;justify-content:flex-end;}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px;}
+.stat{background:#fff;border:1px solid var(--bdr);border-radius:var(--rs);padding:16px;text-align:center;}
+.stat .sv{font-size:28px;font-weight:900;color:var(--sky);}
+.stat .sl{font-size:11px;color:var(--t4);margin-top:4px;}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:#0f172a;color:#fff;padding:12px 24px;border-radius:var(--rs);font-size:13px;font-weight:600;z-index:600;transition:transform .3s ease;box-shadow:0 10px 30px rgba(0,0,0,.2);}
+.toast.show{transform:translateX(-50%) translateY(0);}
+.user-badge{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:20px;background:var(--skyL);color:var(--sky);font-size:11px;font-weight:600;}
+.editor-note{margin-top:8px;padding:8px 12px;border-radius:var(--rs);background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.15);font-size:11px;color:var(--amb);font-weight:500;}
+.std-edit-note{background:rgba(14,165,233,.06);border:1px solid rgba(14,165,233,.15);border-radius:var(--rs);padding:10px 12px;margin-top:8px;}
+.std-edit-note label{font-size:10px;font-weight:600;color:var(--sky);display:block;margin-bottom:4px;}
+.std-edit-note textarea{width:100%;border:1px solid var(--bdr);border-radius:6px;padding:8px;font-family:inherit;font-size:12px;color:var(--t1);resize:vertical;min-height:40px;outline:none;}
+.std-edit-note textarea:focus{border-color:var(--sky);}
+.report-btn{display:inline-flex;align-items:center;gap:4px;padding:5px 12px;border-radius:20px;border:1px solid rgba(239,68,68,.2);background:rgba(239,68,68,.04);color:var(--red);font-family:inherit;font-size:10px;font-weight:600;cursor:pointer;margin-top:6px;}
+.report-btn:active{transform:scale(.95);}
+@media(max-width:768px){.sidebar{display:none;}.layout{flex-direction:column;}.content{padding:16px;}.mob-nav{display:flex;overflow-x:auto;gap:4px;padding:8px 12px;background:#fff;border-bottom:1px solid var(--bdr);scrollbar-width:none;}.mob-nav::-webkit-scrollbar{display:none;}.mob-nav .mn-btn{padding:8px 14px;border-radius:20px;border:1px solid var(--bdr);background:#fff;color:var(--t3);font-family:inherit;font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap;}.mob-nav .mn-btn.on{background:var(--sky);color:#fff;border-color:var(--sky);}.top-actions{gap:4px;}.save-btn{padding:8px 12px;font-size:12px;}.logout-btn{padding:8px 10px;font-size:11px;}}
+@media(min-width:769px){.mob-nav{display:none;}}
+</style>
+</head>
+<body>
+
+<div class="login-overlay" id="loginScreen">
+<div class="login-box"><div class="login-logo"><div class="ico">🔧</div><h2>לוח ניהול</h2><p>א.ד. אינסטלציה · גישה מורשית בלבד</p></div>
+<div class="login-field"><label>שם משתמש</label><input type="text" id="loginUser" placeholder="שם משתמש" autocomplete="username"></div>
+<div class="login-field"><label>סיסמה</label><input type="password" id="loginPass" placeholder="סיסמה" autocomplete="current-password"></div>
+<button class="login-btn" onclick="doLogin()">🔐 כניסה</button>
+<div class="login-error" id="loginError"></div></div></div>
+
+<div id="adminPanel" style="display:none">
+<div class="top-bar"><h1><span>🔧</span> לוח ניהול</h1><div class="top-actions"><div class="user-badge" id="userBadge">👤</div><button class="save-btn" id="saveBtn" onclick="saveAll()">💾 שמור</button><button class="logout-btn" onclick="doLogout()">🚪 יציאה</button></div></div>
+<div class="mob-nav" id="mobNav"></div>
+<div class="layout"><aside class="sidebar" id="sidebar"></aside><div class="content" id="content"></div></div>
+</div>
+
+<div class="modal-overlay" id="modal"><div class="modal" id="modalContent"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══ AUTH ═══
+var AK='ad_plumbing_auth',SK='ad_plumbing_session',LK='ad_plumbing_lockout',MAX_ATT=5,LOCK_MIN=15,SESS_HR=24;
+function hp(p){var h=0;for(var i=0;i<p.length;i++){h=((h<<5)-h)+p.charCodeAt(i);h|=0;}return 'h_'+Math.abs(h).toString(36)+'_'+p.length;}
+function gA(){try{var a=localStorage.getItem(AK);if(a)return JSON.parse(a);}catch(e){}var d={user:'admin',pass:hp('ad2024')};localStorage.setItem(AK,JSON.stringify(d));return d;}
+function cLO(){try{var l=localStorage.getItem(LK);if(!l)return false;var d=JSON.parse(l);if(d.until>Date.now())return d;localStorage.removeItem(LK);}catch(e){}return false;}
+function addFail(){try{var k='ad_plumbing_attempts',a=JSON.parse(localStorage.getItem(k)||'{"count":0,"first":0}');if(Date.now()-a.first>LOCK_MIN*60000){a={count:0,first:Date.now()};}a.count++;if(a.count===1)a.first=Date.now();localStorage.setItem(k,JSON.stringify(a));if(a.count>=MAX_ATT){localStorage.setItem(LK,JSON.stringify({until:Date.now()+LOCK_MIN*60000}));localStorage.removeItem(k);return true;}return false;}catch(e){return false;}}
+function gFC(){try{return JSON.parse(localStorage.getItem('ad_plumbing_attempts')||'{"count":0}').count;}catch(e){return 0;}}
+function cSess(){var s={token:'s_'+Math.random().toString(36).substr(2),expires:Date.now()+SESS_HR*3600000};localStorage.setItem(SK,JSON.stringify(s));return s;}
+function chkSess(){try{var s=JSON.parse(localStorage.getItem(SK));if(s&&s.expires>Date.now())return true;localStorage.removeItem(SK);}catch(e){}return false;}
+function doLogin(){var err=document.getElementById('loginError');var lo=cLO();if(lo){var m=Math.ceil((lo.until-Date.now())/60000);err.textContent='⏳ ננעל. נסה בעוד '+m+' דק\'';err.className='login-error login-lockout';err.style.display='block';return;}var u=document.getElementById('loginUser').value.trim(),p=document.getElementById('loginPass').value;if(!u||!p){err.textContent='⚠️ הזן שם וסיסמה';err.style.display='block';return;}var a=gA();if(u===a.user&&hp(p)===a.pass){localStorage.removeItem('ad_plumbing_attempts');cSess();showAdmin(u);}else{var locked=addFail();if(locked){err.textContent='🔒 ננעל ל-'+LOCK_MIN+' דק\'';err.className='login-error login-lockout';}else{err.textContent='❌ שגוי ('+(MAX_ATT-gFC())+' נותרו)';err.className='login-error';}err.style.display='block';document.getElementById('loginPass').value='';}}
+function doLogout(){localStorage.removeItem(SK);document.getElementById('adminPanel').style.display='none';document.getElementById('loginScreen').classList.remove('hidden');document.getElementById('loginUser').value='';document.getElementById('loginPass').value='';document.getElementById('loginError').style.display='none';}
+function showAdmin(u){document.getElementById('loginScreen').classList.add('hidden');document.getElementById('adminPanel').style.display='';document.getElementById('userBadge').textContent='👤 '+u;}
+document.getElementById('loginPass').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin();});
+document.getElementById('loginUser').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('loginPass').focus();});
+if(chkSess()){showAdmin(gA().user);}
+
+// ═══ DATA ═══
+var CATS={fix:'תיקונים',install:'התקנות',replace:'החלפות',block:'סתימות',other:'שונות'};
+var DEFAULTS={
+prices:[{cat:'fix',name:'תיקון נזילה קטנה (גלוי)',price:250},{cat:'fix',name:'תיקון נזילה בקיר (עם פתיחה)',price:550},{cat:'fix',name:'תיקון שטף אסלה',price:200},{cat:'fix',name:'תיקון ברז מטפטף',price:180},{cat:'fix',name:'תיקון דליפה מדוד שמש',price:400},{cat:'fix',name:'תיקון צנרת תת-רצפתית',price:800},{cat:'fix',name:'תיקון מנגנון ניאגרה',price:280},{cat:'fix',name:'תיקון אינטרפוץ',price:350},{cat:'install',name:'התקנת אסלה חדשה',price:450},{cat:'install',name:'התקנת כיור רחצה',price:350},{cat:'install',name:'התקנת כיור מטבח',price:400},{cat:'install',name:'התקנת מקלחון',price:500},{cat:'install',name:'התקנת ברז מטבח',price:250},{cat:'install',name:'התקנת דוד חשמלי',price:600},{cat:'install',name:'התקנת מכונת כביסה/כלים',price:250},{cat:'install',name:'התקנת נשם (AAV)',price:200},{cat:'install',name:'התקנת ממעט לחץ (PRV)',price:350},{cat:'install',name:'התקנת ניאגרה סמויה',price:800},{cat:'install',name:'התקנת אינטרפוץ',price:500},{cat:'install',name:'התקנת משאבת לחץ',price:1200},{cat:'replace',name:'החלפת אסלה (כולל פירוק)',price:650},{cat:'replace',name:'החלפת ברז מטבח',price:350},{cat:'replace',name:'החלפת מנגנון שטיפה',price:300},{cat:'replace',name:'החלפת סיפון',price:180},{cat:'replace',name:'החלפת גמיש',price:150},{cat:'replace',name:'החלפת צנרת PPR (מטר)',price:200},{cat:'replace',name:'החלפת אינטרפוץ',price:600},{cat:'block',name:'פתיחת סתימה בכיור',price:250},{cat:'block',name:'פתיחת סתימה באסלה',price:300},{cat:'block',name:'פתיחת סתימה ראשית',price:500},{cat:'block',name:'פתיחת סתימה במכונה חשמלית',price:600},{cat:'block',name:'שטיפת קו בלחץ',price:700},{cat:'block',name:'צילום קו במצלמה',price:500},{cat:'other',name:'ביקור + אבחון',price:200},{cat:'other',name:'בדיקת לחץ מים',price:150},{cat:'other',name:'איתור נזילה עם ציוד',price:500},{cat:'other',name:'קריאת חירום (שבת/חג)',price:500},{cat:'other',name:'קריאת חירום (לילה)',price:450}],
+faults:[
+{icon:'🔊',title:'רעשי גרגור בצנרת ניקוז',symptoms:'רעש בועות וגרגור בזמן שטיפת אסלה או ריקון כיור',causes:'חוסר אוורור – אין נשם או קולטן קרוב|שיפוע חד מדי שגורם לשאיבת סיפון|חסימה חלקית בצנרת שמפריעה לזרימת אוויר',solution:'בדוק מרחק אוורור לפי הל"ת · התקן נשם AAV · ודא שיפוע 1.5%-2% ל-110מ"מ · שטוף צנרת אם יש חסימה'},
+{icon:'💧',title:'דליפה מחיבורי צנרת',symptoms:'טפטוף, רטיבות בקירות או תקרה, כתמי מים',causes:'חיבור PPR שלא הולחם כראוי|לחץ מים מעל 5 בר שמפעיל עומס|חומרי איטום לא מתאימים (טפלון ישן)|סדק בצנרת כתוצאה מקפאון בחורף',solution:'בדוק לחץ כניסה · התקן PRV אם מעל 5 בר · החלף חיבור פגום · PPR – הלחמה מחדש ב-260°C · בחורף – בדד צנרת חשופה'},
+{icon:'🚽',title:'שטיפה חלשה באסלה',symptoms:'מים זורמים לאט, שטיפה לא מפנה את התכולה, צריך ללחוץ פעמיים',causes:'לחץ מים נמוך מ-1.0 בר|מצוף תקוע או מכוון נמוך מדי|מנגנון שטיפה ישן או פגום|חסימה חלקית בצנרת 110 מ"מ|שיפוע ניקוז לא מספיק',solution:'בדוק לחץ בנקודה (מינ\' 1.0 בר) · כוון מצוף · החלף מנגנון שטיפה · בדוק שיפוע (1.5%-2%) · שטוף עם כבל ספירלי'},
+{icon:'🔨',title:'פטיש מים (Water Hammer)',symptoms:'חבטות חזקות או רעש מתכתי בסגירת ברז, רטט בצנרת',causes:'לחץ מים גבוה מדי (מעל 4-5 בר)|מהירות זרימה גבוהה בקוטר קטן|חוסר מעצור פטיש מים|צנרת לא מעוגנת כראוי – חופשית לנוע',solution:'התקן מעצור פטיש מים (Arrestor) · התקן PRV – כוון ל-3-4 בר · עגן צנרת כל 1.5 מ\' אופקי · שקול הגדלת קוטר אם קטן מדי'},
+{icon:'🦠',title:'ריח ביוב עולה מהניקוז',symptoms:'ריח ביוב חזק בחדרי רחצה, מטבח, או חדר כביסה',causes:'סיפון יבש – מחסום המים התאדה בגלל חוסר שימוש|שאיבת סיפון – חוסר אוורור גורם לשאיבת המים מהסיפון|סיפון סדוק או חסר|חיבור לקוי של צנרת ניקוז לקולטן',solution:'שפוך כוס מים לכל סיפון · בדוק אוורור – התקן נשם AAV · החלף סיפון פגום · ודא גובה מחסום מים מינ\' 50 מ"מ'},
+{icon:'🌡',title:'מים חמים לא מגיעים או פושרים',symptoms:'זמן המתנה ארוך מאוד למים חמים, מים פושרים בלבד, אין מים חמים כלל',causes:'מרחק ארוך מהדוד לנקודה – צנרת לא מבודדת|תרמוסטט פגום בדוד חשמלי|דוד שמש – בעיית מחזור, חיישן, או משאבה|ערבוב בצנרת – חיבור הפוך של חם וקר|אבנית בדוד שמפחיתה יעילות חימום',solution:'בדד צנרת מים חמים (חובה ת"י 1205) · בדוק טמפ\' דוד (60°C) · שקול משאבת רצירקולציה · ודא חיבורים: חם=שמאל, קר=ימין · שטוף דוד מאבנית'},
+{icon:'🚿',title:'לחץ מים חלש במקלחת',symptoms:'זרם מים חלש מראש המקלחת, מים בטפטוף',causes:'לחץ מים נמוך בנקודה (מתחת ל-1.0 בר)|ראש מקלחת סתום מאבנית|מערבל (אינטרפוץ) פגום או סתום|צנרת אספקה בקוטר קטן מדי|שסתום עצירה חצי סגור',solution:'בדוק לחץ · נקה ראש מקלחת בחומץ · בדוק אינטרפוץ · ודא קוטר אספקה מתאים · ודא שסתומים פתוחים'},
+{icon:'💦',title:'דליפה מתחת לכיור',symptoms:'רטיבות בארון מתחת לכיור, טפטוף לאט',causes:'סיפון רופף או סדוק|אטמים בלויים בחיבור הכיור|ברז מטפטף מהבסיס|גמיש (שלנג) ישן שהתבלה|חיבור ניקוז רופף',solution:'הדק סיפון · החלף אטמים · החלף גמישים כל 5-7 שנים · בדוק חיבורי ניקוז · בדוק ברז'},
+{icon:'🔧',title:'ברז מטפטף / לא נסגר עד הסוף',symptoms:'טפטוף מתמשך מהברז גם כשסגור, ידית קשה לסיבוב',causes:'קרמיקה (דיסקית) שחוקה בברז|אטם O-ring בלוי|אבנית שמפריעה לסגירה|קרטרידג\' פגום בברז חד-ידני',solution:'החלף קרמיקה/דיסקית · החלף O-ring · נקה מאבנית · החלף קרטרידג\' · אם ברז ישן מאוד – שקול החלפה מלאה'},
+{icon:'🚰',title:'אסלה רצה ללא הפסקה',symptoms:'מים ממשיכים לזרום לאחר שטיפה, רעש מים מתמשך',causes:'מצוף תקוע במצב פתוח|שסתום מילוי (Fill Valve) פגום|פלאפר (Flapper) בלוי – לא אוטם|גובה מים בניאגרה מכוון גבוה מדי – מים עוברים לצנרת גלישה',solution:'נקה/החלף מצוף · כוון גובה מים 2 ס"מ מתחת לצנרת גלישה · החלף פלאפר · החלף שסתום מילוי'},
+{icon:'🧊',title:'צנרת קפואה בחורף',symptoms:'אין זרימת מים כלל בבוקר קר, צנרת נפוחה או סדוקה',causes:'צנרת חשופה לקור ללא בידוד|צנרת בקיר חיצוני ללא הגנה|טמפרטורה ירדה מתחת לאפס',solution:'חמם בזהירות עם פן (לא אש!) · בדד כל צנרת חשופה · התקן כבל חימום חשמלי · שקול העברת צנרת לקירות פנימיים · בדוק סדקים אחרי הפשרה'},
+{icon:'🔴',title:'מים חלודים / צבע חום-אדמדם',symptoms:'מים בצבע חלוד מהברז, כתמים על כלים',causes:'צנרת פלדה ישנה שנשחקה מבפנים|הפסקת מים ברשת העירונית שגרמה לשחרור משקעים|דוד ישן עם חלודה פנימית|ברז ישן עם חלקים מתכתיים מחלידים',solution:'שטוף צנרת – פתח ברזים למספר דקות · אם חוזר – צנרת פלדה דורשת החלפה ל-PPR · בדוק דוד · סנן מים בכניסה'},
+{icon:'🔵',title:'לחץ מים גבוה מדי',symptoms:'ברזים נסגרים בחבטה, גמישים מתנפצים, רעש בצנרת',causes:'לחץ רשת עירוני גבוה (מעל 5 בר)|אין ממעט לחץ (PRV) בכניסה לדירה',solution:'מדוד לחץ בכניסה · התקן PRV וכוון ל-3.0-3.5 בר · בדוק PRV קיים – ייתכן שתקוע'},
+{icon:'🟡',title:'נזילה סמויה (ספיקת מד מים גבוהה)',symptoms:'חשבון מים גבוה, מד מים מסתובב כשכל הברזים סגורים',causes:'נזילה בצנרת תת-רצפתית|סדק בצנרת בקיר|מנגנון אסלה דולף לאט|ברז חיצוני (גינה) דולף',solution:'סגור שסתום ראשי ובדוק אם המד עוצר · אם לא עוצר – נזילה לפני השסתום · בדוק אסלות (הוסף צבע מאכל לניאגרה) · בדוק ברזים חיצוניים · בצע איתור עם ציוד מקצועי'},
+{icon:'⚡',title:'דוד חשמלי לא מחמם',symptoms:'אין מים חמים כלל, דוד לא מגיב',causes:'תרמוסטט פגום|גוף חימום (טן) שרוף|בעיית חשמל – מפסק/פיוז נפל|אבנית עבה על גוף החימום',solution:'בדוק חשמל – האם המפסק למעלה · בדוק תרמוסטט (כוון ל-60°C) · אם אין חשמל לטן – החלף תרמוסטט · טן שרוף – החלף · שטוף דוד מאבנית'},
+{icon:'☀',title:'דוד שמש לא מחמם מספיק',symptoms:'מים פושרים בלבד מדוד שמש, צריך גיבוי חשמלי כל יום',causes:'קולטים מלוכלכים או מוצללים|משאבת מחזור תקועה|חיישן טמפרטורה פגום|אבנית בדוד|צנרת מחזור לא מבודדת',solution:'נקה קולטים · בדוק משאבת מחזור · החלף חיישן · שטוף דוד מאבנית · בדד צנרת מחזור'},
+{icon:'🚾',title:'אסלה סתומה / ניקוז איטי',symptoms:'מים עולים באסלה, ניקוז איטי מאוד, הצפה',causes:'חסימה מנייר/חפצים|חסימה בצנרת 110 מ"מ|שורשי עצים חדרו לצנרת|שיפוע ניקוז לא מספיק',solution:'נסה פומפה (בוכנה) · כבל ספירלי ידני · מכונת כבל חשמלית · בדוק שיפוע · צלם קו עם מצלמה אם חוזר'},
+{icon:'🏠',title:'רטיבות בתקרה מהדירה מעל',symptoms:'כתם רטיבות בתקרה, טפטוף, בועות בצבע',causes:'דליפה מצנרת ניקוז של הדירה מעל|דליפה ממערכת אספקה בדירה מעל|איטום לקוי במקלחת/אמבטיה מעל|סתימה בקו ניקוז משותף',solution:'זהה מקור (אספקה/ניקוז) · בדוק עם השכן · אם ניקוז – בדוק סיפון ואיטום מקלחת · אם אספקה – חפש נזילה בצנרת · פנה למתכנן אם לא ניתן לאתר'},
+{icon:'🔩',title:'חיבור PPR דולף אחרי הלחמה',symptoms:'טפטוף מחיבור שזה עתה הולחם',causes:'טמפרטורת הלחמה לא מספקת (צריך 260°C)|זמן חימום קצר מדי|צנרת לא נוקתה לפני הלחמה|הצנרת זזה בזמן קירור|שימוש בצנרת לא תקנית',solution:'חתוך את החיבור ובצע הלחמה מחדש · ודא 260°C · חמם לפי זמנים: 20מ"מ=5שניות, 25מ"מ=7שניות, 32מ"מ=8שניות · נקה קודם · אל תזיז 30 שניות אחרי הלחמה'},
+{icon:'🌊',title:'הצפה ממכונת כביסה/כלים',symptoms:'מים על הרצפה ליד המכונה, הצפה בזמן ניקוז',causes:'צנרת ניקוז סתומה|שלנג ניקוז יצא מהמקום|סיפון רצפה סתום|גובה שלנג ניקוז לא מספיק (צריך לולאה)',solution:'בדוק שלנג ניקוז מחובר ומונח גבוה · נקה סיפון רצפה · פתח סתימה בצנרת ניקוז · ודא לולאת שלנג בגובה 60-80 ס"מ'},
+{icon:'🔔',title:'רעש שריקה/ציפצוף מהצנרת',symptoms:'שריקה או ציפצוף כשפותחים ברז',causes:'שסתום חצי סגור שגורם לזרימה טורבולנטית|ברז עם קרמיקה שחוקה|קוטר צנרת קטן מדי לספיקה הנדרשת|לחץ גבוה מדי',solution:'פתח כל השסתומים עד הסוף · החלף קרמיקה/קרטרידג\' בברז · בדוק לחץ · שקול הגדלת קוטר אם קטן'}
+],
+clientTexts:[{title:'🔊 רעשי גרגור',text:'הרעש נגרם כי אין מספיק אוויר בצנרת הניקוז. הפתרון הוא התקנת שסתום אוויר (נשם).'},{title:'💧 דליפה',text:'הדליפה נגרמת מלחץ מים גבוה או חיבור ישן. מומלץ וסת לחץ והחלפת חיבור.'},{title:'🦠 ריח ביוב',text:'מחסום המים בסיפון התייבש. שפכו כוס מים ובדקו שהסיפון תקין.'},{title:'🔨 רעש חבטות',text:'קורה בסגירת ברז חדה. הפתרון: בולם זעזועים ובדיקת לחץ.'},{title:'🚽 שטיפה חלשה',text:'נגרמת מלחץ נמוך או מנגנון ישן. לבדוק לחץ, מנגנון וחסימות.'}],
+heights:[{name:'ניאגרה סמויה',height:'100',note:'מרכז לחצן'},{name:'יציאת ביוב אסלה',height:'18',note:'מרכז צנרת'},{name:'אינטרפוץ מקלחת',height:'110-120',note:'מרצפה גמורה'},{name:'ברז כיור רחצה',height:'105',note:'מרצפה גמורה'},{name:'ברז מטבח',height:'105',note:'מעל השיש'},{name:'יציאת מכ"כ',height:'75',note:'מרצפה גמורה'},{name:'גובה כיור',height:'80-85',note:'חלק עליון'}],
+drying:[{name:'דבק PVC',wait:'5 דק\'',full:'2 שעות'},{name:'דבק CPVC',wait:'10 דק\'',full:'4 שעות'},{name:'סיליקון',wait:'30 דק\'',full:'24 שעות'},{name:'טפלון חוט',wait:'מיידי',full:'מיידי'},{name:'אפוקסי',wait:'60 דק\'',full:'24 שעות'},{name:'PPR (הלחמה)',wait:'מיידי',full:'3 דק\' קירור'},{name:'מלט אינסטלציה',wait:'4 שעות',full:'24-48 שעות'},{name:'איטום ביטומני',wait:'2 שעות',full:'24 שעות'},{name:'פוליאוריתן',wait:'45 דק\'',full:'24 שעות'}],
+// CORRECTED STANDARDS per ת"י 1205
+standards:{
+  fu:[{name:'כיור רחצה',fu:0.5},{name:'כיור מטבח',fu:1.0},{name:'אסלה 6 ליטר',fu:2.0},{name:'אסלה 9 ליטר',fu:2.5},{name:'מקלחת',fu:0.5},{name:'אמבטיה',fu:1.0},{name:'מכונת כביסה',fu:1.0},{name:'מכונת כלים',fu:0.5}],
+  slopes:[{pipe:'2" (50 מ"מ)',min:2.0,max:5.0},{pipe:'3" (75 מ"מ)',min:1.5,max:3.0},{pipe:'4" (110 מ"מ)',min:1.5,max:2.0},{pipe:'6" (160 מ"מ)',min:1.0,max:1.5}],
+  vents:[{fixture:'אסלה',maxDist:3.0,fu:2.0},{fixture:'כיור רחצה',maxDist:1.5,fu:0.5},{fixture:'מקלחת',maxDist:2.5,fu:0.5},{fixture:'כיור מטבח',maxDist:2.5,fu:1.0}],
+  pressure:{min:1.0,max:5.0,rule:'10 מ\' גובה = 1 בר'},
+  brackets:[{pipe:'PPR 20-25 מ"מ',horiz:'0.6-0.8 מ\'',vert:'1.0-1.2 מ\''},{pipe:'PPR 32-40 מ"מ',horiz:'0.8-1.0 מ\'',vert:'1.2-1.5 מ\''},{pipe:'PVC 50 מ"מ',horiz:'0.8 מ\'',vert:'1.2 מ\''},{pipe:'PVC 110 מ"מ',horiz:'1.6 מ\'',vert:'1.8 מ\''}],
+  septic:{minDistance:'2 מ\' מגבול מגרש',minVolume:'2,000 ליטר'},
+  editorNotes:'',
+  errorReports:[]
+},
+settings:{businessName:'א.ד. אינסטלציה',phone:'',whatsappPrefix:'א.ד. אינסטלציה'}
+};
+
+var data={};
+function loadData(){try{var s=localStorage.getItem('ad_plumbing_cms');if(s){data=JSON.parse(s);if(!data.standards){data.standards=JSON.parse(JSON.stringify(DEFAULTS.standards));}}else{data=JSON.parse(JSON.stringify(DEFAULTS));}}catch(e){data=JSON.parse(JSON.stringify(DEFAULTS));}}
+function saveAll(){try{localStorage.setItem('ad_plumbing_cms',JSON.stringify(data));var b=document.getElementById('saveBtn');b.innerHTML='✅ נשמר!';setTimeout(function(){b.innerHTML='💾 שמור';},2000);showToast('✅ נשמר');}catch(e){showToast('❌ שגיאה');}}
+function showToast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},3000);}
+function resetToDefaults(){if(confirm('אפס הכל?')){data=JSON.parse(JSON.stringify(DEFAULTS));saveAll();renderPage(curPage);}}
+function esc(s){return s?String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'):'';}
+
+// ═══ NAV ═══
+var PAGES=[{id:'dashboard',ico:'📊',name:'דשבורד'},{id:'prices',ico:'💰',name:'מחירון'},{id:'faults',ico:'⚠️',name:'תקלות'},{id:'client',ico:'👤',name:'הסברי לקוח'},{id:'heights',ico:'📏',name:'גבהי התקנה'},{id:'drying',ico:'⏳',name:'זמני ייבוש'},{id:'standards',ico:'📐',name:'תקנים'},{id:'security',ico:'🔐',name:'אבטחה'},{id:'settings',ico:'⚙️',name:'הגדרות'}];
+var curPage='dashboard';
+function initNav(){var sb=document.getElementById('sidebar'),mn=document.getElementById('mobNav');PAGES.forEach(function(p){var d=document.createElement('div');d.className='sb-item'+(p.id===curPage?' on':'');d.dataset.page=p.id;d.innerHTML='<span class="sb-ico">'+p.ico+'</span>'+p.name;d.addEventListener('click',function(){navTo(p.id);});sb.appendChild(d);var b=document.createElement('button');b.className='mn-btn'+(p.id===curPage?' on':'');b.dataset.page=p.id;b.textContent=p.ico+' '+p.name;b.addEventListener('click',function(){navTo(p.id);});mn.appendChild(b);});}
+function navTo(id){curPage=id;document.querySelectorAll('.sb-item,.mn-btn').forEach(function(el){el.classList.toggle('on',el.dataset.page===id);});renderPage(id);}
+function renderPage(id){var c=document.getElementById('content');var fn={dashboard:rDash,prices:rPrices,faults:rFaults,client:rClient,heights:rHeights,drying:rDrying,standards:rStd,security:rSec,settings:rSet};if(fn[id])fn[id](c);}
+function openModal(h){document.getElementById('modalContent').innerHTML=h;document.getElementById('modal').classList.add('on');}
+function closeModal(){document.getElementById('modal').classList.remove('on');}
+document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+
+// ═══ DASHBOARD ═══
+function rDash(c){var np=(data.prices||[]).length,nf=(data.faults||[]).length,nr=(data.standards&&data.standards.errorReports||[]).length;c.innerHTML='<div class="page on"><div class="page-title">📊 דשבורד</div><div class="page-desc">סקירה כללית</div><div class="stats"><div class="stat"><div class="sv">'+np+'</div><div class="sl">עבודות</div></div><div class="stat"><div class="sv">'+nf+'</div><div class="sl">תקלות</div></div><div class="stat"><div class="sv">'+nr+'</div><div class="sl">דיווחי טעות</div></div></div><div class="section-card"><div class="sc-title">פעולות</div><div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button class="btn btn-sky" onclick="navTo(\'prices\')">💰 מחירון</button><button class="btn btn-sky" onclick="navTo(\'standards\')">📐 תקנים</button><button class="btn btn-sky" onclick="navTo(\'security\')">🔐 אבטחה</button><button class="btn btn-red" onclick="resetToDefaults()">↺ אפס</button></div></div></div>';}
+
+// ═══ PRICES ═══
+function rPrices(c){var h='<div class="page on"><div class="page-title">💰 מחירון</div><div class="page-desc">ניהול עבודות ומחירים</div>';Object.keys(CATS).forEach(function(cat){var items=(data.prices||[]).filter(function(p){return p.cat===cat;});h+='<div class="section-card"><div class="sc-header"><div class="sc-title">'+CATS[cat]+' ('+items.length+')</div></div><div class="item-list">';items.forEach(function(item){var idx=data.prices.indexOf(item);h+='<div class="item-row"><div class="ir-name">'+esc(item.name)+'</div><div class="ir-price">₪'+item.price+'</div><button class="btn btn-sm btn-sky" onclick="editPrice('+idx+')">✏️</button><button class="btn btn-sm btn-red" onclick="delPrice('+idx+')">🗑️</button></div>';});h+='</div><button class="add-btn" onclick="addPrice(\''+cat+'\')">+ הוסף</button></div>';});h+='</div>';c.innerHTML=h;}
+function editPrice(i){var p=data.prices[i];openModal('<div class="modal-title"><span>✏️ עריכה</span><button class="modal-close" onclick="closeModal()">✕</button></div><div class="form-group"><label>שם</label><input id="ep-n" value="'+esc(p.name)+'"></div><div class="form-row"><div class="form-group"><label>מחיר ₪</label><input type="number" id="ep-p" value="'+p.price+'"></div><div class="form-group"><label>קטגוריה</label><select id="ep-c">'+Object.keys(CATS).map(function(k){return '<option value="'+k+'"'+(k===p.cat?' selected':'')+'>'+CATS[k]+'</option>';}).join('')+'</select></div></div><div class="modal-actions"><button class="btn" onclick="closeModal()">ביטול</button><button class="btn btn-sky" onclick="svP('+i+')">💾</button></div>');}
+function svP(i){data.prices[i].name=document.getElementById('ep-n').value;data.prices[i].price=parseInt(document.getElementById('ep-p').value)||0;data.prices[i].cat=document.getElementById('ep-c').value;closeModal();rPrices(document.getElementById('content'));showToast('✅');}
+function delPrice(i){if(confirm('למחוק?')){data.prices.splice(i,1);rPrices(document.getElementById('content'));showToast('🗑️');}}
+function addPrice(cat){openModal('<div class="modal-title"><span>+ חדש</span><button class="modal-close" onclick="closeModal()">✕</button></div><div class="form-group"><label>שם</label><input id="ep-n" placeholder="תיאור"></div><div class="form-row"><div class="form-group"><label>מחיר ₪</label><input type="number" id="ep-p" placeholder="0"></div><div class="form-group"><label>קטגוריה</label><select id="ep-c">'+Object.keys(CATS).map(function(k){return '<option value="'+k+'"'+(k===cat?' selected':'')+'>'+CATS[k]+'</option>';}).join('')+'</select></div></div><div class="modal-actions"><button class="btn" onclick="closeModal()">ביטול</button><button class="btn btn-grn" onclick="doAddP()">+</button></div>');}
+function doAddP(){var n=document.getElementById('ep-n').value;if(!n)return showToast('⚠️');data.prices.push({cat:document.getElementById('ep-c').value,name:n,price:parseInt(document.getElementById('ep-p').value)||0});closeModal();rPrices(document.getElementById('content'));showToast('✅');}
+
+// ═══ FAULTS ═══
+function rFaults(c){var h='<div class="page on"><div class="page-title">⚠️ תקלות</div><div class="page-desc">מדריך תקלות</div>';(data.faults||[]).forEach(function(f,i){h+='<div class="section-card"><div class="sc-header"><div class="sc-title">'+f.icon+' '+esc(f.title)+'</div><div style="display:flex;gap:6px"><button class="btn btn-sm btn-sky" onclick="editF('+i+')">✏️</button><button class="btn btn-sm btn-red" onclick="delF('+i+')">🗑️</button></div></div><div style="font-size:12px;color:#64748b;line-height:1.7"><strong>סימפטום:</strong> '+esc(f.symptoms)+'<br><strong>סיבות:</strong> '+esc(f.causes)+'<br><strong>פתרון:</strong> '+esc(f.solution)+'</div></div>';});h+='<button class="add-btn" onclick="addF()">+ תקלה</button></div>';c.innerHTML=h;}
+function editF(i){var f=data.faults[i];openModal('<div class="modal-title"><span>✏️</span><button class="modal-close" onclick="closeModal()">✕</button></div><div class="form-row"><div class="form-group" style="max-width:60px"><label>אייקון</label><input id="ef-i" value="'+f.icon+'" maxlength="2"></div><div class="form-group"><label>כותרת</label><input id="ef-t" value="'+esc(f.title)+'"></div></div><div class="form-group"><label>סימפטומים</label><input id="ef-s" value="'+esc(f.symptoms)+'"></div><div class="form-group"><label>סיבות (|)</label><input id="ef-c" value="'+esc(f.causes)+'"></div><div class="form-group"><label>פתרון</label><textarea id="ef-sl">'+esc(f.solution)+'</textarea></div><div class="modal-actions"><button class="btn" onclick="closeModal()">ביטול</button><button class="btn btn-sky" onclick="svF('+i+')">💾</button></div>');}
+function svF(i){data.faults[i]={icon:document.getElementById('ef-i').value,title:document.getElementById('ef-t').value,symptoms:document.getElementById('ef-s').value,causes:document.getElementById('ef-c').value,solution:document.getElementById('ef-sl').value};closeModal();rFaults(document.getElementById('content'));showToast('✅');}
+function delF(i){if(confirm('למחוק?')){data.faults.splice(i,1);rFaults(document.getElementById('content'));showToast('🗑️');}}
+function addF(){openModal('<div class="modal-title"><span>+</span><button class="modal-close" onclick="closeModal()">✕</button></div><div class="form-row"><div class="form-group" style="max-width:60px"><label>אייקון</label><input id="ef-i" value="🔧" maxlength="2"></div><div class="form-group"><label>כותרת</label><input id="ef-t"></div></div><div class="form-group"><label>סימפטומים</label><input id="ef-s"></div><div class="form-group"><label>סיבות (|)</label><input id="ef-c"></div><div class="form-group"><label>פתרון</label><textarea id="ef-sl"></textarea></div><div class="modal-actions"><button class="btn" onclick="closeModal()">ביטול</button><button class="btn btn-grn" onclick="doAddF()">+</button></div>');}
+function doAddF(){data.faults.push({icon:document.getElementById('ef-i').value,title:document.getElementById('ef-t').value,symptoms:document.getElementById('ef-s').value,causes:document.getElementById('ef-c').value,solution:document.getElementById('ef-sl').value});closeModal();rFaults(document.getElementById('content'));showToast('✅');}
+
+// ═══ CLIENT ═══
+function rClient(c){var h='<div class="page on"><div class="page-title">👤 הסברי לקוח</div><div class="page-desc">טקסטים לווטסאפ</div>';(data.clientTexts||[]).forEach(function(t,i){h+='<div class="section-card"><div class="sc-header"><div class="sc-title">'+esc(t.title)+'</div><div style="display:flex;gap:6px"><button class="btn btn-sm btn-sky" onclick="editCT('+i+')">✏️</button><button class="btn btn-sm btn-red" onclick="delCT('+i+')">🗑️</button></div></div><div style="font-size:13px;color:#475569;line-height:1.7">'+esc(t.text)+'</div></div>';});h+='<button class="add-btn" onclick="addCT()">+ הסבר</button></div>';c.innerHTML=h;}
+function editCT(i){var t=data.clientTexts[i];openModal('<div class="modal-title"><span>✏️</span><button class="modal-close" onclick="closeModal()">✕</button></div><div class="form-group"><label>כותרת</label><input id="ct-t" value="'+esc(t.title)+'"></div><div class="form-group"><label>טקסט</label><textarea id="ct-x" rows="4">'+esc(t.text)+'</textarea></div><div class="modal-actions"><button class="btn" onclick="closeModal()">ביטול</button><button class="btn btn-sky" onclick="svCT('+i+')">💾</button></div>');}
+function svCT(i){data.clientTexts[i]={title:document.getElementById('ct-t').value,text:document.getElementById('ct-x').value};closeModal();rClient(document.getElementById('content'));showToast('✅');}
+function delCT(i){if(confirm('?')){data.clientTexts.splice(i,1);rClient(document.getElementById('content'));showToast('🗑️');}}
+function addCT(){openModal('<div class="modal-title"><span>+</span><button class="modal-close" onclick="closeModal()">✕</button></div><div class="form-group"><label>כותרת</label><input id="ct-t"></div><div class="form-group"><label>טקסט</label><textarea id="ct-x" rows="4"></textarea></div><div class="modal-actions"><button class="btn" onclick="closeModal()">ביטול</button><button class="btn btn-grn" onclick="doAddCT()">+</button></div>');}
+function doAddCT(){data.clientTexts.push({title:document.getElementById('ct-t').value,text:document.getElementById('ct-x').value});closeModal();rClient(document.getElementById('content'));showToast('✅');}
+
+// ═══ HEIGHTS ═══
+function rHeights(c){var h='<div class="page on"><div class="page-title">📏 גבהי התקנה</div><div class="section-card"><div class="item-list">';(data.heights||[]).forEach(function(r,i){h+='<div class="item-row"><div class="ir-name">'+esc(r.name)+'</div><div class="ir-meta"><span class="ir-price">'+esc(r.height)+' ס"מ</span></div><button class="btn btn-sm btn-sky" onclick="editH('+i+')">✏️</button><button class="btn btn-sm btn-red" onclick="delH('+i+')">🗑️</button></div>';});h+='</div><button class="add-btn" onclick="addH()">+ מוצר</button></div></div>';c.innerHTML=h;}
+function editH(i){var h=data.heights[i];openModal('<div class="modal-title"><span>✏️</span><button class="modal-close" onclick="closeModal()">✕</button></div><div class="form-group"><label>מוצר</label><input id="h-n" value="'+esc(h.name)+'"></div><div class="form-row"><div class="form-group"><label>גובה</label><input id="h-h" value="'+esc(h.height)+'"></div><div class="form-group"><label>הערה</label><input id="h-o" value="'+esc(h.note)+'"></div></div><div class="modal-actions"><button class="btn" onclick="closeModal()">ביטול</button><button class="btn btn-sky" onclick="svH('+i+')">💾</button></div>');}
+function svH(i){data.heights[i]={name:document.getElementById('h-n').value,height:document.getElementById('h-h').value,note:document.getElementById('h-o').value};closeModal();rHeights(document.getElementById('content'));showToast('✅');}
+function delH(i){if(confirm('?')){data.heights.splice(i,1);rHeights(document.getElementById('content'));showToast('🗑️');}}
+function addH(){openModal('<div class="modal-title"><span>+</span><button class="modal-close" onclick="closeModal()">✕</button></div><div class="form-group"><label>מוצר</label><input id="h-n"></div><div class="form-row"><div class="form-group"><label>גובה</label><input id="h-h"></div><div class="form-group"><label>הערה</label><input id="h-o"></div></div><div class="modal-actions"><button class="btn" onclick="closeModal()">ביטול</button><button class="btn btn-grn" onclick="doAddH()">+</button></div>');}
+function doAddH(){data.heights.push({name:document.getElementById('h-n').value,height:document.getElementById('h-h').value,note:document.getElementById('h-o').value});closeModal();rHeights(document.getElementById('content'));showToast('✅');}
+
+// ═══ DRYING ═══
+function rDrying(c){var h='<div class="page on"><div class="page-title">⏳ זמני ייבוש</div><div class="section-card"><div class="item-list">';(data.drying||[]).forEach(function(d,i){h+='<div class="item-row"><div class="ir-name">'+esc(d.name)+'</div><div class="ir-meta"><span style="color:#0ea5e9;font-weight:700">'+esc(d.wait)+'</span><span style="color:#94a3b8">→ '+esc(d.full)+'</span></div><button class="btn btn-sm btn-sky" onclick="editD('+i+')">✏️</button><button class="btn btn-sm btn-red" onclick="delD('+i+')">🗑️</button></div>';});h+='</div><button class="add-btn" onclick="addD()">+ חומר</button></div></div>';c.innerHTML=h;}
+function editD(i){var d=data.drying[i];openModal('<div class="modal-title"><span>✏️</span><button class="modal-close" onclick="closeModal()">✕</button></div><div class="form-group"><label>חומר</label><input id="d-n" value="'+esc(d.name)+'"></div><div class="form-row"><div class="form-group"><label>המתנה</label><input id="d-w" value="'+esc(d.wait)+'"></div><div class="form-group"><label>ייבוש מלא</label><input id="d-f" value="'+esc(d.full)+'"></div></div><div class="modal-actions"><button class="btn" onclick="closeModal()">ביטול</button><button class="btn btn-sky" onclick="svD('+i+')">💾</button></div>');}
+function svD(i){data.drying[i]={name:document.getElementById('d-n').value,wait:document.getElementById('d-w').value,full:document.getElementById('d-f').value};closeModal();rDrying(document.getElementById('content'));showToast('✅');}
+function delD(i){if(confirm('?')){data.drying.splice(i,1);rDrying(document.getElementById('content'));showToast('🗑️');}}
+function addD(){openModal('<div class="modal-title"><span>+</span><button class="modal-close" onclick="closeModal()">✕</button></div><div class="form-group"><label>חומר</label><input id="d-n"></div><div class="form-row"><div class="form-group"><label>המתנה</label><input id="d-w"></div><div class="form-group"><label>ייבוש מלא</label><input id="d-f"></div></div><div class="modal-actions"><button class="btn" onclick="closeModal()">ביטול</button><button class="btn btn-grn" onclick="doAddD()">+</button></div>');}
+function doAddD(){data.drying.push({name:document.getElementById('d-n').value,wait:document.getElementById('d-w').value,full:document.getElementById('d-f').value});closeModal();rDrying(document.getElementById('content'));showToast('✅');}
+
+// ═══════════════════════════════════════
+//  STANDARDS - EDITABLE WITH NOTES
+// ═══════════════════════════════════════
+function rStd(c){
+  var std=data.standards||DEFAULTS.standards;
+  var reports=std.errorReports||[];
+  var h='<div class="page on"><div class="page-title">📐 תקנים (ת"י 1205)</div><div class="page-desc">ערכים מעודכנים · ניתנים לעריכה עם הערות עורך</div>';
+
+  // FU Table - CORRECTED
+  h+='<div class="section-card"><div class="sc-header"><div class="sc-title">🔩 יחידות קבועה (FU) — ת"י 1205 מעודכן</div><button class="btn btn-sm btn-sky" onclick="editFU()">✏️ ערוך FU</button></div><div class="item-list">';
+  (std.fu||[]).forEach(function(f){h+='<div class="item-row"><div class="ir-name">'+esc(f.name)+'</div><div class="ir-price">FU = '+f.fu+'</div></div>';});
+  h+='</div></div>';
+
+  // Slopes
+  h+='<div class="section-card"><div class="sc-title">📐 שיפועי ניקוז</div><div style="margin-top:10px;font-size:13px;color:#475569;line-height:2">';
+  (std.slopes||[]).forEach(function(s){h+='• <strong>'+esc(s.pipe)+':</strong> '+s.min+'% - '+s.max+'%<br>';});
+  h+='</div></div>';
+
+  // Vents
+  h+='<div class="section-card"><div class="sc-title">🔧 מרחקי אוורור</div><div style="margin-top:10px;font-size:13px;color:#475569;line-height:2">';
+  (std.vents||[]).forEach(function(v){h+='• <strong>'+esc(v.fixture)+':</strong> עד '+v.maxDist+' מ\' (FU='+v.fu+')<br>';});
+  h+='</div></div>';
+
+  // Brackets - CORRECTED
+  h+='<div class="section-card"><div class="sc-header"><div class="sc-title">📏 מרחקי חבקים (עיגון צנרת)</div><button class="btn btn-sm btn-sky" onclick="editBrackets()">✏️ ערוך</button></div><div class="item-list">';
+  (std.brackets||[]).forEach(function(b){h+='<div class="item-row"><div class="ir-name">'+esc(b.pipe)+'</div><div class="ir-meta"><span style="color:#0ea5e9">אופקי: '+esc(b.horiz)+'</span><span style="color:#94a3b8">אנכי: '+esc(b.vert)+'</span></div></div>';});
+  h+='</div></div>';
+
+  // Septic - NEW
+  h+='<div class="section-card"><div class="sc-header"><div class="sc-title">🏗️ מכל רקב (ביוב)</div><button class="btn btn-sm btn-sky" onclick="editSeptic()">✏️ ערוך</button></div><div style="font-size:14px;color:#334155;line-height:2;margin-top:8px">• <strong>מרחק מינימלי מגבול מגרש:</strong> <span style="color:#0ea5e9;font-weight:800">'+esc(std.septic.minDistance)+'</span><br>• <strong>נפח מינימלי:</strong> <span style="color:#0ea5e9;font-weight:800">'+esc(std.septic.minVolume)+'</span></div></div>';
+
+  // Pressure
+  h+='<div class="section-card"><div class="sc-title">💧 לחצים</div><div style="margin-top:8px;font-size:13px;color:#475569;line-height:2">• מינימום: <strong>'+std.pressure.min+' בר</strong><br>• מקסימום: <strong>'+std.pressure.max+' בר</strong><br>• כלל: <strong>'+esc(std.pressure.rule)+'</strong></div></div>';
+
+  // Editor Notes
+  h+='<div class="section-card"><div class="sc-title">📝 הערת עורך לתקן</div><div class="std-edit-note"><label>הוסף הערה על עדכונים / שינויים בתקן:</label><textarea id="std-editor-note" onchange="data.standards.editorNotes=this.value">'+(esc(std.editorNotes)||'')+'</textarea></div></div>';
+
+  // Error Reports
+  h+='<div class="section-card"><div class="sc-header"><div class="sc-title">🚩 דיווחי טעות מהשטח ('+reports.length+')</div>';
+  if(reports.length>0)h+='<button class="btn btn-sm btn-red" onclick="clearReports()">🗑️ נקה הכל</button>';
+  h+='</div>';
+  if(reports.length===0){h+='<div style="font-size:13px;color:#94a3b8;text-align:center;padding:16px">אין דיווחים</div>';}else{reports.forEach(function(r,i){h+='<div style="padding:8px 0;border-bottom:1px solid #e2e8f0;font-size:12px"><strong style="color:#ef4444">'+esc(r.section)+':</strong> '+esc(r.message)+'<br><span style="color:#94a3b8;font-size:10px">'+esc(r.date)+'</span></div>';});}
+  h+='</div>';
+
+  // Disclaimer
+  h+='<div style="margin-top:16px;padding:14px;border-radius:var(--r);background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.15);font-size:12px;color:#b45309;line-height:1.7"><strong>⚠️ הערה מקצועית חשובה:</strong><br>הנתונים באתר מהווים עזר בלבד. בכל מקרה של ספק לגבי קוטר צינור, חישוב עומסים מורכב, או תכנון מערכות — <strong>יש להתייעץ עם מתכנן אינסטלציה מוסמך.</strong> אין להסתמך על האפליקציה כתחליף לתכנון מקצועי.</div>';
+
+  h+='</div>';c.innerHTML=h;
+}
+
+function editFU(){
+  var std=data.standards;
+  var h='<div class="modal-title"><span>✏️ עריכת FU</span><button class="modal-close" onclick="closeModal()">✕</button></div>';
+  (std.fu||[]).forEach(function(f,i){
+    h+='<div class="form-row"><div class="form-group"><label>מוצר</label><input id="fu-n-'+i+'" value="'+esc(f.name)+'"></div><div class="form-group" style="max-width:100px"><label>FU</label><input type="number" step="0.1" id="fu-v-'+i+'" value="'+f.fu+'"></div></div>';
+  });
+  h+='<div class="modal-actions"><button class="btn" onclick="closeModal()">ביטול</button><button class="btn btn-sky" onclick="saveFU()">💾 שמור</button></div>';
+  openModal(h);
+}
+function saveFU(){
+  data.standards.fu.forEach(function(f,i){
+    f.name=document.getElementById('fu-n-'+i).value;
+    f.fu=parseFloat(document.getElementById('fu-v-'+i).value)||0;
+  });
+  closeModal();rStd(document.getElementById('content'));showToast('✅ FU עודכן');
+}
+
+function editBrackets(){
+  var std=data.standards;
+  var h='<div class="modal-title"><span>✏️ חבקים</span><button class="modal-close" onclick="closeModal()">✕</button></div>';
+  (std.brackets||[]).forEach(function(b,i){
+    h+='<div class="form-row"><div class="form-group"><label>צנרת</label><input id="br-p-'+i+'" value="'+esc(b.pipe)+'"></div><div class="form-group"><label>אופקי</label><input id="br-h-'+i+'" value="'+esc(b.horiz)+'"></div><div class="form-group"><label>אנכי</label><input id="br-v-'+i+'" value="'+esc(b.vert)+'"></div></div>';
+  });
+  h+='<div class="modal-actions"><button class="btn" onclick="closeModal()">ביטול</button><button class="btn btn-sky" onclick="saveBrackets()">💾</button></div>';
+  openModal(h);
+}
+function saveBrackets(){
+  data.standards.brackets.forEach(function(b,i){
+    b.pipe=document.getElementById('br-p-'+i).value;
+    b.horiz=document.getElementById('br-h-'+i).value;
+    b.vert=document.getElementById('br-v-'+i).value;
+  });
+  closeModal();rStd(document.getElementById('content'));showToast('✅');
+}
+
+function editSeptic(){
+  var s=data.standards.septic;
+  openModal('<div class="modal-title"><span>✏️ מכל רקב</span><button class="modal-close" onclick="closeModal()">✕</button></div><div class="form-group"><label>מרחק מינימלי מגבול מגרש</label><input id="sp-d" value="'+esc(s.minDistance)+'"></div><div class="form-group"><label>נפח מינימלי</label><input id="sp-v" value="'+esc(s.minVolume)+'"></div><div class="modal-actions"><button class="btn" onclick="closeModal()">ביטול</button><button class="btn btn-sky" onclick="saveSeptic()">💾</button></div>');
+}
+function saveSeptic(){
+  data.standards.septic.minDistance=document.getElementById('sp-d').value;
+  data.standards.septic.minVolume=document.getElementById('sp-v').value;
+  closeModal();rStd(document.getElementById('content'));showToast('✅');
+}
+
+function clearReports(){if(confirm('נקה כל הדיווחים?')){data.standards.errorReports=[];rStd(document.getElementById('content'));showToast('🗑️');}}
+
+// ═══ SECURITY ═══
+function rSec(c){var a=gA();c.innerHTML='<div class="page on"><div class="page-title">🔐 אבטחה</div><div class="page-desc">ניהול התחברות</div><div class="section-card"><div class="sc-title">👤 שם משתמש</div><div class="form-group" style="margin-top:12px"><label>נוכחי</label><input value="'+esc(a.user)+'" disabled style="background:#f1f5f9;color:#94a3b8"></div><div class="form-group"><label>חדש</label><input id="sec-u" placeholder="3+ תווים"></div><div style="margin-top:12px"><button class="btn btn-sky" onclick="chgUser()">💾 עדכן</button></div></div><div class="section-card"><div class="sc-title">🔑 סיסמה</div><div class="form-group" style="margin-top:12px"><label>נוכחית</label><input type="password" id="sec-op"></div><div class="form-group"><label>חדשה (4+)</label><input type="password" id="sec-np"></div><div class="form-group"><label>אימות</label><input type="password" id="sec-np2"></div><div style="margin-top:12px"><button class="btn btn-sky" onclick="chgPass()">🔑 עדכן</button></div></div><div class="section-card"><div class="sc-title">🛡️ מידע</div><div style="font-size:13px;color:#475569;line-height:1.8;margin-top:8px">• נעילה אחרי '+MAX_ATT+' ניסיונות ל-'+LOCK_MIN+' דק\'<br>• Session: '+SESS_HR+' שעות<br>• סיסמה מוצפנת</div></div></div>';}
+function chgUser(){var n=document.getElementById('sec-u').value.trim();if(!n||n.length<3)return showToast('⚠️ 3+ תווים');var a=gA();a.user=n;localStorage.setItem(AK,JSON.stringify(a));document.getElementById('userBadge').textContent='👤 '+n;showToast('✅ משתמש: '+n);rSec(document.getElementById('content'));}
+function chgPass(){var op=document.getElementById('sec-op').value,np=document.getElementById('sec-np').value,np2=document.getElementById('sec-np2').value,a=gA();if(hp(op)!==a.pass)return showToast('❌ סיסמה שגויה');if(np.length<4)return showToast('⚠️ 4+ תווים');if(np!==np2)return showToast('⚠️ לא תואמות');a.pass=hp(np);localStorage.setItem(AK,JSON.stringify(a));showToast('✅ סיסמה עודכנה');rSec(document.getElementById('content'));}
+
+// ═══ SETTINGS ═══
+function rSet(c){var s=data.settings||DEFAULTS.settings;c.innerHTML='<div class="page on"><div class="page-title">⚙️ הגדרות</div><div class="section-card"><div class="sc-title">פרטי העסק</div><div class="form-group" style="margin-top:12px"><label>שם</label><input id="st-n" value="'+esc(s.businessName)+'" onchange="data.settings.businessName=this.value"></div><div class="form-group"><label>טלפון</label><input id="st-p" value="'+esc(s.phone||'')+'" onchange="data.settings.phone=this.value"></div><div class="form-group"><label>פתיח ווטסאפ</label><input id="st-w" value="'+esc(s.whatsappPrefix)+'" onchange="data.settings.whatsappPrefix=this.value"></div></div><div class="section-card"><div class="sc-title">נתונים</div><div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button class="btn btn-sky" onclick="expData()">📤 ייצוא</button><button class="btn" onclick="document.getElementById(\'impF\').click()">📥 ייבוא</button><input type="file" id="impF" accept=".json" style="display:none" onchange="impData(event)"><button class="btn btn-red" onclick="resetToDefaults()">↺ אפס</button></div></div></div>';}
+function expData(){var b=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='ad-plumbing-data.json';a.click();showToast('📤');}
+function impData(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(ev){try{data=JSON.parse(ev.target.result);saveAll();renderPage(curPage);showToast('📥 יובא');}catch(err){showToast('❌');}};r.readAsText(f);}
+
+// ═══ INIT ═══
+loadData();initNav();renderPage('dashboard');
+</script>
+</body>
+</html>
